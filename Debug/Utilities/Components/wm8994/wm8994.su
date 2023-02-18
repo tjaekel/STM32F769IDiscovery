@@ -1,0 +1,12 @@
+../Utilities/Components/wm8994/wm8994.c:871:10:wm8994_SetOutputMode	16	static
+../Utilities/Components/wm8994/wm8994.c:958:10:wm8994_SetFrequency	8	static
+../Utilities/Components/wm8994/wm8994.c:1013:10:wm8994_Reset	8	static
+../Utilities/Components/wm8994/wm8994.c:630:6:wm8994_DeInit	0	static
+../Utilities/Components/wm8994/wm8994.c:641:10:wm8994_ReadID	8	static
+../Utilities/Components/wm8994/wm8994.c:671:10:wm8994_Pause	16	static
+../Utilities/Components/wm8994/wm8994.c:655:10:wm8994_Play	16	static
+../Utilities/Components/wm8994/wm8994.c:690:10:wm8994_Resume	16	static
+../Utilities/Components/wm8994/wm8994.c:714:10:wm8994_Stop	16	static
+../Utilities/Components/wm8994/wm8994.c:836:10:wm8994_SetMute	16	static
+../Utilities/Components/wm8994/wm8994.c:760:10:wm8994_SetVolume	40	static
+../Utilities/Components/wm8994/wm8994.c:136:10:wm8994_Init	40	static

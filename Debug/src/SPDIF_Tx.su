@@ -1,0 +1,6 @@
+../src/SPDIF_Tx.c:28:6:SPDIF_TX_Init	4	static
+../src/SPDIF_Tx.c:70:6:SPDIF_TX_Start	0	static
+../src/SPDIF_Tx.c:76:39:SPDIF_Tx_CpyBuf	0	static
+../src/SPDIF_Tx.c:94:6:SPDIF_TX_TransferComplete_CallBack	0	static
+../src/SPDIF_Tx.c:118:6:SPDIF_TX_HalfTransfer_CallBack	0	static
+../src/SPDIF_Tx.c:137:6:SPDIF_TX_OutBuf	16	static

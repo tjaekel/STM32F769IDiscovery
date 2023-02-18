@@ -1,0 +1,2 @@
+../HAL_Driver/Src/stm32f7xx_hal_iwdg.c:172:19:HAL_IWDG_Init	16	static
+../HAL_Driver/Src/stm32f7xx_hal_iwdg.c:256:19:HAL_IWDG_Refresh	0	static

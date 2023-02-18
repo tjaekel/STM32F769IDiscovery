@@ -1,0 +1,4 @@
+../HAL_Driver/Src/stm32f7xx_hal_smartcard_ex.c:103:6:HAL_SMARTCARDEx_BlockLength_Config	0	static
+../HAL_Driver/Src/stm32f7xx_hal_smartcard_ex.c:115:6:HAL_SMARTCARDEx_TimeOut_Config	0	static
+../HAL_Driver/Src/stm32f7xx_hal_smartcard_ex.c:126:19:HAL_SMARTCARDEx_EnableReceiverTimeOut	0	static
+../HAL_Driver/Src/stm32f7xx_hal_smartcard_ex.c:149:19:HAL_SMARTCARDEx_DisableReceiverTimeOut	0	static

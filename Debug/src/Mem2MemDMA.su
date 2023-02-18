@@ -1,0 +1,2 @@
+../src/Mem2MemDMA.c:18:19:DMA_Mem2Mem_Init	16	static
+../src/Mem2MemDMA.c:53:19:DMA_Mem2Mem_Start	24	static

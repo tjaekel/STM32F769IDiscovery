@@ -1,0 +1,7 @@
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:128:10:USBD_AUDIO_DeviceDescriptor	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:140:10:USBD_AUDIO_LangIDStrDescriptor	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:171:10:USBD_AUDIO_ManufacturerStrDescriptor	8	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:152:10:USBD_AUDIO_ProductStrDescriptor	8	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:199:10:USBD_AUDIO_ConfigStrDescriptor	8	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:218:10:USBD_AUDIO_InterfaceStrDescriptor	8	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_desc.c:183:10:USBD_AUDIO_SerialStrDescriptor	0	static

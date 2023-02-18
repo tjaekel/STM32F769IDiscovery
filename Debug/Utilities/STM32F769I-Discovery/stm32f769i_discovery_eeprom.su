@@ -1,0 +1,7 @@
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:154:10:BSP_EEPROM_Init	8	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:177:9:BSP_EEPROM_DeInit	0	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:453:13:BSP_EEPROM_TIMEOUT_UserCallback	0	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:198:10:BSP_EEPROM_ReadBuffer	8	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:437:10:BSP_EEPROM_WaitEepromStandbyState	8	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:245:10:BSP_EEPROM_WritePage	16	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_eeprom.c:280:10:BSP_EEPROM_WriteBuffer	32	static

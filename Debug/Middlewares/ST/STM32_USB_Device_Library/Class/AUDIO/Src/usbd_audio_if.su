@@ -1,0 +1,7 @@
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:65:15:Audio_Init	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:82:15:Audio_DeInit	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:97:15:Audio_PlaybackCmd	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:143:15:Audio_PeriodicTC	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:153:15:Audio_GetState	0	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:132:15:Audio_MuteCtl	8	static
+../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if.c:121:15:Audio_VolumeCtl	8	static

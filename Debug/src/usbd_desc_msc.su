@@ -1,0 +1,7 @@
+../src/usbd_desc_msc.c:111:10:USBD_MSC_DeviceDescriptor	0	static
+../src/usbd_desc_msc.c:123:10:USBD_MSC_LangIDStrDescriptor	0	static
+../src/usbd_desc_msc.c:154:10:USBD_MSC_ManufacturerStrDescriptor	8	static
+../src/usbd_desc_msc.c:135:10:USBD_MSC_ProductStrDescriptor	8	static
+../src/usbd_desc_msc.c:182:10:USBD_MSC_ConfigStrDescriptor	8	static
+../src/usbd_desc_msc.c:201:10:USBD_MSC_InterfaceStrDescriptor	8	static
+../src/usbd_desc_msc.c:166:10:USBD_MSC_SerialStrDescriptor	0	static

@@ -1,0 +1,11 @@
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:106:10:HAL_DACEx_DualGetValue	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:142:19:HAL_DACEx_TriangleWaveGenerate	4	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:191:19:HAL_DACEx_NoiseWaveGenerate	4	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:231:19:HAL_DACEx_DualSetValue	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:270:13:HAL_DACEx_ConvCpltCallbackCh2	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:286:13:HAL_DACEx_ConvHalfCpltCallbackCh2	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:302:13:HAL_DACEx_ErrorCallbackCh2	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:318:13:HAL_DACEx_DMAUnderrunCallbackCh2	0	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:334:6:DAC_DMAConvCpltCh2	8	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:349:6:DAC_DMAHalfConvCpltCh2	8	static
+../HAL_Driver/Src/stm32f7xx_hal_dac_ex.c:362:6:DAC_DMAErrorCh2	8	static

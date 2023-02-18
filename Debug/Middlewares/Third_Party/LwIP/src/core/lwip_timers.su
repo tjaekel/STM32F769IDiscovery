@@ -1,0 +1,9 @@
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:168:1:dhcp_timer_fine	16	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:138:1:arp_timer	16	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:154:1:dhcp_timer_coarse	8	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:81:1:tcpip_tcp_timer	16	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:103:1:tcp_timer_needed	16	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:329:1:sys_timeout	16	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:275:6:sys_timeouts_init	8	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:400:1:sys_untimeout	8	static
+../Middlewares/Third_Party/LwIP/src/core/lwip_timers.c:519:1:sys_timeouts_mbox_fetch	24	static

@@ -1,0 +1,3 @@
+../src/SPKR_BassBoost.c:29:13:BassBoost_SingleSample	24	static
+../src/SPKR_BassBoost.c:82:6:BASS_BOOST_filterBuf	16	static
+../src/SPKR_BassBoost.c:91:6:BASS_BOOST_filter	24	static

@@ -1,0 +1,9 @@
+../src/FFT.c:456:13:FFT_DisplayMagnitude	72	static
+../src/FFT.c:293:9:FFT_Init	0	static
+../src/FFT.c:301:9:FFT_Ready	4	static
+../src/FFT.c:341:9:FFT_Filter	32	static
+../src/FFT.c:451:6:FFT_SetBarType	0	static
+../src/FFT.c:509:6:FFT_Display_BarGraph	80	static
+../src/FFT.c:638:6:FFT_Display_Points	64	static
+../src/FFT.c:729:6:FFT_Display_Lines	88	static
+../src/FFT.c:441:6:FFT_DisplayGraph	0	static

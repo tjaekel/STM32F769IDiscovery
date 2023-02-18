@@ -1,0 +1,11 @@
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:217:9:BSP_QSPI_Read	72	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:257:9:BSP_QSPI_Write	200	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:337:9:BSP_QSPI_Erase_Block	168	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:383:9:BSP_QSPI_Erase_Chip	168	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:423:9:BSP_QSPI_GetStatus	72	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:468:9:BSP_QSPI_GetInfo	8	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:484:9:BSP_QSPI_EnableMemoryMappedMode	72	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:529:13:BSP_QSPI_MspInit	72	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:122:9:BSP_QSPI_Init	192	static,ignoring_inline_asm
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:590:13:BSP_QSPI_MspDeInit	16	static
+../Utilities/STM32F769I-Discovery/stm32f769i_discovery_qspi.c:188:9:BSP_QSPI_DeInit	72	static

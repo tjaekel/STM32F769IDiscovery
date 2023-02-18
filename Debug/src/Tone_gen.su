@@ -1,0 +1,2 @@
+../src/Tone_gen.c:20:6:TONEGEN_CpySine	16	static
+../src/Tone_gen.c:32:5:TONEGEN_GetSine	0	static

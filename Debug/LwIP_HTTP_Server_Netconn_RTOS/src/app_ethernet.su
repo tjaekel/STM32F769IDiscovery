@@ -1,0 +1,2 @@
+../LwIP_HTTP_Server_Netconn_RTOS/src/app_ethernet.c:74:6:User_notification	32	static
+../LwIP_HTTP_Server_Netconn_RTOS/src/app_ethernet.c:112:6:DHCP_thread	48	static

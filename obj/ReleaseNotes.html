@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Lyrebird APP FW</title>
+</head>
+<body lang="EN-US" link="blue" vlink="blue">
+<h1><img src="logo.jpg" alt="Lyrebird APP logo">Lyrebird APP <small>V1.1.0</small></h1>
+<h2>Readme - Firmware Release Notes</h2>
+<hr>
+<h2>New features in V1.1.0</h2>
+<ul>
+	<li>UART remote control - volume control via UART</li>
+	<li>Web Browser remote control - volume control via Web Browser</li>
+	<li>non-volatile store and restore of config - using QSPI flash device</li>
+</ul>
+
+<table style="width: 800px; height: 30px;" border="0" cellpadding="2" cellspacing="2">
+<tbody>
+<tr>
+	<td colspan="2" style="font-family: Verdana; font-weight: bold; font-style: italic; background-color: rgb(250, 250, 250); text-align: left;">Web Server</td>
+</tr>
+<tr>
+<td>Web Server does not get DHCP IP address in a reliable way</td>
+<td>Try again with the Reset button (right one), start again or change to use static IP address (192.168.1.200)</td>
+</tr>
+<tr>
+	<td>Web Server conflicts with SD Card Player</td>
+	<td>When playing files from SD Card - the Web Server is disabled and not running</td>
+</tr>
+<tr>
+	<td>The site content of the Web Server is just a minimal demonstration. It provides just a feature to control the Volume or to get information
+	    about the running RTOS threads.</td>
+	<td>Flash future and updated FW versions on the ST-Link interface, when extended FW was released</td>
+</tr>
+<tr>
+	<td colspan="2" style="font-family: Verdana; font-weight: bold; font-style: italic; background-color: rgb(250, 250, 250); text-align: left;">SD Card</td>
+</tr>
+<tr>
+	<td>Only the first 24 files found on file system are displayed and can be selected. The order displayed looks random (used in the order as found on file system)</td>
+	<td>Copy files to empty (formated) SD Card step-by-step to make sure about the order. Have just 24 files on SD Card. Do not use sub-directories. Store just WAV files.</td>
+</tr>
+<tr>
+	<td>The SD Card WAV Player stops after a single file played. There is not (yet) a "Play All" or "Shuffle Play" feature.</td>
+	<td>Select another file and start with the Play button. When the file was played - the SD Card menu is displayed automatically.</td>
+</tr>
+<tr>
+	<td colspan="2" style="font-family: Verdana; font-weight: bold; font-style: italic; background-color: rgb(250, 250, 250); text-align: left;">USB</td>
+</tr>
+<tr>
+	<td>USB is used for audio OR to manage files on SD Card, not in parallel</td>
+	<td>If USB is selected to manage files on SD Card - the USB audio devices (In and Out) and MIC are disabled (conflict with SD Card access).
+	    Select any other interface, e.g. Line In, when managing the SD Card.</td>
+</tr>
+<tr>
+	<td>USB to PC (as USB IN on PC) is active on all interface. When playing from SD Card and sending audio via USB to PC - there could be a performance
+	    issue (not fast enough, drop outs).</td>
+    	<td>Do not use USB Audio to PC in combination with playing files from SD Card.</td>
+</tr>
+<tr>
+	<td>USB audio from PC via USB (USB Out on PC) is just supported as 44.1 or 48 KHz, 16 bit.</td>
+	<td>Set the audio sample rate on PC for USB accordingly, to 44.1 or 48 KHz. Especially, when receiving audio from other interfaces, or playing from SD Card -
+	    the USB sample rate for the Recording Device on PC must match with the processed audio sample rate.</td>
+</tr>
+<tr>
+	<td colspan="2" style="font-family: Verdana; font-weight: bold; font-style: italic; background-color: rgb(250, 250, 250); text-align: left;">uDANTE Network Audio</td>
+</tr>
+<tr>
+	<td>When listen to an Audinate DANTE (uDANTE) network audio stream - the IP where audio is transmitted will be found independently of assigned IP address for DANTE
+		receiver. As UDP port - the first found will be used.</td>
+        <td>The first found UDP port with Audinate DANTE network audio is opened and used. Have just one (stereo) audio stream running in Ethernet network for uDANTE receiver.</td>	
+</tr>
+<tr>
+	<td>Web Server is disabled, not running, when uDANTE network audio is processed.</td>
+	<td>Due to performance reasons - it is not possible to process network audio and to have the Web Server running at the same time (will never be supported to have both in parallel).</td>
+</tr>
+<tr>
+	<td colspan="2" style="font-family: Verdana; font-weight: bold; font-style: italic; background-color: rgb(250, 250, 250); text-align: left;">Configuration Menu</td>
+</tr>
+<tr>
+	<td>The confuration is not yet saved and restored from QSPI flash device.</td>
+	<td>Use the Config Menu first to change if not the default setting is used, esp. when enabling the Web Server.</td>
+</tr>
+</tbody>
+</table>
+<p>Lyrebird APP | Sept. 2016</p>
+</body></html>
+

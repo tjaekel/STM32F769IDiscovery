@@ -1,0 +1,3 @@
+../src/uart_cmd.c:92:6:UART_cmd_init	8	static
+../src/uart_cmd.c:108:5:UART_cmd	56	static
+../src/uart_cmd.c:143:5:UART_task	8	static

@@ -1,0 +1,2 @@
+../Utilities/Components/otm8009a/otm8009a.c:180:13:DSI_IO_WriteCmd	0	static
+../Utilities/Components/otm8009a/otm8009a.c:194:9:OTM8009A_Init	16	static

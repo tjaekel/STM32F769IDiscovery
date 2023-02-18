@@ -1,0 +1,4 @@
+../LwIP_HTTP_Server_Netconn_RTOS/src/fs.c:79:1:fs_open	32	static
+../LwIP_HTTP_Server_Netconn_RTOS/src/fs.c:120:1:fs_close	0	static
+../LwIP_HTTP_Server_Netconn_RTOS/src/fs.c:134:1:fs_read	16	static
+../LwIP_HTTP_Server_Netconn_RTOS/src/fs.c:153:5:fs_bytes_left	0	static
