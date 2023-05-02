@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains definitions for STM32F769I-Discovery LEDs,
   *          push-buttons hardware resources.
   ******************************************************************************
@@ -52,15 +50,15 @@
   * @{
   */
 
-/** @addtogroup STM32F769I_Discovery
+/** @addtogroup STM32F769I_DISCOVERY
   * @{
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL STM32F769I-Discovery LOW LEVEL
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL STM32F769I-Discovery LOW LEVEL
   * @{
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Exported_Types STM32F769I Discovery Low Level Exported Types
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Exported_Types STM32F769I Discovery Low Level Exported Types
  * @{
  */
 
@@ -72,7 +70,7 @@
 #endif
 
 /** @brief Led_TypeDef
-  *  STM32F769I_Discovery board leds definitions.
+  *  STM32F769I_DISCOVERY board leds definitions.
   */
 typedef enum
 {
@@ -83,7 +81,7 @@ typedef enum
 } Led_TypeDef;
 
 /** @brief Button_TypeDef
-  *  STM32F769I_Discovery board Buttons definitions.
+  *  STM32F769I_DISCOVERY board Buttons definitions.
   */
 typedef enum
 {
@@ -93,7 +91,7 @@ typedef enum
 #define BUTTON_USER BUTTON_WAKEUP
 
 /** @brief ButtonMode_TypeDef
-  *  STM32F769I_Discovery board Buttons Modes definitions.
+  *  STM32F769I_DISCOVERY board Buttons Modes definitions.
   */
 typedef enum
 {
@@ -126,12 +124,12 @@ typedef enum
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Exported_Constants STM32F769I Discovery Low Level Exported Constants
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Exported_Constants STM32F769I Discovery Low Level Exported Constants
   * @{
   */
 
 
-/** @addtogroup STM32F769I_Discovery_LOW_LEVEL_LED STM32F769I Discovery Low Level Led
+/** @addtogroup STM32F769I_DISCOVERY_LOW_LEVEL_LED STM32F769I Discovery Low Level Led
   * @{
   */
 /* Always four leds for all revisions of Discovery boards */
@@ -152,7 +150,7 @@ typedef enum
   * @}
   */
 
-/** @addtogroup STM32F769I_Discovery_LOW_LEVEL_BUTTON STM32F769I Discovery Low Level Button
+/** @addtogroup STM32F769I_DISCOVERY_LOW_LEVEL_BUTTON STM32F769I Discovery Low Level Button
   * @{
   */
 /* Only one User/Wakeup button */
@@ -197,8 +195,7 @@ typedef enum
 #define SD_DETECT_EXTI_IRQn                  EXTI15_10_IRQn
 
 /**
-  * @brief TS_INT signal from TouchScreen when it is configured in interrupt mode
-  * GPIOI13 is used for that purpose on Manta Dragon Discovery board
+  * @brief Touch screen interrupt signal
   */
 #define TS_INT_PIN                        ((uint32_t)GPIO_PIN_13)
 #define TS_INT_GPIO_PORT                  ((GPIO_TypeDef*)GPIOI)
@@ -207,10 +204,24 @@ typedef enum
 #define TS_INT_EXTI_IRQn                  EXTI15_10_IRQn
 
 /**
-  * @brief TouchScreen FT6206 Slave I2C address
+  * @brief TouchScreen FT6206 Slave I2C address 1
   */
 #define TS_I2C_ADDRESS                   ((uint16_t)0x54)
 
+/**
+  * @brief TouchScreen FT6336G Slave I2C address 2
+  */
+#define TS_I2C_ADDRESS_A02               ((uint16_t)0x70)
+
+/**
+  * @brief LCD DSI Slave I2C address 1
+  */
+#define LCD_DSI_ADDRESS                  TS_I2C_ADDRESS
+
+/**
+  * @brief LCD DSI Slave I2C address 2
+  */
+#define LCD_DSI_ADDRESS_A02              TS_I2C_ADDRESS_A02
 
 /**
   * @brief Audio I2C Slave address
@@ -282,7 +293,6 @@ typedef enum
 /* I2C TIMING is calculated from APB1 source clock = 50 MHz */
 /* Due to the big MOFSET capacity for adapting the camera level the rising time is very large (>1us) */
 /* 0x40912732 takes in account the big rising and aims a clock of 100khz */
-/* this value might be adapted when next Rev Birdie board is available */
 #ifndef DISCOVERY_I2Cx_TIMING  
 #define DISCOVERY_I2Cx_TIMING                      ((uint32_t)0x40912732)
 #endif /* DISCOVERY_I2Cx_TIMING */
@@ -292,14 +302,14 @@ typedef enum
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Exported_Macros STM32F769I Discovery Low Level Exported Macros
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Exported_Macros STM32F769I Discovery Low Level Exported Macros
   * @{
   */
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Exported_Functions STM32F769I Discovery Low Level Exported Functions
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Exported_Functions STM32F769I Discovery Low Level Exported Functions
   * @{
   */
 uint32_t         BSP_GetVersion(void);

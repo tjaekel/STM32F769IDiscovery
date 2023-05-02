@@ -27,7 +27,7 @@
 RCC_PeriphCLKInitTypeDef     		PeriphClkInitStruct;
 
 
-extern DMA_HandleTypeDef hdma_spdif_rx_dt;
+extern DMA_HandleTypeDef			hdma_spdif_rx_dt;
 
 extern SAI_HandleTypeDef 			spdiftxhsai;
 extern DMA_HandleTypeDef            hSaiDma;

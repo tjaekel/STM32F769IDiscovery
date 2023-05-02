@@ -27,6 +27,7 @@
 /* Private variables ---------------------------------------------------------*/ 
 extern DSI_HandleTypeDef 	hdsi_discovery;
 extern PCD_HandleTypeDef 	hpcd;
+extern HCD_HandleTypeDef	hhcd_USB_OTG_HS;
 extern SD_HandleTypeDef  	uSdHandle;
 extern DMA_HandleTypeDef 	hdma_spdif_rx_dt;
 #ifndef DIGI_FP
@@ -35,6 +36,8 @@ extern SAI_HandleTypeDef 	spdiftxhsai;
 extern SAI_HandleTypeDef    haudio_in_src_sai;
 #endif
 extern UART_HandleTypeDef huart1;
+
+int extern gUSBInterface;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -211,7 +214,14 @@ void OTG_FS_IRQHandler(void)
 void OTG_HS_IRQHandler(void)
 #endif
 {
-  HAL_PCD_IRQHandler(&hpcd);
+  if (gUSBInterface == 2)
+  {
+	  HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
+  }
+  else
+  {
+	  HAL_PCD_IRQHandler(&hpcd);
+  }
 }
 
 /**

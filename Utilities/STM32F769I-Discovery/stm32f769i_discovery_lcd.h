@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_lcd.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains the common defines and functions prototypes for
   *          the stm32469i_discovery_lcd.c driver.
   ******************************************************************************
@@ -49,12 +47,14 @@
 
 /* Include OTM8009A LCD Driver IC driver code */
 #include "../Components/otm8009a/otm8009a.h"
+/* Include ADV7533 HDMI Driver IC driver code */
+#include "../Components/adv7533/adv7533.h"
    
 /* Include SDRAM Driver */
 #include "stm32f769i_discovery_sdram.h"
 #include "stm32f769i_discovery.h"
 
-#include "../Fonts/fonts.h"
+#include "../../../Utilities/Fonts/fonts.h"
 
 #include <string.h> /* use of memset() */
 
@@ -62,15 +62,15 @@
   * @{
   */
 
-/** @addtogroup STM32F769I-DISCOVERY
+/** @addtogroup STM32F769I_DISCOVERY
   * @{
   */
 
-/** @addtogroup STM32F769I-DISCOVERY_LCD STM32F769I DISCOVERY LCD
+/** @addtogroup STM32F769I_DISCOVERY_LCD 
   * @{
   */
 
-/** @defgroup STM32F769I-DISCOVERY_LCD_Exported_Constants STM32F769I DISCOVERY LCD Exported Constants
+/** @defgroup STM32F769I_DISCOVERY_LCD_Exported_Constants STM32F769I DISCOVERY LCD Exported Constants
   * @{
   */
 #define BSP_LCD_DMA2D_IRQHandler        DMA2D_IRQHandler
@@ -113,9 +113,20 @@
 #define   LCD_TIMEOUT    0x02
 
 /** 
-  * @brief  LCD Display OTM8009A ID  
+  * @brief  LCD Display OTM8009A DSI Virtual Channel  ID 
   */ 
 #define LCD_OTM8009A_ID  ((uint32_t) 0)
+
+/** 
+  * @brief  HDMI ADV7533 DSI Virtual Channel  ID  
+  */    
+#define HDMI_ADV7533_ID  ((uint32_t) 0) 
+
+/** 
+  * @brief  HDMI Foramt   
+  */   
+#define HDMI_FORMAT_720_480   ((uint8_t) 0x00) /*720_480 format choice of HDMI display */
+#define HDMI_FORMAT_720_576   ((uint8_t) 0x01) /*720_576 format choice of HDMI display*/
    
 /**
   * @brief  LCD color definitions values
@@ -177,7 +188,6 @@
 /** @brief Light Dark Green value in ARGB8888 format
  */
 #define LCD_COLOR_DARKGREEN     ((uint32_t) 0xFF008000)
-
 #define LCD_COLOR_DARKGREEN2     ((uint32_t) 0xFF002000)
 
 /** @brief Light Dark Red value in ARGB8888 format
@@ -232,11 +242,20 @@
   * @brief LCD default font
   */
 #define LCD_DEFAULT_FONT        Font24
+   
+/**
+ *  @brief  Possible values of
+ *  pixel data format (ie color coding) transmitted on DSI Data lane in DSI packets
+ */
+
+#define   LCD_DSI_PIXEL_DATA_FMT_RBG888  DSI_RGB888 /*!< DSI packet pixel format chosen is RGB888 : 24 bpp */
+#define   LCD_DSI_PIXEL_DATA_FMT_RBG565  DSI_RGB565 /*!< DSI packet pixel format chosen is RGB565 : 16 bpp */
+
 /**
   * @}
   */
 
-/** @defgroup STM32F769I-DISCOVERY_LCD_Exported_Types STM32F769I DISCOVERY LCD Exported Types
+/** @defgroup STM32F769I_DISCOVERY_LCD_Exported_Types STM32F769I DISCOVERY LCD Exported Types
   * @{
   */
 
@@ -290,30 +309,19 @@ typedef enum
 } LCD_OrientationTypeDef;
 
 /**
- *  @brief  Possible values of
- *  pixel data format (ie color coding) transmitted on DSI Data lane in DSI packets
- */
-typedef enum
-{
-  LCD_DSI_PIXEL_DATA_FMT_RBG888  = 0x00, /*!< DSI packet pixel format chosen is RGB888 : 24 bpp */
-  LCD_DSI_PIXEL_DATA_FMT_RBG565  = 0x02, /*!< DSI packet pixel format chosen is RGB565 : 16 bpp */
-  LCD_DSI_PIXEL_DATA_FMT_INVALID = 0x03  /*!< Invalid DSI packet pixel format                   */
-
-} LCD_DsiPixelDataFmtTypeDef;
-
-/**
   * @}
   */
 
-/** @defgroup STM32F769I-DISCOVERY_LCD_Exported_Macro STM32F769I DISCOVERY LCD Exported Macro
+/** @defgroup STM32F769I_DISCOVERY_LCD_Exported_Macro STM32F769I DISCOVERY LCD Exported Macro
   * @{
   */
 
-/** @defgroup STM32F769I-DISCOVERY_LCD_Exported_Functions STM32F769I DISCOVERY LCD Exported Functions
+/** @addtogroup STM32F769I_DISCOVERY_LCD_Exported_Functions
   * @{
   */
 uint8_t  BSP_LCD_Init(void);
 uint8_t  BSP_LCD_InitEx(LCD_OrientationTypeDef orientation);
+uint8_t  BSP_LCD_HDMIInitEx(uint8_t format);
 
 void     BSP_LCD_MspDeInit(void);
 void     BSP_LCD_MspInit(void);
@@ -371,7 +379,7 @@ void     BSP_LCD_SetBrightness(uint8_t BrightnessValue);
   * @}
   */
 
-/** @defgroup STM32F769I-DISCOVERY_LCD_Exported_Variables STM32F769I DISCOVERY LCD Exported Variables
+/** @defgroup STM32F769I_DISCOVERY_LCD_Exported_Variables STM32F769I DISCOVERY LCD Exported Variables
   * @{
   */
 

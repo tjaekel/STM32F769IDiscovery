@@ -1,4 +1,0 @@
-../src/SPDIF_Rx.c:19:6:SPDIF_RX_Msp_Init	4	static
-../src/SPDIF_Rx.c:41:6:SPDIF_RX_DMA_Init	16	static
-../src/SPDIF_Rx.c:56:6:SPDIF_RX_Init	8	static
-../src/SPDIF_Rx.c:67:5:SPDIF_RX_Start	16	static

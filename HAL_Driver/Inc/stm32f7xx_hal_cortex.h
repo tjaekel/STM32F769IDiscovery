@@ -2,35 +2,16 @@
   ******************************************************************************
   * @file    stm32f7xx_hal_cortex.h
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    22-April-2016
   * @brief   Header file of CORTEX HAL module.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
   *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */ 
@@ -291,6 +272,8 @@ uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb);
  */
 /* Peripheral Control functions ***********************************************/
 #if (__MPU_PRESENT == 1)
+void HAL_MPU_Enable(uint32_t MPU_Control);
+void HAL_MPU_Disable(void);
 void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init);
 #endif /* __MPU_PRESENT */
 uint32_t HAL_NVIC_GetPriorityGrouping(void);
@@ -401,53 +384,8 @@ void HAL_SYSTICK_Callback(void);
 #endif /* __MPU_PRESENT */
 
 /**                                                                          
-  * @}                                                                  
-  */                                                                            
-                                                                                   
-/* Private functions ---------------------------------------------------------*/   
-/** @defgroup CORTEX_Private_Functions CORTEX Private Functions
-  * @brief    CORTEX private  functions 
-  * @{
-  */
-
-#if (__MPU_PRESENT == 1)
-/**
-  * @brief  Disables the MPU
-  * @retval None
-  */
-__STATIC_INLINE void HAL_MPU_Disable(void)
-{
-  /* Disable fault exceptions */
-  SCB->SHCSR &= ~SCB_SHCSR_MEMFAULTENA_Msk;
-  
-  /* Disable the MPU */
-  MPU->CTRL  &= ~MPU_CTRL_ENABLE_Msk;
-}
-
-/**
-  * @brief  Enables the MPU
-  * @param  MPU_Control: Specifies the control mode of the MPU during hard fault, 
-  *          NMI, FAULTMASK and privileged access to the default memory 
-  *          This parameter can be one of the following values:
-  *            @arg MPU_HFNMI_PRIVDEF_NONE
-  *            @arg MPU_HARDFAULT_NMI
-  *            @arg MPU_PRIVILEGED_DEFAULT
-  *            @arg MPU_HFNMI_PRIVDEF
-  * @retval None
-  */
-__STATIC_INLINE void HAL_MPU_Enable(uint32_t MPU_Control)
-{
-  /* Enable the MPU */
-  MPU->CTRL   = MPU_Control | MPU_CTRL_ENABLE_Msk;
-  
-  /* Enable fault exceptions */
-  SCB->SHCSR |= SCB_SHCSR_MEMFAULTENA_Msk;
-}
-#endif /* __MPU_PRESENT */
-
-/**
   * @}
-  */
+  */                                                                            
 
 /**
   * @}
@@ -464,4 +402,3 @@ __STATIC_INLINE void HAL_MPU_Enable(uint32_t MPU_Control)
 #endif /* __STM32F7xx_HAL_CORTEX_H */
  
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

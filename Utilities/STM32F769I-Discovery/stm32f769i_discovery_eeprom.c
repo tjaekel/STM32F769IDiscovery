@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_eeprom.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file provides a set of functions needed to manage an I2C M24LR64 
   *          EEPROM memory.
   @verbatim
@@ -85,6 +83,11 @@
   *
   ******************************************************************************
   */
+
+/* Dependencies 
+- stm32f769i_discovery.c
+EndDependencies */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f769i_discovery_eeprom.h"
 
@@ -96,33 +99,33 @@
   * @{
   */ 
   
-/** @addtogroup STM32F769I_DISCOVERY_EEPROM
+/** @addtogroup STM32F769I_DISCOVERY_EEPROM STM32F769I_DISCOVERY EEPROM
   * @brief This file includes the I2C EEPROM driver of STM32F769I-DISCOVERY board.
   * @{
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Types
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Types  EEPROM Private Types
   * @{
   */ 
 /**
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Defines
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Defines EEPROM Private Defines
   * @{
   */  
 /**
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Macros
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Macros EEPROM Private Macros
   * @{
   */
 /**
   * @}
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Variables
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Variables  EEPROM Private Variables
   * @{
   */
 __IO uint16_t EEPROMAddress = 0;
@@ -132,14 +135,14 @@ __IO uint8_t  EEPROMDataWrite;
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Function_Prototypes
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Function_Prototypes EEPROM Private Function Prototypes
   * @{
   */ 
 /**
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Functions
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Private_Functions EEPROM Private Functions
   * @{
   */ 
 

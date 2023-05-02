@@ -68,20 +68,22 @@ int AUDIO_PLAYER_GetBuffer(uint8_t **out_BufAddr)
 	return sizeof(BufferCtl.buff);
 }
 
-int AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_BufAddr)
+int __attribute__((section("ITCM"))) AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_BufAddr)
 {
 	if (BufferCtl.state == BUFFER_OFFSET_HALF)
 	{
-		//first half buffer was played - return the other, active buffer
+		//first half buffer was played - return the other, first as active buffer - UFFER_OFFSET_HALF
 		*out_BufAddr = BufferCtl.buff;
 	}
 	else
 	{
-		//second half buffer was played - return the first, active buffer
-		*out_BufAddr = BufferCtl.buff + (sizeof(BufferCtl.buff) / 2);
+		//second half buffer was played - return the second, active buffer - BUFFER_OFFSET_FULL
+		////*out_BufAddr = BufferCtl.buff + (sizeof(BufferCtl.buff) / 2);
+		*out_BufAddr = &BufferCtl.buff[AUDIO_TOTAL_BUF_SIZE];
 	}
 
-	return (sizeof(BufferCtl.buff) / 2);
+	////return (sizeof(BufferCtl.buff) / 2);		//in bytes, half size of Double Buffer
+	return AUDIO_TOTAL_BUF_SIZE;
 }
 
 /**

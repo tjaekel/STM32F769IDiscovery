@@ -62,8 +62,8 @@
 #define AUDIO_FREQ_DEFAULT	48000
 
 // stop watch to measure performance
-extern volatile uint32_t time_begin, time_start, time_end, time_diff, time_total;
-extern TIM_HandleTypeDef hTim2;
+volatile uint32_t time_begin, time_start, time_end, time_diff, time_total;
+TIM_HandleTypeDef hTim2;
 
 #define TIM_MEASURE_BEGIN 	do { \
 								if ( ! time_begin) \

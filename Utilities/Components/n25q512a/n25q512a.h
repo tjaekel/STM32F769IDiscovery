@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    n25q512a.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    28-April-2015
   * @brief   This file contains all the description of the N25Q512A QSPI memory.
   ******************************************************************************
   * @attention

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_qspi.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains the common defines and functions prototypes for
   *          the stm32f769i_discovery_qspi.c driver.
   ******************************************************************************

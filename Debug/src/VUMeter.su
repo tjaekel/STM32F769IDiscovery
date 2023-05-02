@@ -1,5 +1,0 @@
-../src/VUMeter.c:23:6:VUMETER_Analyse	32	static
-../src/VUMeter.c:64:6:VUMETER_Input	0	static
-../src/VUMeter.c:104:6:VUMETER_Display	48	static
-../src/VUMeter.c:161:6:VUMETER_Volume	32	static
-../src/VUMeter.c:208:6:VUMETER_ProcessVolume	32	static

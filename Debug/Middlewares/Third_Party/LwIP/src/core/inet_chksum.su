@@ -1,7 +1,0 @@
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:136:1:lwip_standard_chksum	16	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:313:1:inet_chksum_pseudo	24	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:382:1:ip_chksum_pseudo	0	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:459:1:inet_chksum_pseudo_partial	32	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:529:1:ip_chksum_pseudo_partial	0	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:558:1:inet_chksum	16	static
-../Middlewares/Third_Party/LwIP/src/core/inet_chksum.c:571:1:inet_chksum_pbuf	16	static

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file provides a set of firmware functions to manage LEDs,
   *          push-buttons, external SDRAM, external QSPI Flash, RF EEPROM,
   *          available on STM32F769I-Discovery board (MB1225) from 
@@ -38,6 +36,13 @@
   ******************************************************************************
   */
 
+/* Dependencies
+- stm32f7xx_hal_cortex.c
+- stm32f7xx_hal_gpio.c
+- stm32f7xx_hal_uart.c
+- stm32f7xx_hal_i2c.c
+EndDependencies */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f769i_discovery.h"
 
@@ -45,30 +50,30 @@
   * @{
   */
 
-/** @addtogroup STM32F769I_Discovery
+/** @addtogroup STM32F769I_DISCOVERY
   * @{
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL STM32F769I-Discovery LOW LEVEL
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL STM32F769I_DISCOVERY LOW LEVEL
   * @{
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_TypesDefinitions STM32F769I Discovery Low Level Private Typedef
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_TypesDefinitions STM32F769I Discovery Low Level Private Typedef
   * @{
   */
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_Defines LOW_LEVEL Private Defines
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_Defines LOW_LEVEL Private Defines
   * @{
   */
 /**
- * @brief STM32F769I Discovery BSP Driver version number V1.0.0
+ * @brief STM32F769I Discovery BSP Driver version number V2.0.1
    */
-#define __STM32F769I_DISCOVERY_BSP_VERSION_MAIN   (0x01) /*!< [31:24] main version */
+#define __STM32F769I_DISCOVERY_BSP_VERSION_MAIN   (0x02) /*!< [31:24] main version */
 #define __STM32F769I_DISCOVERY_BSP_VERSION_SUB1   (0x00) /*!< [23:16] sub1 version */
-#define __STM32F769I_DISCOVERY_BSP_VERSION_SUB2   (0x00) /*!< [15:8]  sub2 version */
+#define __STM32F769I_DISCOVERY_BSP_VERSION_SUB2   (0x01) /*!< [15:8]  sub2 version */
 #define __STM32F769I_DISCOVERY_BSP_VERSION_RC     (0x00) /*!< [7:0]  release candidate */
 #define __STM32F769I_DISCOVERY_BSP_VERSION        ((__STM32F769I_DISCOVERY_BSP_VERSION_MAIN << 24)\
                                                  |(__STM32F769I_DISCOVERY_BSP_VERSION_SUB1 << 16)\
@@ -78,14 +83,14 @@
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_Macros  LOW_LEVEL Private Macros
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_Macros  LOW_LEVEL Private Macros
   * @{
   */
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_Variables LOW_LEVEL Private Variables
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_Variables LOW_LEVEL Private Variables
   * @{
   */
 uint32_t GPIO_PIN[LEDn] = {LED1_PIN,
@@ -108,7 +113,7 @@ static I2C_HandleTypeDef hI2cExtHandler = {0};
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_FunctionPrototypes LOW_LEVEL Private FunctionPrototypes
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_FunctionPrototypes LOW_LEVEL Private FunctionPrototypes
   * @{
   */
 static void     I2Cx_MspInit(I2C_HandleTypeDef *i2c_handler);
@@ -126,6 +131,11 @@ void            AUDIO_IO_Write(uint8_t Addr, uint16_t Reg, uint16_t Value);
 uint16_t        AUDIO_IO_Read(uint8_t Addr, uint16_t Reg);
 void            AUDIO_IO_Delay(uint32_t Delay);
 
+/* HDMI IO functions */
+void            HDMI_IO_Init(void);
+void            HDMI_IO_Delay(uint32_t Delay);
+void            HDMI_IO_Write(uint8_t Addr, uint8_t Reg, uint8_t Value);
+uint8_t         HDMI_IO_Read(uint8_t Addr, uint8_t Reg);
 
 /* I2C EEPROM IO function */
 void                EEPROM_IO_Init(void);
@@ -147,7 +157,7 @@ void     OTM8009A_IO_Delay(uint32_t Delay);
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_BSP_Public_Functions BSP Public Functions
+/** @defgroup STM32F769I_DISCOVERY_BSP_Public_Functions BSP Public Functions
   * @{
   */
 
@@ -327,7 +337,7 @@ uint32_t BSP_PB_GetState(Button_TypeDef Button)
   * @}
   */
 
-/** @defgroup STM32F769I_Discovery_LOW_LEVEL_Private_Functions STM32F769I_Discovery_LOW_LEVEL Private Functions
+/** @defgroup STM32F769I_DISCOVERY_LOW_LEVEL_Private_Functions STM32F769I_DISCOVERY_LOW_LEVEL Private Functions
   * @{
   */
 
@@ -742,6 +752,53 @@ void OTM8009A_IO_Delay(uint32_t Delay)
   HAL_Delay(Delay);
 }
 
+/**************************** LINK ADV7533 DSI-HDMI (Display driver) **********/
+/**
+  * @brief  Initializes HDMI IO low level.
+  * @retval None
+  */
+void HDMI_IO_Init(void)
+{
+  I2Cx_Init(&hI2cAudioHandler);
+}
+
+/**
+  * @brief  HDMI writes single data.
+  * @param  Addr: I2C address
+  * @param  Reg: Register address 
+  * @param  Value: Data to be written
+  * @retval None
+  */
+void HDMI_IO_Write(uint8_t Addr, uint8_t Reg, uint8_t Value)
+{
+  I2Cx_WriteMultiple(&hI2cAudioHandler, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, &Value, 1);  
+}
+
+/**
+  * @brief  Reads single data with I2C communication
+  *         channel from HDMI bridge.
+  * @param  Addr: I2C address
+  * @param  Reg: Register address
+  * @retval Read data
+  */
+uint8_t HDMI_IO_Read(uint8_t Addr, uint8_t Reg)
+{
+  uint8_t value = 0x00;
+
+  I2Cx_ReadMultiple(&hI2cAudioHandler, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, &value, 1);
+
+  return value;   
+}
+
+/**
+  * @brief  HDMI delay 
+  * @param  Delay: Delay in ms
+  * @retval None
+  */
+void HDMI_IO_Delay(uint32_t Delay)
+{
+  HAL_Delay(Delay);
+}
 /**
   * @}
   */

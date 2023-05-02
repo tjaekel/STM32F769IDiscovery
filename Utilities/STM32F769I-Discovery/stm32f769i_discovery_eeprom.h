@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_eeprom.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains all the functions prototypes for 
   *          the stm32f769i_discovery_eeprom.c firmware driver.
   ******************************************************************************
@@ -60,14 +58,14 @@
   * @{
   */
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Types
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Types  EEPROM Exported Types
   * @{
   */ 
 /**
   * @}
   */
   
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Constants
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Constants EEPROM Exported Constants
   * @{
   */
 /* EEPROM hardware address and page size */ 
@@ -85,14 +83,14 @@
   * @}
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Macros
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Macros EEPROM Exported Macros
   * @{
   */    
 /**
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Functions
+/** @defgroup STM32F769I_DISCOVERY_EEPROM_Exported_Functions EEPROM Exported Functions
   * @{
   */ 
 uint32_t BSP_EEPROM_Init(void);

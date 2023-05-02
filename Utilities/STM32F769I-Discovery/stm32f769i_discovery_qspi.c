@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_qspi.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file includes a standard driver for the MX25L512 QSPI
   *          memory mounted on STM32F769I-Discovery board.
   @verbatim
@@ -64,6 +62,14 @@
   ******************************************************************************
   */ 
 
+/* Dependencies
+- stm32f7xx_hal_qspi.c
+- stm32f7xx_hal_gpio.c
+- stm32f7xx_hal_cortex.c
+- stm32f7xx_hal_rcc_ex.h
+- mx25l512.h
+EndDependencies */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f769i_discovery_qspi.h"
 
@@ -75,7 +81,7 @@
   * @{
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_QSPI STM32F769I-Discovery QSPI
+/** @defgroup STM32F769I_DISCOVERY_QSPI STM32F769I_DISCOVERY QSPI
   * @{
   */ 
 
@@ -138,7 +144,7 @@ uint8_t BSP_QSPI_Init(void)
   QSPIHandle.Init.FifoThreshold      = 16;
   QSPIHandle.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_HALFCYCLE; 
   QSPIHandle.Init.FlashSize          = POSITION_VAL(MX25L512_FLASH_SIZE) - 1;
-  QSPIHandle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
+  QSPIHandle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_4_CYCLE; /* Min 30ns for nonRead */
   QSPIHandle.Init.ClockMode          = QSPI_CLOCK_MODE_0;
   QSPIHandle.Init.FlashID            = QSPI_FLASH_ID_1;
   QSPIHandle.Init.DualFlash          = QSPI_DUALFLASH_DISABLE;
@@ -238,11 +244,17 @@ uint8_t BSP_QSPI_Read(uint8_t* pData, uint32_t ReadAddr, uint32_t Size)
     return QSPI_ERROR;
   }
   
+  /* Set S# timing for Read command */
+  MODIFY_REG(QSPIHandle.Instance->DCR, QUADSPI_DCR_CSHT, QSPI_CS_HIGH_TIME_1_CYCLE);
+  
   /* Reception of the data */
   if (HAL_QSPI_Receive(&QSPIHandle, pData, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
   {
     return QSPI_ERROR;
   }
+  
+  /* Restore S# timing for nonRead commands */
+  MODIFY_REG(QSPIHandle.Instance->DCR, QUADSPI_DCR_CSHT, QSPI_CS_HIGH_TIME_4_CYCLE);
 
   return QSPI_OK;
 }
@@ -260,13 +272,7 @@ uint8_t BSP_QSPI_Write(uint8_t* pData, uint32_t WriteAddr, uint32_t Size)
   uint32_t end_addr, current_size, current_addr;
 
   /* Calculation of the size between the write address and the end of the page */
-  current_addr = 0;
-
-  while (current_addr <= WriteAddr)
-  {
-    current_addr += MX25L512_PAGE_SIZE;
-  }
-  current_size = current_addr - WriteAddr;
+  current_size = MX25L512_PAGE_SIZE - (WriteAddr % MX25L512_PAGE_SIZE);
 
   /* Check if the size of the data is less than the remaining place in the page */
   if (current_size > Size)
@@ -351,10 +357,6 @@ uint8_t BSP_QSPI_Erase_Block(uint32_t BlockAddress)
   s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
   s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
 
-  /*
-   * the follow call work only if we step through, not as full speed - a timing issue?
-   */
-
   /* Enable write operations */
   if (QSPI_WriteEnable(&QSPIHandle) != QSPI_OK)
   {
@@ -366,7 +368,7 @@ uint8_t BSP_QSPI_Erase_Block(uint32_t BlockAddress)
   {
     return QSPI_ERROR;
   }
-
+  
   /* Configure automatic polling mode to wait for end of erase */  
   if (QSPI_AutoPollingMemReady(&QSPIHandle, MX25L512_SUBSECTOR_ERASE_MAX_TIME) != QSPI_OK)
   {

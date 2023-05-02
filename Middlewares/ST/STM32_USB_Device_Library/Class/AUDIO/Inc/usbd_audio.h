@@ -103,7 +103,7 @@
  /*
   * trim the buffer size for 48 and 44.1 KHz - it must be 45 packets
   */
- /* for SPDIF -> USB In it must be 2* !!! minimum (for MIC) is 2*8 !!! */
+ /* for SPDIF -> USB In it must be 2* !!! */
 #define AUDIO_OUT_PACKET_NUM                          (2*45)	//(45)
 
 /* Total size of the audio transfer buffer in bytes */

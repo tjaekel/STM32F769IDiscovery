@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stmpe811.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    15-December-2014
   * @brief   This file provides a set of functions needed to manage the STMPE811
   *          IO Expander devices.
   ******************************************************************************

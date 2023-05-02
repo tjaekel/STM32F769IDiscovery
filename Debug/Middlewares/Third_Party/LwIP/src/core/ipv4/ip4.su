@@ -1,6 +1,0 @@
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:148:1:ip4_route	8	static
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:395:1:ip4_input	40	static
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:360:1:ip_input	0	static
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:778:1:ip4_output_if	56	static
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:817:1:ip4_output_if_src	56	static
-../Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c:1003:1:ip4_output	56	static

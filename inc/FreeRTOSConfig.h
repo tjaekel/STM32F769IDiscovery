@@ -67,7 +67,6 @@
     1 tab == 4 spaces!
 */
 
-
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
@@ -89,7 +88,7 @@
  extern uint32_t SystemCoreClock;
 #endif
 
-#define configUSE_PREEMPTION              0
+#define configUSE_PREEMPTION              0		//1 does not work!
 #define configUSE_IDLE_HOOK               0
 #define configUSE_TICK_HOOK               0
 #define configCPU_CLOCK_HZ                (SystemCoreClock)

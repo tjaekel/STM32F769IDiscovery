@@ -18,7 +18,7 @@
 /* Exported constants --------------------------------------------------------*/
 #define AUDIO_OUT_BUFFER_SIZE               (2 * AUDIO_TOTAL_BUF_SIZE)		//double buffering
 
-#define AUDIO_DEFAULT_VOLUME                50
+#define AUDIO_DEFAULT_VOLUME                80	//50
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum {

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    exc7200.c
   * @author  MCD Application Team
-  * @version V1.0.1
-  * @date    21-September-2015
   * @brief   This file provides a set of functions needed to manage the EXC7200
   *          Touch-screen controller.
   ******************************************************************************

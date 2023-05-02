@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    exc7200.h
   * @author  MCD Application Team
-  * @version V1.0.1
-  * @date    21-September-2015
   * @brief   This file contains all the functions prototypes for the
   *          exc7200.c IO expander driver.
   ******************************************************************************

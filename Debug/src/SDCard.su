@@ -1,3 +1,0 @@
-../src/SDCard.c:111:5:SDCard_Init	8	static
-../src/SDCard.c:143:6:SDCard_Deinit	0	static
-../src/SDCard.c:154:5:SDCard_GetStatus	0	static

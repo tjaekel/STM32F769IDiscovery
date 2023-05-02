@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_sdram.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file includes the SDRAM driver for the MT48LC4M32B2B5-6A memory 
   *          device mounted on STM32F769I-DISCOVERY boards.
   @verbatim
@@ -74,6 +72,15 @@
   ******************************************************************************
   */
 
+/* Dependencies
+- stm32f7xx_hal_sdram.c
+- stm32f7xx_ll_fmc.c
+- stm32f7xx_hal_dma.c  
+- stm32f7xx_hal_gpio.c
+- stm32f7xx_hal_cortex.c
+- stm32f7xx_hal_rcc_ex.h
+EndDependencies */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f769i_discovery_sdram.h"
 
@@ -85,32 +92,32 @@
   * @{
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_SDRAM
+/** @defgroup STM32F769I_DISCOVERY_SDRAM STM32F769I_DISCOVERY SDRAM
   * @{
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Types_Definitions
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Types_Definitions SDRAM Private Types Definitions
   * @{
   */ 
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Defines
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Defines SDRAM Private Defines
   * @{
   */
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Macros
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Macros SDRAM Private Macros
   * @{
   */  
 /**
   * @}
   */
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Variables
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Variables SDRAM Private Variables
   * @{
   */       
 SDRAM_HandleTypeDef sdramHandle;
@@ -120,14 +127,14 @@ static FMC_SDRAM_CommandTypeDef Command;
   * @}
   */ 
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Function_Prototypes
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Function_Prototypes SDRAM Private Function Prototypes
   * @{
   */ 
 /**
   * @}
   */
     
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Functions
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Private_Functions SDRAM Private Functions
   * @{
   */ 
 
@@ -361,6 +368,7 @@ uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
 /**
   * @brief  Initializes SDRAM MSP.
   * @param  hsdram: SDRAM handle
+  * @param  Params  
   * @retval None
   */
 __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
@@ -433,7 +441,7 @@ __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
   dma_handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
   dma_handle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
   dma_handle.Init.Mode                = DMA_NORMAL;
-  dma_handle.Init.Priority            = DMA_PRIORITY_MEDIUM;
+  dma_handle.Init.Priority            = DMA_PRIORITY_HIGH;
   dma_handle.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;         
   dma_handle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
   dma_handle.Init.MemBurst            = DMA_MBURST_SINGLE;
@@ -458,6 +466,7 @@ __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
 /**
   * @brief  DeInitializes SDRAM MSP.
   * @param  hsdram: SDRAM handle
+  * @param  Params  
   * @retval None
   */
 __weak void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params)

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    mfxstm32l152.c
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    24-June-2015
   * @brief   This file provides a set of functions needed to manage the MFXSTM32L152
   *          IO Expander devices.
   ******************************************************************************
@@ -808,13 +806,23 @@ void mfxstm32l152_IO_WritePin(uint16_t DeviceAddr, uint32_t IO_Pin, uint8_t PinS
   */
 uint32_t mfxstm32l152_IO_ReadPin(uint16_t DeviceAddr, uint32_t IO_Pin)
 {
-  uint8_t tmp1;
-  uint16_t tmp2;
-  uint32_t tmp3;
+  uint32_t  tmp1 = 0;
+  uint32_t  tmp2 = 0;
+  uint32_t  tmp3 = 0;
   
-  tmp1 = MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE1);
-  tmp2 = (uint16_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE2);
-  tmp3 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE3);
+  if(IO_Pin & 0x000000FF)
+  {
+    tmp1 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE1);
+  }
+  if(IO_Pin & 0x0000FF00)
+  {
+    tmp2 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE2);
+  }
+  if(IO_Pin & 0x00FF0000)
+  {
+    tmp3 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_GPIO_STATE3);
+  }
+
   tmp3 = tmp1 + (tmp2 << 8) + (tmp3 << 16);
   
   return(tmp3 & IO_Pin);
@@ -881,13 +889,23 @@ void mfxstm32l152_IO_DisablePinIT(uint16_t DeviceAddr, uint32_t IO_Pin)
 uint32_t mfxstm32l152_IO_ITStatus(uint16_t DeviceAddr, uint32_t IO_Pin)
 {
   /* Get the Interrupt status */
-  uint8_t tmp1;
-  uint16_t tmp2;
-  uint32_t tmp3;
-
-  tmp1 = MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING1);
-  tmp2 = (uint16_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING2);
-  tmp3 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING3);
+  uint8_t   tmp1 = 0;
+  uint16_t  tmp2 = 0;
+  uint32_t  tmp3 = 0;
+  
+  if(IO_Pin & 0xFF)
+  {
+    tmp1 = MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING1);
+  }
+  if(IO_Pin & 0xFFFF00)
+  {
+    tmp2 = (uint16_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING2);
+  }
+  if(IO_Pin & 0xFFFF0000)
+  {
+    tmp3 = (uint32_t) MFX_IO_Read(DeviceAddr, MFXSTM32L152_REG_ADR_IRQ_GPI_PENDING3);
+  } 
+  
   tmp3 = tmp1 + (tmp2 << 8) + (tmp3 << 16);
   
   return(tmp3 & IO_Pin);

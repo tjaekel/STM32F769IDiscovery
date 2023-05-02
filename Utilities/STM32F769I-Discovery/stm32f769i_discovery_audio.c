@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_audio.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file provides the Audio driver for the STM32F769I-DISCOVERY  
   *          board.
   @verbatim
@@ -126,9 +124,20 @@
   *
   ******************************************************************************
   */
+
+/* Dependencies
+- stm32f769i_discovery.c
+- stm32f7xx_hal_sai.c
+- stm32f7xx_hal_dfsdm.c
+- stm32f7xx_hal_dma.c
+- stm32f7xx_hal_gpio.c
+- stm32f7xx_hal_cortex.c
+- stm32f7xx_hal_rcc_ex.h
+- wm8994.c
+EndDependencies */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f769i_discovery_audio.h"
-#include "AudioPlayer.h"
 
 /** @addtogroup BSP
   * @{
@@ -138,9 +147,9 @@
   * @{
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_AUDIO STM32F769I_DISCOVERY_AUDIO
+/** @defgroup STM32F769I_DISCOVERY_AUDIO STM32F769I_DISCOVERY AUDIO
   * @brief This file includes the low layer driver for wm8994 Audio Codec
-  *        available on STM32F769I-DISCOVERY evaluation board(MB1225).
+  *        available on STM32F769I-DISCOVERY discoveryuation board(MB1225).
   * @{
   */ 
 
@@ -244,18 +253,18 @@ static uint8_t                  AudioIn_ChannelNumber = DEFAULT_AUDIO_IN_CHANNEL
 static uint16_t                 AudioIn_Device = INPUT_DEVICE_DIGITAL_MIC; 
 
 /* Buffers status flags */
-static uint32_t                	DmaTopLeftRecHalfCplt  = 0;
-static uint32_t                	DmaTopLeftRecCplt      = 0;
-static uint32_t                	DmaTopRightRecHalfCplt = 0;
-static uint32_t                	DmaTopRightRecCplt     = 0;
-static uint32_t                	DmaButtomLeftRecHalfCplt  = 0;
-static uint32_t                	DmaButtomLeftRecCplt      = 0;
-static uint32_t                	DmaButtomRightRecHalfCplt = 0;
-static uint32_t                	DmaButtomRightRecCplt     = 0;
+static uint32_t                DmaTopLeftRecHalfCplt  = 0;
+static uint32_t                DmaTopLeftRecCplt      = 0;
+static uint32_t                DmaTopRightRecHalfCplt = 0;
+static uint32_t                DmaTopRightRecCplt     = 0;
+static uint32_t                DmaButtomLeftRecHalfCplt  = 0;
+static uint32_t                DmaButtomLeftRecCplt      = 0;
+static uint32_t                DmaButtomRightRecHalfCplt = 0;
+static uint32_t                DmaButtomRightRecCplt     = 0;
 
 /* Application Buffer Trigger */
-static __IO uint32_t           	AppBuffTrigger          = 0;
-static __IO uint32_t           	AppBuffHalf             = 0;
+static __IO uint32_t           AppBuffTrigger          = 0;
+static __IO uint32_t           AppBuffHalf             = 0;
 
 /**
   * @}
@@ -264,18 +273,19 @@ static __IO uint32_t           	AppBuffHalf             = 0;
 /** @defgroup STM32F769I_DISCOVERY_AUDIO_Private_Function_Prototypes STM32F769I_DISCOVERY_AUDIO Private Function Prototypes
   * @{
   */
-static void 	SAIx_Out_Init(uint32_t AudioFreq);
-static void 	SAIx_Out_DeInit(void);
-static void 	SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params);
-static void 	SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params);
-static void 	SAIx_In_Init(uint32_t AudioFreq);
-static void 	SAIx_In_DeInit(void);
-static void    	DFSDMx_ChannelMspInit(void);
-static void    	DFSDMx_FilterMspInit(void);
-static void    	DFSDMx_ChannelMspDeInit(void);
-static void    	DFSDMx_FilterMspDeInit(void);
-static uint8_t 	DFSDMx_Init(uint32_t AudioFreq);
-static uint8_t 	DFSDMx_DeInit(void);
+static void SAIx_Out_Init(uint32_t AudioFreq);
+static void SAIx_Out_DeInit(void);
+static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params);
+static void SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params);
+static void SAIx_In_Init(uint32_t AudioFreq);
+static void SAIx_In_DeInit(void);
+static void    DFSDMx_ChannelMspInit(void);
+static void    DFSDMx_FilterMspInit(void);
+static void    DFSDMx_ChannelMspDeInit(void);
+static void    DFSDMx_FilterMspDeInit(void);
+static uint8_t DFSDMx_Init(uint32_t AudioFreq);
+static uint8_t DFSDMx_DeInit(void);
+
 /**
   * @}
   */ 
@@ -379,9 +389,9 @@ void BSP_AUDIO_OUT_ChangeBuffer(uint16_t *pData, uint16_t Size)
 /**
   * @brief  This function Pauses the audio file stream. In case
   *         of using DMA, the DMA Pause feature is used.
-  * @WARNING When calling BSP_AUDIO_OUT_Pause() function for pause, only
+  * @note    When calling BSP_AUDIO_OUT_Pause() function for pause, only
   *          BSP_AUDIO_OUT_Resume() function should be called for resume (use of BSP_AUDIO_OUT_Play() 
-  *          function for resume could lead to unexpected behavior).
+  *          function for resume could lead to unexpected behaviour).
   * @retval AUDIO_OK if correct communication, else wrong communication
   */
 uint8_t BSP_AUDIO_OUT_Pause(void)
@@ -403,7 +413,7 @@ uint8_t BSP_AUDIO_OUT_Pause(void)
 
 /**
   * @brief   Resumes the audio file stream.  
-  * @WARNING When calling BSP_AUDIO_OUT_Pause() function for pause, only
+  * @note    When calling BSP_AUDIO_OUT_Pause() function for pause, only
   *          BSP_AUDIO_OUT_Resume() function should be called for resume (use of BSP_AUDIO_OUT_Play() 
   *          function for resume could lead to unexpected behaviour).
   * @retval AUDIO_OK if correct communication, else wrong communication
@@ -543,7 +553,6 @@ void BSP_AUDIO_OUT_SetFrequency(uint32_t AudioFreq)
 /**
   * @brief  Updates the Audio frame slot configuration.
   * @param  AudioFrameSlot: specifies the audio Frame slot
-  *         This parameter can be any value of @ref CODEC_AudioFrame_SLOT_TDMMode
   * @note   This API should be called after the BSP_AUDIO_OUT_Init() to adjust the
   *         audio frame slot.
   * @retval None
@@ -579,13 +588,9 @@ void BSP_AUDIO_OUT_DeInit(void)
   */
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
-  extern void SPDIF_TX_TransferComplete_CallBack();
   /* Manage the remaining file size and new address offset: This function 
      should be coded by user (its prototype is already declared in stm32f769i_discovery_audio.h) */
-  if (hsai == &haudio_out_sai)
-	  BSP_AUDIO_OUT_TransferComplete_CallBack();
-  else
-	  SPDIF_TX_TransferComplete_CallBack();
+  BSP_AUDIO_OUT_TransferComplete_CallBack();
 }
 
 /**
@@ -595,13 +600,9 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
   */
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
-  extern void SPDIF_TX_HalfTransfer_CallBack();
   /* Manage the remaining file size and new address offset: This function 
      should be coded by user (its prototype is already declared in stm32f769i_discovery_audio.h) */
-  if (hsai == &haudio_out_sai)
-	  BSP_AUDIO_OUT_HalfTransfer_CallBack();
-  else
-	  SPDIF_TX_HalfTransfer_CallBack();
+  BSP_AUDIO_OUT_HalfTransfer_CallBack();
 }
 
 /**
@@ -648,6 +649,7 @@ __weak void BSP_AUDIO_OUT_Error_CallBack(void)
 /**
   * @brief  Initializes BSP_AUDIO_OUT MSP.
   * @param  hsai: SAI handle
+  * @param  Params  
   * @retval None
   */
 __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
@@ -657,6 +659,7 @@ __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
   
   /* Enable SAI clock */
   AUDIO_OUT_SAIx_CLK_ENABLE();
+  
   
   /* Enable GPIO clock */
   AUDIO_OUT_SAIx_MCLK_ENABLE();
@@ -689,8 +692,8 @@ __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
     hdma_sai_tx.Init.Priority            = DMA_PRIORITY_HIGH;
     hdma_sai_tx.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;         
     hdma_sai_tx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_sai_tx.Init.MemBurst            = DMA_MBURST_INC4;
-    hdma_sai_tx.Init.PeriphBurst         = DMA_PBURST_INC4;
+    hdma_sai_tx.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_sai_tx.Init.PeriphBurst         = DMA_PBURST_SINGLE; 
     
     hdma_sai_tx.Instance = AUDIO_OUT_SAIx_DMAx_STREAM;
     
@@ -712,6 +715,7 @@ __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
 /**
   * @brief  Initializes SAI Audio IN MSP.
   * @param  hsai: SAI handle
+  * @param  Params  
   * @retval None
   */
 static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
@@ -757,8 +761,8 @@ static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
     hdma_sai_rx.Init.Priority            = DMA_PRIORITY_HIGH;
     hdma_sai_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
     hdma_sai_rx.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_sai_rx.Init.MemBurst            = DMA_MBURST_INC4;
-    hdma_sai_rx.Init.PeriphBurst         = DMA_PBURST_INC4;
+    hdma_sai_rx.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_sai_rx.Init.PeriphBurst         = DMA_MBURST_SINGLE;
     
     hdma_sai_rx.Instance = AUDIO_IN_SAIx_DMAx_STREAM;
     
@@ -776,16 +780,15 @@ static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
   HAL_NVIC_SetPriority(AUDIO_IN_SAIx_DMAx_IRQ, AUDIO_IN_IRQ_PREPRIO, 0);
   HAL_NVIC_EnableIRQ(AUDIO_IN_SAIx_DMAx_IRQ);
 
-#if 0
   /* Audio INT IRQ Channel configuration */
   HAL_NVIC_SetPriority(AUDIO_IN_INT_IRQ, AUDIO_IN_IRQ_PREPRIO, 0);
   HAL_NVIC_EnableIRQ(AUDIO_IN_INT_IRQ);
-#endif
 }
 
 /**
   * @brief  De-Initializes SAI Audio IN MSP.
   * @param  hsai: SAI handle
+  * @param  Params  
   * @retval None
   */
 static void SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
@@ -818,6 +821,7 @@ static void SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
 /**
   * @brief  Deinitializes SAI MSP.
   * @param  hsai: SAI handle
+  * @param  Params  
   * @retval None
   */
 __weak void BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
@@ -854,6 +858,7 @@ __weak void BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
   * @brief  Clock Config.
   * @param  hsai: might be required to set audio peripheral predivider if any.
   * @param  AudioFreq: Audio frequency used to play the audio stream.
+  * @param  Params  
   * @note   This API is called by BSP_AUDIO_OUT_Init() and BSP_AUDIO_OUT_SetFrequency()
   *         Being __weak it can be overwritten by the application     
   * @retval None
@@ -910,7 +915,7 @@ __weak void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFre
 static void SAIx_Out_Init(uint32_t AudioFreq)
 {
   /* Initialize the haudio_out_sai Instance parameter */
-  haudio_out_sai.Instance 						= AUDIO_OUT_SAIx;
+  haudio_out_sai.Instance = AUDIO_OUT_SAIx;
   
   /* Disable SAI peripheral to allow access to SAI internal registers */
   __HAL_SAI_DISABLE(&haudio_out_sai);
@@ -918,21 +923,21 @@ static void SAIx_Out_Init(uint32_t AudioFreq)
   /* Configure SAI_Block_x 
   LSBFirst: Disabled 
   DataSize: 16 */
-  haudio_out_sai.Init.MonoStereoMode 			= SAI_STEREOMODE;
-  haudio_out_sai.Init.AudioFrequency 			= AudioFreq;
-  haudio_out_sai.Init.AudioMode 				= SAI_MODEMASTER_TX;
-  haudio_out_sai.Init.NoDivider 				= SAI_MASTERDIVIDER_ENABLED;
-  haudio_out_sai.Init.Protocol 					= SAI_FREE_PROTOCOL;
-  haudio_out_sai.Init.DataSize 					= SAI_DATASIZE_16;
-  haudio_out_sai.Init.FirstBit 					= SAI_FIRSTBIT_MSB;
-  haudio_out_sai.Init.ClockStrobing 			= SAI_CLOCKSTROBING_RISINGEDGE;
-  haudio_out_sai.Init.Synchro 					= SAI_ASYNCHRONOUS;
-  haudio_out_sai.Init.OutputDrive 				= SAI_OUTPUTDRIVE_ENABLED;
-  haudio_out_sai.Init.FIFOThreshold 			= SAI_FIFOTHRESHOLD_1QF;
-  haudio_out_sai.Init.SynchroExt     			= SAI_SYNCEXT_OUTBLOCKA_ENABLE; //SAI_SYNCEXT_DISABLE;
-  haudio_out_sai.Init.CompandingMode 			= SAI_NOCOMPANDING;
-  haudio_out_sai.Init.TriState       			= SAI_OUTPUT_NOTRELEASED;
-  haudio_out_sai.Init.Mckdiv         			= 0;
+  haudio_out_sai.Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_out_sai.Init.AudioFrequency = AudioFreq;
+  haudio_out_sai.Init.AudioMode = SAI_MODEMASTER_TX;
+  haudio_out_sai.Init.NoDivider = SAI_MASTERDIVIDER_ENABLED;
+  haudio_out_sai.Init.Protocol = SAI_FREE_PROTOCOL;
+  haudio_out_sai.Init.DataSize = SAI_DATASIZE_16;
+  haudio_out_sai.Init.FirstBit = SAI_FIRSTBIT_MSB;
+  haudio_out_sai.Init.ClockStrobing = SAI_CLOCKSTROBING_RISINGEDGE;
+  haudio_out_sai.Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_out_sai.Init.OutputDrive = SAI_OUTPUTDRIVE_ENABLED;
+  haudio_out_sai.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_1QF;
+  haudio_out_sai.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
+  haudio_out_sai.Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_out_sai.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+  haudio_out_sai.Init.Mckdiv         = 0;
     
   /* Configure SAI_Block_x Frame 
   Frame Length: 64
@@ -940,21 +945,21 @@ static void SAIx_Out_Init(uint32_t AudioFreq)
   FS Definition: Start frame + Channel Side identification
   FS Polarity: FS active Low
   FS Offset: FS asserted one bit before the first bit of slot 0 */ 
-  haudio_out_sai.FrameInit.FrameLength 			= 128;
-  haudio_out_sai.FrameInit.ActiveFrameLength 	= 64;
-  haudio_out_sai.FrameInit.FSDefinition 		= SAI_FS_CHANNEL_IDENTIFICATION;
-  haudio_out_sai.FrameInit.FSPolarity 			= SAI_FS_ACTIVE_LOW;
-  haudio_out_sai.FrameInit.FSOffset 			= SAI_FS_BEFOREFIRSTBIT;
+  haudio_out_sai.FrameInit.FrameLength = 128; 
+  haudio_out_sai.FrameInit.ActiveFrameLength = 64;
+  haudio_out_sai.FrameInit.FSDefinition = SAI_FS_CHANNEL_IDENTIFICATION;
+  haudio_out_sai.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  haudio_out_sai.FrameInit.FSOffset = SAI_FS_BEFOREFIRSTBIT;
   
   /* Configure SAI Block_x Slot 
   Slot First Bit Offset: 0
   Slot Size  : 16
   Slot Number: 4
   Slot Active: All slot actives */
-  haudio_out_sai.SlotInit.FirstBitOffset 		= 0;
-  haudio_out_sai.SlotInit.SlotSize 				= SAI_SLOTSIZE_DATASIZE;
-  haudio_out_sai.SlotInit.SlotNumber 			= 4;
-  haudio_out_sai.SlotInit.SlotActive 			= CODEC_AUDIOFRAME_SLOT_0123;
+  haudio_out_sai.SlotInit.FirstBitOffset = 0;
+  haudio_out_sai.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  haudio_out_sai.SlotInit.SlotNumber = 4; 
+  haudio_out_sai.SlotInit.SlotActive = CODEC_AUDIOFRAME_SLOT_0123;
 
   HAL_SAI_Init(&haudio_out_sai);
   
@@ -996,21 +1001,21 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   /* Configure SAI_Block_x
   LSBFirst: Disabled
   DataSize: 16 */
-  haudio_out_sai.Init.MonoStereoMode 		= SAI_STEREOMODE;
-  haudio_out_sai.Init.AudioFrequency 		= AudioFreq;
-  haudio_out_sai.Init.AudioMode      		= SAI_MODEMASTER_TX; //SAI_MODEMASTER_RX;
-  haudio_out_sai.Init.NoDivider      		= SAI_MASTERDIVIDER_ENABLE;
-  haudio_out_sai.Init.Protocol       		= SAI_FREE_PROTOCOL;
-  haudio_out_sai.Init.DataSize       		= SAI_DATASIZE_16;
-  haudio_out_sai.Init.FirstBit       		= SAI_FIRSTBIT_MSB;
-  haudio_out_sai.Init.ClockStrobing  		= SAI_CLOCKSTROBING_FALLINGEDGE;
-  haudio_out_sai.Init.Synchro        		= SAI_ASYNCHRONOUS;
-  haudio_out_sai.Init.OutputDrive    		= SAI_OUTPUTDRIVE_ENABLE;
-  haudio_out_sai.Init.FIFOThreshold  		= SAI_FIFOTHRESHOLD_1QF;
-  haudio_out_sai.Init.SynchroExt     		= SAI_SYNCEXT_OUTBLOCKA_ENABLE; //SAI_SYNCEXT_DISABLE;
-  haudio_out_sai.Init.CompandingMode 		= SAI_NOCOMPANDING;
-  haudio_out_sai.Init.TriState       		= SAI_OUTPUT_NOTRELEASED;
-  haudio_out_sai.Init.Mckdiv         		= 0;
+  haudio_out_sai.Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_out_sai.Init.AudioFrequency = AudioFreq;
+  haudio_out_sai.Init.AudioMode      = SAI_MODEMASTER_RX;
+  haudio_out_sai.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+  haudio_out_sai.Init.Protocol       = SAI_FREE_PROTOCOL;
+  haudio_out_sai.Init.DataSize       = SAI_DATASIZE_16;
+  haudio_out_sai.Init.FirstBit       = SAI_FIRSTBIT_MSB;
+  haudio_out_sai.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
+  haudio_out_sai.Init.Synchro        = SAI_ASYNCHRONOUS;
+  haudio_out_sai.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
+  haudio_out_sai.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  haudio_out_sai.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
+  haudio_out_sai.Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_out_sai.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+  haudio_out_sai.Init.Mckdiv         = 0;  
 
   /* Configure SAI_Block_x Frame
   Frame Length: 64
@@ -1028,11 +1033,11 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   Slot First Bit Offset: 0
   Slot Size  : 16
   Slot Number: 4
-  Slot Active: All slot active */
-  haudio_out_sai.SlotInit.FirstBitOffset 	= 0;
-  haudio_out_sai.SlotInit.SlotSize       	= SAI_SLOTSIZE_DATASIZE;
-  haudio_out_sai.SlotInit.SlotNumber     	= 4;
-  haudio_out_sai.SlotInit.SlotActive     	= CODEC_AUDIOFRAME_SLOT_02;
+  Slot Active: All slot actives */
+  haudio_out_sai.SlotInit.FirstBitOffset = 0;
+  haudio_out_sai.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
+  haudio_out_sai.SlotInit.SlotNumber     = 4;
+  haudio_out_sai.SlotInit.SlotActive     = CODEC_AUDIOFRAME_SLOT_02;
 
   HAL_SAI_Init(&haudio_out_sai);
 
@@ -1046,21 +1051,21 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   /* Configure SAI_Block_x
   LSBFirst: Disabled
   DataSize: 16 */
-  haudio_in_sai.Init.MonoStereoMode 		= SAI_STEREOMODE;
-  haudio_in_sai.Init.AudioFrequency 		= AudioFreq;
-  haudio_in_sai.Init.AudioMode      		= SAI_MODESLAVE_RX;
-  haudio_in_sai.Init.NoDivider      		= SAI_MASTERDIVIDER_ENABLE;
-  haudio_in_sai.Init.Protocol       		= SAI_FREE_PROTOCOL;
-  haudio_in_sai.Init.DataSize       		= SAI_DATASIZE_16;
-  haudio_in_sai.Init.FirstBit       		= SAI_FIRSTBIT_MSB;
-  haudio_in_sai.Init.ClockStrobing  		= SAI_CLOCKSTROBING_RISINGEDGE;
-  haudio_in_sai.Init.Synchro        		= SAI_SYNCHRONOUS;
-  haudio_in_sai.Init.OutputDrive    		= SAI_OUTPUTDRIVE_DISABLE;
-  haudio_in_sai.Init.FIFOThreshold  		= SAI_FIFOTHRESHOLD_1QF;
-  haudio_in_sai.Init.SynchroExt     		= SAI_SYNCEXT_DISABLE;
-  haudio_in_sai.Init.CompandingMode 		= SAI_NOCOMPANDING;
-  haudio_in_sai.Init.TriState       		= SAI_OUTPUT_RELEASED;
-  haudio_in_sai.Init.Mckdiv         		= 0;
+  haudio_in_sai.Init.MonoStereoMode = SAI_STEREOMODE;
+  haudio_in_sai.Init.AudioFrequency = AudioFreq;
+  haudio_in_sai.Init.AudioMode      = SAI_MODESLAVE_RX;
+  haudio_in_sai.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+  haudio_in_sai.Init.Protocol       = SAI_FREE_PROTOCOL;
+  haudio_in_sai.Init.DataSize       = SAI_DATASIZE_16;
+  haudio_in_sai.Init.FirstBit       = SAI_FIRSTBIT_MSB;
+  haudio_in_sai.Init.ClockStrobing  = SAI_CLOCKSTROBING_RISINGEDGE;
+  haudio_in_sai.Init.Synchro        = SAI_SYNCHRONOUS;
+  haudio_in_sai.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
+  haudio_in_sai.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  haudio_in_sai.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
+  haudio_in_sai.Init.CompandingMode = SAI_NOCOMPANDING;
+  haudio_in_sai.Init.TriState       = SAI_OUTPUT_RELEASED;
+  haudio_in_sai.Init.Mckdiv         = 0;
 
   /* Configure SAI_Block_x Frame
   Frame Length: 64
@@ -1120,8 +1125,8 @@ static void SAIx_In_DeInit(void)
 /**
   * @brief  Initialize wave recording. 
   * @param  AudioFreq: Audio frequency to be configured for the DFSDM peripheral. 
-  * @param  BitRes: Audio bit resolution to be configured for the DFSDM peripheral.
-  * @param  ChnlNbr: Audio channel number to be configured for the DFSDM peripheral.
+  * @param  BitRes: Audio frequency to be configured for the DFSDM peripheral.
+  * @param  ChnlNbr: Audio frequency to be configured for the DFSDM peripheral.
   * @retval AUDIO_OK if correct communication, else wrong communication
   */
 uint8_t BSP_AUDIO_IN_Init(uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr)
@@ -1166,12 +1171,12 @@ uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t B
     haudio_in_sai.Instance = AUDIO_IN_SAIx;
     if(HAL_SAI_GetState(&haudio_in_sai) == HAL_SAI_STATE_RESET)
     {    
-    	BSP_AUDIO_OUT_MspInit(&haudio_in_sai, NULL);
-    	BSP_AUDIO_IN_MspInit();
+    BSP_AUDIO_OUT_MspInit(&haudio_in_sai, NULL);
+    BSP_AUDIO_IN_MspInit();
     }
 
     SAIx_In_Init(AudioFreq);
-
+    
     if((wm8994_drv.ReadID(AUDIO_I2C_ADDRESS)) == WM8994_ID)
     {
       /* Reset the Codec Registers */
@@ -1188,7 +1193,7 @@ uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t B
     if(ret == AUDIO_OK)
     {
       /* Initialize the codec internal registers */
-      audio_drv->Init(AUDIO_I2C_ADDRESS, InputDevice | OUTPUT_DEVICE_HEADPHONE, 90, AudioFreq);
+      audio_drv->Init(AUDIO_I2C_ADDRESS, InputDevice, 100, AudioFreq);
     }    
   }
   
@@ -1218,7 +1223,6 @@ uint8_t BSP_AUDIO_IN_AllocScratch (int32_t *pScratch, uint32_t size)
 
 /**
   * @brief  Return audio in channel number 
-  * @param  None
   * @retval Number of channel
   */
 uint8_t BSP_AUDIO_IN_GetChannelNumber(void)
@@ -1272,7 +1276,7 @@ uint8_t BSP_AUDIO_IN_Record(uint16_t* pbuf, uint32_t size)
   else
   {
     /* Start the process receive DMA */
-    if(HAL_OK != HAL_SAI_Receive_DMA(&haudio_in_sai, (uint8_t*)pbuf, size))
+    if(HAL_OK !=HAL_SAI_Receive_DMA(&haudio_in_sai, (uint8_t*)pbuf, size))
     {
       return AUDIO_ERROR;
     }
@@ -1588,29 +1592,25 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_
 
 /**
   * @brief  Half reception complete callback.
-  * @param  hi2s : I2S handle.
+  * @param  hsai : SAI handle.
   * @retval None
   */
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
   /* Manage the remaining file size and new address offset: This function 
-     should be coded by user (its prototype is already declared in stm32746g_discovery_audio.h) */
+     should be coded by user (its prototype is already declared in stm32769i_discovery_audio.h) */
   BSP_AUDIO_IN_HalfTransfer_CallBack();
-
-  AUDIO_PLAYER_IncHeartbeat();
 }
 
 /**
   * @brief  Reception complete callback.
-  * @param  hi2s : I2S handle.
+  * @param  hsai : SAI handle.
   * @retval None
   */
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 {
   /* Call the record update function to get the next buffer to fill and its size (size is ignored) */
   BSP_AUDIO_IN_TransferComplete_CallBack();
-
-  AUDIO_PLAYER_IncHeartbeat();
 }
 
 /**
@@ -1647,27 +1647,25 @@ __weak void BSP_AUDIO_IN_Error_CallBack(void)
 
 /**
   * @brief  Initialize BSP_AUDIO_IN MSP.
-  * @param  None
   * @retval None
   */
 __weak void BSP_AUDIO_IN_MspInit(void)
 { 
   if (AudioIn_Device == INPUT_DEVICE_DIGITAL_MIC)
   {  
-	  /* MSP channels initialization */
-	  DFSDMx_ChannelMspInit();
-	  /* MSP filters initialization */
-	  DFSDMx_FilterMspInit();
+  /* MSP channels initialization */
+  DFSDMx_ChannelMspInit();  
+  /* MSP filters initialization */
+  DFSDMx_FilterMspInit();
   }
   else
   {
-	  SAI_AUDIO_IN_MspInit(&haudio_in_sai, NULL);
+   SAI_AUDIO_IN_MspInit(&haudio_in_sai, NULL); 
   }
 }
 
 /**
   * @brief  DeInitialize BSP_AUDIO_IN MSP.
-  * @param  None
   * @retval None
   */
 __weak void BSP_AUDIO_IN_MspDeInit(void)
@@ -1689,6 +1687,7 @@ __weak void BSP_AUDIO_IN_MspDeInit(void)
   * @brief  Clock Config.
   * @param  hdfsdm_filter: might be required to set audio peripheral predivider if any.
   * @param  AudioFreq: Audio frequency used to play the audio stream.
+  * @param  Params  
   * @note   This API is called by BSP_AUDIO_IN_Init()
   *         Being __weak it can be overwritten by the application     
   * @retval None
@@ -1723,9 +1722,8 @@ __weak void BSP_AUDIO_IN_ClockConfig(DFSDM_Filter_HandleTypeDef *hdfsdm_filter, 
     SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 49.142/1 = 49.142 Mhz */  
     rcc_ex_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_SAI2;
     rcc_ex_clk_init_struct.Sai2ClockSelection = RCC_SAI2CLKSOURCE_PLLI2S;
-    //XXXX
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 432;	//344;
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 9;		//7;
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 344; 
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 7; 
     rcc_ex_clk_init_struct.PLLI2SDivQ = 1;   
     HAL_RCCEx_PeriphCLKConfig(&rcc_ex_clk_init_struct);
   }
@@ -2011,7 +2009,6 @@ static uint8_t DFSDMx_DeInit(void)
 
 /**
   * @brief  Initialize the DFSDM channel MSP.
-  * @param  hdfsdm_channel : DFSDM channel handle.
   * @retval None
   */
 static void DFSDMx_ChannelMspInit(void)
@@ -2049,7 +2046,6 @@ static void DFSDMx_ChannelMspInit(void)
 
 /**
   * @brief  DeInitialize the DFSDM channel MSP.
-  * @param  hdfsdm_channel : DFSDM channel handle.
   * @retval None
   */
 static void DFSDMx_ChannelMspDeInit(void)
@@ -2074,7 +2070,6 @@ static void DFSDMx_ChannelMspDeInit(void)
 
 /**
   * @brief  Initialize the DFSDM filter MSP.
-  * @param  hdfsdm_filter : DFSDM filter handle.
   * @retval None
   */
 static void DFSDMx_FilterMspInit(void)
@@ -2117,7 +2112,7 @@ static void DFSDMx_FilterMspInit(void)
   hDmaTopRight.Init.PeriphDataAlignment = AUDIO_DFSDMx_DMAx_PERIPH_DATA_SIZE;
   hDmaTopRight.Init.MemDataAlignment    = AUDIO_DFSDMx_DMAx_MEM_DATA_SIZE;
   hDmaTopRight.Init.Mode                = DMA_CIRCULAR;
-  hDmaTopRight.Init.Priority            = DMA_PRIORITY_HIGH;
+  hDmaTopRight.Init.Priority            = DMA_PRIORITY_HIGH;  
   hDmaTopRight.Instance                 = AUDIO_DFSDMx_DMAx_TOP_RIGHT_STREAM;
   hDmaTopRight.Init.Channel             = AUDIO_DFSDMx_DMAx_CHANNEL;
   
@@ -2168,7 +2163,7 @@ static void DFSDMx_FilterMspInit(void)
     hDmaButtomRight.Init.PeriphDataAlignment = AUDIO_DFSDMx_DMAx_PERIPH_DATA_SIZE;
     hDmaButtomRight.Init.MemDataAlignment    = AUDIO_DFSDMx_DMAx_MEM_DATA_SIZE;
     hDmaButtomRight.Init.Mode                = DMA_CIRCULAR;
-    hDmaButtomRight.Init.Priority            = DMA_PRIORITY_HIGH;
+    hDmaButtomRight.Init.Priority            = DMA_PRIORITY_HIGH;  
     hDmaButtomRight.Instance                 = AUDIO_DFSDMx_DMAx_BUTTOM_RIGHT_STREAM;
     hDmaButtomRight.Init.Channel             = AUDIO_DFSDMx_DMAx_CHANNEL;
     
@@ -2189,7 +2184,6 @@ static void DFSDMx_FilterMspInit(void)
 
 /**
   * @brief  DeInitialize the DFSDM filter MSP.
-  * @param  hdfsdm_filter : DFSDM filter handle.
   * @retval None
   */
 static void DFSDMx_FilterMspDeInit(void)

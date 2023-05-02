@@ -1,3 +1,0 @@
-../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_main.c:16:6:USB_Interface	16	static
-../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_main.c:59:6:USB_InterfaceDeinit	0	static
-../Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_main.c:69:6:USB_ClearBuffer	0	static

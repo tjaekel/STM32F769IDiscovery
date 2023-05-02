@@ -56,9 +56,7 @@ static uint8_t uartRxBuf[ 2]   				  /*__attribute__((section("DTCM_RAM")))*/;	/
 //! internal UART string receiver buffer, for UART Shell commands
 static uint8_t uartRxStrBuf[UART_RX_STR_SIZE] /*__attribute__((section("DTCM_RAM")))*/;
 
-#ifdef UART_THREAD
 extern SemaphoreHandle_t xSemaphoreUART;
-#endif
 
 /**
   * @fn void HAL_UART_MspInit(UART_HandleTypeDef* huart)

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_sd.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains the common defines and functions prototypes for
   *          the stm32f769i_discovery_sd.c driver.
   ******************************************************************************
@@ -51,22 +49,22 @@
   * @{
   */
 
-/** @addtogroup STM32F769I-Discovery
+/** @addtogroup STM32F769I_DISCOVERY
   * @{
   */
 
-/** @defgroup STM32F769I-Discovery_SD STM32F769I-Discovery SD
+/** @addtogroup STM32F769I_DISCOVERY_SD STM32F769I_DISCOVERY SD
   * @{
   */
 
-/** @defgroup STM32F769I-Discovery_SD_Exported_Types SD Exported Types
+/** @defgroup STM32F769I_DISCOVERY_SD_Exported_Types SD Exported Types
   * @{
   */
 
 /**
   * @brief SD Card information structure
   */
-#define SD_CardInfo HAL_SD_CardInfoTypedef
+#define BSP_SD_CardInfo HAL_SD_CardInfoTypeDef
 /**
   * @}
   */
@@ -78,7 +76,13 @@
 #define   MSD_ERROR                     ((uint8_t)0x01)
 #define   MSD_ERROR_SD_NOT_PRESENT      ((uint8_t)0x02)
 
-/** @defgroup STM32F769I-Discovery_SD_Exported_Constants SD Exported Constants
+/** 
+  * @brief  SD transfer state definition  
+  */     
+#define   SD_TRANSFER_OK                ((uint8_t)0x00)
+#define   SD_TRANSFER_BUSY              ((uint8_t)0x01)
+   
+/** @defgroup STM32F769I_DISCOVERY_SD_Exported_Constants SD Exported Constants
   * @{
   */
 #define SD_PRESENT               ((uint8_t)0x01)
@@ -95,7 +99,6 @@
 #define SD_DMAx_Tx_IRQn                   DMA2_Stream5_IRQn
 #define SD_DMAx_Rx_IRQn                   DMA2_Stream0_IRQn
 #define BSP_SDMMC_IRQHandler              SDMMC2_IRQHandler   
-//ATT: it conflicts with DFSDMx Digital MICs
 #define BSP_SDMMC_DMA_Tx_IRQHandler       DMA2_Stream5_IRQHandler
 #define BSP_SDMMC_DMA_Rx_IRQHandler       DMA2_Stream0_IRQHandler
 #define SD_DetectIRQHandler()             HAL_GPIO_EXTI_IRQHandler(SD_DETECT_PIN)
@@ -105,35 +108,36 @@
   * @}
   */
 
-/** @defgroup STM32F769I-Discovery_SD_Exported_Macro STM32F769I Discovery SD Exported Macro
+/** @defgroup STM32F769I_DISCOVERY_SD_Exported_Macro STM32F769I Discovery SD Exported Macro
   * @{
   */
 /**
   * @}
   */
 
-/** @defgroup STM32F769I-Discovery_SD_Exported_Functions STM32F769I Discovery SD Exported Functions
+/** @defgroup STM32F769I_DISCOVERY_SD_Exported_Functions STM32F769I Discovery SD Exported Functions
   * @{
   */
 uint8_t BSP_SD_Init(void);
 uint8_t BSP_SD_DeInit(void);
 uint8_t BSP_SD_ITConfig(void);
-
-
-uint8_t BSP_SD_ReadBlocks(uint32_t *pData, uint64_t ReadAddr, uint32_t BlockSize, uint32_t NumOfBlocks);
-uint8_t BSP_SD_WriteBlocks(uint32_t *pData, uint64_t WriteAddr, uint32_t BlockSize, uint32_t NumOfBlocks);
-uint8_t BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint64_t ReadAddr, uint32_t BlockSize, uint32_t NumOfBlocks);
-uint8_t BSP_SD_WriteBlocks_DMA(uint32_t *pData, uint64_t WriteAddr, uint32_t BlockSize, uint32_t NumOfBlocks);
-uint8_t BSP_SD_Erase(uint64_t StartAddr, uint64_t EndAddr);
-HAL_SD_TransferStateTypedef BSP_SD_GetStatus(void);
-void    BSP_SD_GetCardInfo(HAL_SD_CardInfoTypedef *CardInfo);
+uint8_t BSP_SD_ReadBlocks(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks, uint32_t Timeout);
+uint8_t BSP_SD_WriteBlocks(uint32_t *pData, uint32_t WriteAddr, uint32_t NumOfBlocks, uint32_t Timeout);
+uint8_t BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks);
+uint8_t BSP_SD_WriteBlocks_DMA(uint32_t *pData, uint32_t WriteAddr, uint32_t NumOfBlocks);
+uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr);
+uint8_t BSP_SD_GetCardState(void);
+void    BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo);
 uint8_t BSP_SD_IsDetected(void);
 
-/* These __weak function can be surcharged by application code in case the current settings (e.g. DMA stream)
-   need to be changed for specific needs */
+/* These functions can be modified in case the current settings (e.g. DMA stream)
+   need to be changed for specific application needs */
 void    BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params);
 void    BSP_SD_Detect_MspInit(SD_HandleTypeDef *hsd, void *Params);
 void    BSP_SD_MspDeInit(SD_HandleTypeDef *hsd, void *Params);
+void    BSP_SD_AbortCallback(void);
+void    BSP_SD_WriteCpltCallback(void);
+void    BSP_SD_ReadCpltCallback(void);
 
 /**
   * @}

@@ -1,4 +1,0 @@
-../LwIP_HTTP_Server_Netconn_RTOS/src/httpserver-netconn.c:287:6:http_server_netconn_init	16	static
-../LwIP_HTTP_Server_Netconn_RTOS/src/httpserver-netconn.c:298:6:DynWebPage	560	static
-../LwIP_HTTP_Server_Netconn_RTOS/src/httpserver-netconn.c:144:6:http_server_serve	48	static
-../LwIP_HTTP_Server_Netconn_RTOS/src/httpserver-netconn.c:247:13:http_server_netconn_thread	16	static

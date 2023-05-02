@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    mfxstm32l152.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    24-June-2015
   * @brief   This file contains all the functions prototypes for the
   *          mfxstm32l152.c IO expander driver.
   ******************************************************************************

@@ -1,2 +1,0 @@
-../src/config.c:31:9:ReadSysConfig	40	static
-../src/config.c:75:9:WriteSysConfig	32	static

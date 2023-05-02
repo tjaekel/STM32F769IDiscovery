@@ -1,7 +1,0 @@
-../src/SDPlay.c:132:12:SDPlay_StartPlay	40	static
-../src/SDPlay.c:34:6:SDPlay_GUIPage	8	static
-../src/SDPlay.c:45:6:SDPlay_Init	8	static
-../src/SDPlay.c:312:5:SDPlay_Run	24	static
-../src/SDPlay.c:325:5:SDPlay_ScanFiles	624	static
-../src/SDPlay.c:428:5:SDPlay_FileSelectionNB	40	static
-../src/SDPlay.c:581:5:SDPlay_FileSelection	56	static

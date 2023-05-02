@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    ov9655.c
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    25-June-2015
   * @brief   This file provides the OV9655 camera driver
   ******************************************************************************
   * @attention

@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_audio.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains the common defines and functions prototypes for
   *          the stm32f769i_discovery_audio.c driver.
   ******************************************************************************
@@ -99,6 +97,7 @@
   */
 /* To have 2 separate audio stream in Both headphone and speaker the 4 slot must be activated */
 #define CODEC_AUDIOFRAME_SLOT_0123                   SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_1 | SAI_SLOTACTIVE_2 | SAI_SLOTACTIVE_3
+
 /* To have an audio stream in headphone only SAI Slot 0 and Slot 2 must be activated */ 
 #define CODEC_AUDIOFRAME_SLOT_02                     SAI_SLOTACTIVE_0 | SAI_SLOTACTIVE_2 
 /* To have an audio stream in speaker only SAI Slot 1 and Slot 3 must be activated */ 
@@ -131,33 +130,33 @@
    
 #define AUDIO_OUT_SAIx_DMAx_IRQHandler           DMA2_Stream1_IRQHandler
 
-/* Select the interrupt preemption priority and sub-priority for the DMA interrupt */
-#define AUDIO_OUT_IRQ_PREPRIO                    ((uint32_t)10)
+/* Select the interrupt preemption priority and subpriority for the DMA interrupt */
+#define AUDIO_OUT_IRQ_PREPRIO                    ((uint32_t)0x0E) 
 
 /*------------------------------------------------------------------------------
                         AUDIO IN CONFIGURATION
 ------------------------------------------------------------------------------*/
 /* SAI peripheral configuration defines */
-#define AUDIO_IN_SAIx                           		SAI1_Block_B
-#define AUDIO_IN_SAIx_CLK_ENABLE()              		__HAL_RCC_SAI1_CLK_ENABLE()
-#define AUDIO_IN_SAIx_CLK_DISABLE()             		__HAL_RCC_SAI1_CLK_DISABLE()
-#define AUDIO_IN_SAIx_AF                        		GPIO_AF6_SAI1
-#define AUDIO_IN_SAIx_SD_ENABLE()               		__HAL_RCC_GPIOE_CLK_ENABLE()
-#define AUDIO_IN_SAIx_SD_GPIO_PORT              		GPIOE
-#define AUDIO_IN_SAIx_SD_PIN                    		GPIO_PIN_3
+#define AUDIO_IN_SAIx                           SAI1_Block_B
+#define AUDIO_IN_SAIx_CLK_ENABLE()              __HAL_RCC_SAI1_CLK_ENABLE()
+#define AUDIO_IN_SAIx_CLK_DISABLE()             __HAL_RCC_SAI1_CLK_DISABLE()
+#define AUDIO_IN_SAIx_AF                        GPIO_AF6_SAI1
+#define AUDIO_IN_SAIx_SD_ENABLE()               __HAL_RCC_GPIOE_CLK_ENABLE()
+#define AUDIO_IN_SAIx_SD_GPIO_PORT              GPIOE
+#define AUDIO_IN_SAIx_SD_PIN                    GPIO_PIN_3
 
 /* SAI DMA Stream definitions */
-#define AUDIO_IN_SAIx_DMAx_CLK_ENABLE()         		__HAL_RCC_DMA2_CLK_ENABLE()
-#define AUDIO_IN_SAIx_DMAx_STREAM               		DMA2_Stream4
-#define AUDIO_IN_SAIx_DMAx_CHANNEL              		DMA_CHANNEL_1
-#define AUDIO_IN_SAIx_DMAx_IRQ                  		DMA2_Stream4_IRQn
-#define AUDIO_IN_SAIx_DMAx_PERIPH_DATA_SIZE     		DMA_PDATAALIGN_HALFWORD
-#define AUDIO_IN_SAIx_DMAx_MEM_DATA_SIZE        		DMA_MDATAALIGN_HALFWORD
+#define AUDIO_IN_SAIx_DMAx_CLK_ENABLE()         __HAL_RCC_DMA2_CLK_ENABLE()
+#define AUDIO_IN_SAIx_DMAx_STREAM               DMA2_Stream4
+#define AUDIO_IN_SAIx_DMAx_CHANNEL              DMA_CHANNEL_1
+#define AUDIO_IN_SAIx_DMAx_IRQ                  DMA2_Stream4_IRQn
+#define AUDIO_IN_SAIx_DMAx_PERIPH_DATA_SIZE     DMA_PDATAALIGN_HALFWORD
+#define AUDIO_IN_SAIx_DMAx_MEM_DATA_SIZE        DMA_MDATAALIGN_HALFWORD
 
-#define AUDIO_IN_INT_GPIO_ENABLE()               		__HAL_RCC_GPIOJ_CLK_ENABLE()
-#define AUDIO_IN_INT_GPIO_PORT                   		GPIOJ
-#define AUDIO_IN_INT_GPIO_PIN                    		GPIO_PIN_12
-#define AUDIO_IN_INT_IRQ                         		EXTI15_10_IRQn
+#define AUDIO_IN_INT_GPIO_ENABLE()               __HAL_RCC_GPIOJ_CLK_ENABLE()
+#define AUDIO_IN_INT_GPIO_PORT                   GPIOJ
+#define AUDIO_IN_INT_GPIO_PIN                    GPIO_PIN_12
+#define AUDIO_IN_INT_IRQ                         EXTI15_10_IRQn
 
 /* DFSDM Configuration defines */
 #define AUDIO_DFSDMx_TOP_RIGHT_CHANNEL                  DFSDM_CHANNEL_0
@@ -170,7 +169,7 @@
 #define AUDIO_DFSDMx_BUTTOM_LEFT_FILTER                 DFSDM1_Filter2
 #define AUDIO_DFSDMx_BUTTOM_RIGHT_FILTER                DFSDM1_Filter3
    
-#define AUDIO_DFSDMx_CLK_ENABLE()                       __HAL_RCC_DFSDM_CLK_ENABLE()
+#define AUDIO_DFSDMx_CLK_ENABLE()                       __HAL_RCC_DFSDM1_CLK_ENABLE()
 #define AUDIO_DFSDMx_CKOUT_PIN                          GPIO_PIN_3
 #define AUDIO_DFSDMx_CKOUT_DMIC_GPIO_PORT               GPIOD    
 #define AUDIO_DFSDMx_CKOUT_DMIC_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOD_CLK_ENABLE()
@@ -203,55 +202,54 @@
 #define AUDIO_DFSDMx_DMAx_BUTTOM_RIGHT_IRQ              DMA2_Stream7_IRQn
 #define AUDIO_DFSDMx_DMAx_BUTTOM_RIGHT_IRQHandler       DMA2_Stream7_IRQHandler
  
-/* Select the interrupt preemption priority and sub-priority for the DMA interrupt */
-#define AUDIO_IN_IRQ_PREPRIO                			((uint32_t)11)
+/* Select the interrupt preemption priority and subpriority for the DMA interrupt */
+#define AUDIO_IN_IRQ_PREPRIO                ((uint32_t)0x0F)
 
  /*------------------------------------------------------------------------------
-                         AUDIO IN SRC CONFIGURATION
- ------------------------------------------------------------------------------*/
-/* SAI peripheral configuration defines */
-#define AUDIO_IN_SAI_SRC                           		SAI2_Block_A
-#define AUDIO_IN_SAI_SRC_CLK_ENABLE()              		__HAL_RCC_SAI2_CLK_ENABLE()
-#define AUDIO_IN_SAI_SRC_CLK_DISABLE()             		__HAL_RCC_SAI2_CLK_DISABLE()
-#define AUDIO_IN_SAI_SRC_AF                        		GPIO_AF10_SAI2
-#define AUDIO_IN_SAI_SRC_SD_ENABLE()               		__HAL_RCC_GPIOD_CLK_ENABLE()
-#define AUDIO_IN_SAI_SRC_SD_GPIO_PORT              		GPIOD
-#define AUDIO_IN_SAI_SRC_SD_PIN                    		GPIO_PIN_11
+                          AUDIO IN SRC CONFIGURATION
+  ------------------------------------------------------------------------------*/
+ /* SAI peripheral configuration defines */
+ #define AUDIO_IN_SAI_SRC                           		SAI2_Block_A
+ #define AUDIO_IN_SAI_SRC_CLK_ENABLE()              		__HAL_RCC_SAI2_CLK_ENABLE()
+ #define AUDIO_IN_SAI_SRC_CLK_DISABLE()             		__HAL_RCC_SAI2_CLK_DISABLE()
+ #define AUDIO_IN_SAI_SRC_AF                        		GPIO_AF10_SAI2
+ #define AUDIO_IN_SAI_SRC_SD_ENABLE()               		__HAL_RCC_GPIOD_CLK_ENABLE()
+ #define AUDIO_IN_SAI_SRC_SD_GPIO_PORT              		GPIOD
+ #define AUDIO_IN_SAI_SRC_SD_PIN                    		GPIO_PIN_11
 
-/* SAI DMA Stream definitions */
-#define AUDIO_IN_SAI_SRC_DMAx_CLK_ENABLE()         		__HAL_RCC_DMA2_CLK_ENABLE()
-#define AUDIO_IN_SAI_SRC_DMAx_STREAM               		DMA2_Stream2
-#define AUDIO_IN_SAI_SRC_DMAx_CHANNEL              		DMA_CHANNEL_10
-#define AUDIO_IN_SAI_SRC_DMAx_IRQ                  		DMA2_Stream2_IRQn
-#define AUDIO_IN_SAI_SRC_DMAx_PERIPH_DATA_SIZE     		DMA_PDATAALIGN_HALFWORD
-#define AUDIO_IN_SAI_SRC_DMAx_MEM_DATA_SIZE        		DMA_MDATAALIGN_HALFWORD
+ /* SAI DMA Stream definitions */
+ #define AUDIO_IN_SAI_SRC_DMAx_CLK_ENABLE()         		__HAL_RCC_DMA2_CLK_ENABLE()
+ #define AUDIO_IN_SAI_SRC_DMAx_STREAM               		DMA2_Stream2
+ #define AUDIO_IN_SAI_SRC_DMAx_CHANNEL              		DMA_CHANNEL_10
+ #define AUDIO_IN_SAI_SRC_DMAx_IRQ                  		DMA2_Stream2_IRQn
+ #define AUDIO_IN_SAI_SRC_DMAx_PERIPH_DATA_SIZE     		DMA_PDATAALIGN_HALFWORD
+ #define AUDIO_IN_SAI_SRC_DMAx_MEM_DATA_SIZE        		DMA_MDATAALIGN_HALFWORD
 
-#define AUDIO_IN_SAI_SRC_DMAx_IRQHandler           		DMA2_Stream2_IRQHandler
+ #define AUDIO_IN_SAI_SRC_DMAx_IRQHandler           		DMA2_Stream2_IRQHandler
 
-#define AUDIO_IN_SRC_IRQ_PREPRIO                		((uint32_t)11)
+ #define AUDIO_IN_SRC_IRQ_PREPRIO                		((uint32_t)11)
 
 /*------------------------------------------------------------------------------
              CONFIGURATION: Audio Driver Configuration parameters
 ------------------------------------------------------------------------------*/
 
-#define AUDIODATA_SIZE                      			2   /* 16-bits audio data size */
+#define AUDIODATA_SIZE                      2   /* 16-bits audio data size */
 
 /* Audio status definition */     
-#define AUDIO_OK                            			((uint8_t)0)
-#define AUDIO_ERROR                         			((uint8_t)1)
-#define AUDIO_TIMEOUT                       			((uint8_t)2)
+#define AUDIO_OK                            ((uint8_t)0)
+#define AUDIO_ERROR                         ((uint8_t)1)
+#define AUDIO_TIMEOUT                       ((uint8_t)2)
 
 /* Audio In default settings */
-#define DEFAULT_AUDIO_IN_FREQ               			BSP_AUDIO_FREQUENCY_48K
-#define DEFAULT_AUDIO_IN_BIT_RESOLUTION     			((uint8_t)16)
-#define DEFAULT_AUDIO_IN_CHANNEL_NBR        			((uint8_t)2)
-#define DEFAULT_AUDIO_IN_VOLUME             			((uint16_t)64)
+#define DEFAULT_AUDIO_IN_FREQ               BSP_AUDIO_FREQUENCY_16K
+#define DEFAULT_AUDIO_IN_BIT_RESOLUTION     ((uint8_t)16)
+#define DEFAULT_AUDIO_IN_CHANNEL_NBR        ((uint8_t)2)
+#define DEFAULT_AUDIO_IN_VOLUME             ((uint16_t)64)
 
 /*------------------------------------------------------------------------------
                             OUTPUT DEVICES definition
 ------------------------------------------------------------------------------*/
-
-/* Alias on existing output devices to adapt to Big Birdie discovery board 2 headphones output */
+/* Alias on existing output devices to adapt for 2 headphones output */
 #define OUTPUT_DEVICE_HEADPHONE1 OUTPUT_DEVICE_HEADPHONE
 #define OUTPUT_DEVICE_HEADPHONE2 OUTPUT_DEVICE_SPEAKER /* Headphone2 is connected to Speaker output of the wm8994 */
 

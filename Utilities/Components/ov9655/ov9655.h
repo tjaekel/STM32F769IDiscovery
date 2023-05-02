@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    ov9655.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    25-June-2015
   * @brief   This file contains all the functions prototypes for the ov9655.c
   *          driver.
   ******************************************************************************

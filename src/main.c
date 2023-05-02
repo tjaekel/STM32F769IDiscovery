@@ -84,9 +84,6 @@ static const uint32_t Buffers[] =
   LAYER0_ADDRESS + (800*480*4),  
 };
 
-volatile uint32_t time_begin, time_start, time_end, time_diff, time_total;
-TIM_HandleTypeDef hTim2;
-
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MPU_Config(void);
@@ -254,12 +251,12 @@ int main_audio(void)
 #else
 #ifdef UART_THREAD
   UART_cmd_init();
-  osThreadDef(UART, UARTCmd_Thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
+  osThreadDef(UART, UARTCmd_Thread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 2);
   osThreadCreate(osThread(UART), NULL);
 #endif
 
   /* ATT: prio must be lower as HTTPD prio! */
-  osThreadDef(Audio, Audio_Thread, osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
+  osThreadDef(Audio, Audio_Thread, /*osPriorityBelowNormal*/ osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 2);
   osThreadCreate(osThread(Audio), NULL);
 
   /* Start scheduler */
@@ -323,11 +320,13 @@ static void Audio_Thread(void const * argument)
    */
   if (USBConfig == 1)
   {
+	  /* Audio to host, as sound card device */
 	  USB_Interface(2);
   }
   else
   if (ifSelection != INIF_USB)
   {
+	  /* no USB Audio, USB is for MSC to get SD Card on Host */
 	  USB_Interface(1);
   }
 
@@ -378,7 +377,17 @@ static void Audio_Thread(void const * argument)
   if (ifSelection == INIF_USB)
   {
 	  /* USB Audio Init for audio from PC */
+#ifndef TRY_USBH_MIC
 	  USB_Interface(0);
+#else
+	  /* we hijack the USB (audio from PC) button on LCD in order
+	   * to select the USB MIC (STM32 board as host)
+	   * --> it works just a bit (USB Enumeration), but the audio is distorted,
+	   * and we would need a very generic implementation in order to realize the
+	   * audio format (44.1 vs. 48KHz, 16bit vs. 24bit and Mono/Stereo!
+	   */
+	  USB_Interface(3);
+#endif
   }
 
   if (ifSelection == INIF_SPDIF_STM)
@@ -472,6 +481,7 @@ static void Audio_Thread(void const * argument)
 #ifndef DIGI_FP
 #ifdef STM_SPDIF_OUT
     	//SPDIF Tx on STM to output
+    	taskYIELD();	/* give higher thread a chance */
     	SPDIF_TX_OutBuf();
 #endif
 #endif
@@ -503,11 +513,12 @@ static void Audio_Thread(void const * argument)
 
     			{
     				//print where found DANTE audio stream
-    				uint8_t iptxt[40];
+    				uint8_t iptxt[35];
     				sprintf((char*)iptxt, "ETH audio: %ld.%ld.%ld.%ld | %d", UDANTE_IPAddr.addr & 0xFF, UDANTE_IPAddr.addr >> 8 & 0xFF, UDANTE_IPAddr.addr >> 16 & 0xFF, UDANTE_IPAddr.addr >> 24 & 0xFF,
     						UDANTE_UDPPort);
 
     				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    				taskYIELD();	/* give higher thread a chance */
     				BSP_LCD_DisplayStringAt(370, 100, (uint8_t *)iptxt, LEFT_MODE);
     			}
     		}
@@ -516,10 +527,11 @@ static void Audio_Thread(void const * argument)
     	{
     		if (IP_ADDR[0] != 0)
     		{
-				uint8_t iptxt[24];
+				uint8_t iptxt[22];
 				sprintf((char*)iptxt, "HTTP: %d.%d.%d.%d", IP_ADDR[0], IP_ADDR[1], IP_ADDR[2], IP_ADDR[3]);
 
 				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+				taskYIELD();	/* give higher thread a chance */
 				BSP_LCD_DisplayStringAt(370, 100, (uint8_t *)iptxt, LEFT_MODE);
     		}
     	}
@@ -539,6 +551,7 @@ static void Audio_Thread(void const * argument)
     			button = SDPlay_FileSelection(0);				//blocking - return if play selected
     			if (button == SD_B_PLAY)
     			{
+    				taskYIELD();	/* give higher thread a chance */
     				Display_FFTPage();
     				AUDIO_PLAYER_Start();
     				SDGUIState = 0;
@@ -556,6 +569,7 @@ static void Audio_Thread(void const * argument)
     			{
     				SDGUIState = 1;
     				/* clear display and show GUI page - display all again, but non-blocking*/
+    				taskYIELD();	/* give higher thread a chance */
     				SDPlay_FileSelection(1);				//non-blocking
     			}
     		}
@@ -567,6 +581,7 @@ static void Audio_Thread(void const * argument)
     			{
     				//a new or the same file to play
     				SDGUIState = 0;
+    				taskYIELD();	/* give higher thread a chance */
         			Display_FFTPage();
         			AUDIO_PLAYER_Start();
         			touchDelay = TOUCH_DELAY;
@@ -575,6 +590,7 @@ static void Audio_Thread(void const * argument)
     			{
     				//closed without to change anything
     				SDGUIState = 0;
+    				taskYIELD();	/* give higher thread a chance */
     				Display_FFTPage();
     				touchDelay = TOUCH_DELAY;
     			}
@@ -593,6 +609,7 @@ static void Audio_Thread(void const * argument)
     			if ((tsState.touchY[0] < FFT_Y_BORDER_TOP) && (tsState.touchX[0] < 760))
     			{
     				processVolume = 1;
+    				taskYIELD();	/* give higher thread a chance */
     				VUMETER_ProcessVolume(tsState.touchX[0]);
     			}
     			else
@@ -602,23 +619,32 @@ static void Audio_Thread(void const * argument)
     			processVolume = 0;
     	}
 
+#ifdef LCD_UPDATE
     	if (SDGUIState == 0)
     	{
     		if ( ! processVolume)
     		{
     			//in combination with SD Player GUI - just if SD Player GUI not visible
     			VUMETER_Analyse();
+    			taskYIELD();	/* give higher thread a chance */
     			VUMETER_Input(0);
+    			taskYIELD();	/* give higher thread a chance */
     			VUMETER_Input(1);
+    			taskYIELD();	/* give higher thread a chance */
     			VUMETER_Display(0);
+    			taskYIELD();	/* give higher thread a chance */
     			VUMETER_Display(1);
+    			taskYIELD();	/* give higher thread a chance */
     		}
 
     		FFT_Filter(0);
+    		taskYIELD();	/* give higher thread a chance */
     		FFT_DisplayGraph(0);
-
+    		taskYIELD();	/* give higher thread a chance */
     		FFT_Filter(1);
+    		taskYIELD();	/* give higher thread a chance */
     		FFT_DisplayGraph(1);
+    		taskYIELD();	/* give higher thread a chance */
     	}
 
     	if (SDGUIState == 0)
@@ -628,7 +654,7 @@ static void Audio_Thread(void const * argument)
     	    static float sMaxLoad = 0.0f;
     	    int sMaxLoadInt;
     	    float load;
-    	    char text [15];
+    	    char text[15];
 
     	    load = (float)((100.0 * (float)time_diff) / (float)time_total);
     	    if (sMaxLoad < load)
@@ -644,25 +670,26 @@ static void Audio_Thread(void const * argument)
     	    {
     	    	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
     	    }
+    	    taskYIELD();	/* give higher thread a chance */
     		BSP_LCD_DisplayStringAt(715, FFT_Y_BORDER_TOP + 130, (uint8_t *)text, LEFT_MODE);
     		if (sMaxLoad > 0.05f)
-    		{
     			sMaxLoad -= 0.05f;
-    		}
 
     		//display sample rate
     		sprintf(text, "%5d", SysInterfaces.sampleFreq);
     		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+    		taskYIELD();	/* give higher thread a chance */
     		BSP_LCD_DisplayStringAt(726, FFT_Y_BORDER_TOP + 170, (uint8_t *)text, LEFT_MODE);
 
     		/*Refresh the LCD display*/
     		HAL_DSI_Refresh(&hdsi_discovery);
     	}
+#endif
 
     	if (touchDelay)
     		touchDelay--;
 
-		TIM_MEASURE_END; 						// stop stop watch for audio processing
+		TIM_MEASURE_END; 						//stop stop watch for audio processing
 		TIM_MEASURE_TOTAL;						//total time for audio sample loops
 
 		taskYIELD();
@@ -842,6 +869,8 @@ int GetInterfaceSelection(int *outSelection, int *sampleRate)
 	/* Copy Buffer 0 into buffer 1, so only image area to be redrawn later */
 	CopyBuffer((uint32_t *)Buffers[0], (uint32_t *)Buffers[1], 0, 0, 800, 480);
 #endif
+
+	//XXXX: actually just needed if network will be used
 
 	//display temporary message - we are waiting for network
 	BSP_LCD_SetFont(&Font16);
@@ -1524,10 +1553,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 415;					//was 400, for 200 MHz - needed if DDR RAM!, otherwise 432 for 216 MHz
+  RCC_OscInitStruct.PLL.PLLN = 420;					//try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 8;					//9 for 216MHz, 8 for 200 MHz with PLLN 400;
-  RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2
+  RCC_OscInitStruct.PLL.PLLQ = 9;					//9 for 216MHz, 8 for 200 MHz with PLLN 400;
+  RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
   
   ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
   if(ret != HAL_OK)
@@ -1546,7 +1575,7 @@ void SystemClock_Config(void)
   /* Select PLLSAI output as USB clock source */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_CLK48;
   PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48SOURCE_PLLSAIP;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 384;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 384;			//384 is nominal
   PeriphClkInitStruct.PLLSAI.PLLSAIQ = 7;
   PeriphClkInitStruct.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV8;
   if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct)  != HAL_OK)
@@ -1647,6 +1676,21 @@ void assert_failed(uint8_t *file, uint32_t line)
   }
 }
 #endif
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+
+  BSP_LED_On(LED1);
+  //while (1) {}
+
+  /* USER CODE END Error_Handler_Debug */
+}
 
 /**
   * @}

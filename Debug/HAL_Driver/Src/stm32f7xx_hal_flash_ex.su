@@ -1,5 +1,0 @@
-../HAL_Driver/Src/stm32f7xx_hal_flash_ex.c:169:19:HAL_FLASHEx_Erase	32	static,ignoring_inline_asm
-../HAL_Driver/Src/stm32f7xx_hal_flash_ex.c:242:19:HAL_FLASHEx_Erase_IT	8	static,ignoring_inline_asm
-../HAL_Driver/Src/stm32f7xx_hal_flash_ex.c:298:19:HAL_FLASHEx_OBProgram	16	static
-../HAL_Driver/Src/stm32f7xx_hal_flash_ex.c:383:6:HAL_FLASHEx_OBGetConfig	0	static
-../HAL_Driver/Src/stm32f7xx_hal_flash_ex.c:477:6:FLASH_Erase_Sector	4	static,ignoring_inline_asm

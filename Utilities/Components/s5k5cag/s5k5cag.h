@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    s5k5cag.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    05-March-2015
   * @brief   This file contains all the functions prototypes for the s5k5cag.c
   *          driver.
   ******************************************************************************

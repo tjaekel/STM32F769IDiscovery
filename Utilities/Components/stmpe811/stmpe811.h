@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stmpe811.h
   * @author  MCD Application Team
-  * @version V2.0.0
-  * @date    15-December-2014
   * @brief   This file contains all the functions prototypes for the
   *          stmpe811.c IO expander driver.
   ******************************************************************************

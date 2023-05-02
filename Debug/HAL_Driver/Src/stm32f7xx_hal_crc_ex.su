@@ -1,3 +1,0 @@
-../HAL_Driver/Src/stm32f7xx_hal_crc_ex.c:109:19:HAL_CRCEx_Polynomial_Set	4	static
-../HAL_Driver/Src/stm32f7xx_hal_crc_ex.c:175:19:HAL_CRCEx_Input_Data_Reverse	4	static
-../HAL_Driver/Src/stm32f7xx_hal_crc_ex.c:201:19:HAL_CRCEx_Output_Data_Reverse	4	static

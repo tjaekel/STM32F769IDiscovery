@@ -2,8 +2,6 @@
   ******************************************************************************
   * @file    stm32f769i_discovery_sdram.h
   * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    22-April-2016
   * @brief   This file contains the common defines and functions prototypes for
   *          the stm32f769i_discovery_sdram.c driver.
   ******************************************************************************
@@ -55,11 +53,11 @@
   * @{
   */
     
-/** @defgroup STM32F769I_DISCOVERY_SDRAM
+/** @addtogroup STM32F769I_DISCOVERY_SDRAM
   * @{
   */    
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Types
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Types SDRAM Exported Types
   * @{
   */
 
@@ -69,9 +67,10 @@
 #define   SDRAM_OK         ((uint8_t)0x00)
 #define   SDRAM_ERROR      ((uint8_t)0x01)
 
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Constants
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Constants SDRAM Exported Constants
   * @{
-  */ 
+  */
+   
 #define SDRAM_DEVICE_ADDR  ((uint32_t)0xC0000000)
 #define SDRAM_DEVICE_SIZE  ((uint32_t)0x1000000)  /* SDRAM device size in MBytes */
 
@@ -115,14 +114,14 @@
   * @}
   */ 
   
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Macro
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Macro  SDRAM Exported Macro
   * @{
   */  
 /**
   * @}
   */ 
    
-/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Functions
+/** @defgroup STM32F769I_DISCOVERY_SDRAM_Exported_Functions SDRAM Exported Functions
   * @{
   */  
 uint8_t BSP_SDRAM_Init(void);

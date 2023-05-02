@@ -1,8 +1,0 @@
-../src/SRC_i2c.c:228:13:I2C1_Init.part.0	48	static
-../src/SRC_i2c.c:384:5:SRC_I2C_Configure	56	static,ignoring_inline_asm
-../src/SRC_i2c.c:453:5:SRC_I2C_Release	0	static
-../src/SRC_i2c.c:460:5:SRC_ClockSource	8	static
-../src/SRC_i2c.c:472:5:SRC_RefClock	40	static
-../src/SRC_i2c.c:498:5:SRC_AudioSource	40	static
-../src/SRC_i2c.c:512:5:SRC_SetSampleRate	40	static
-../src/SRC_i2c.c:532:5:SRC_SetRefClock	32	static
