@@ -500,13 +500,6 @@ static void Audio_Thread(void const * argument)
     			BASS_BOOST_filter();
     	}
 
-#ifdef TRY_USBH_MIC
-    	if (ifSelection == INIF_USB)
-    	{
-    		/* USBH MIC Audio */
-    	}
-#endif
-
     	if (ifSelection == INIF_UDANTE)
     	{
     		//if with uDANTE network audio

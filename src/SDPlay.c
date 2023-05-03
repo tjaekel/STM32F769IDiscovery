@@ -330,7 +330,7 @@ int SDPlay_ScanFiles(char* rpath)        				/* Start node to be scanned (also u
     FILINFO fno;
     DIR dir;
     char *fn;   										/* This function assumes non-Unicode configuration */
-	static char text [60];								/* static just to avoid to waste stack space */
+	static char text[75];								/* static just to avoid to waste stack space */
 	int numFiles;
 
     int x, y;

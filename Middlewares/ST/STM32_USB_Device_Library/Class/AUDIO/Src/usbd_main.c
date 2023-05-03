@@ -61,7 +61,7 @@ void USB_Interface(int mode)
 		{
 			extern void MX_USB_HOST_Init(void);
 
-			/* needed first to switch USB OTH INT handler! */
+			/* needed first to switch USB OTG INT handler! */
 			gUSBInterface = 2;
 
 			MX_USB_HOST_Init();

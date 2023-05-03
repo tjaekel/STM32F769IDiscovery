@@ -425,7 +425,7 @@ USBH_StatusTypeDef USBH_ReEnumerate(USBH_HandleTypeDef *phost)
   * @param  phost: Host Handle
   * @retval USBH Status
   */
-USBH_StatusTypeDef  USBH_Process(USBH_HandleTypeDef *phost)
+USBH_StatusTypeDef USBH_Process(USBH_HandleTypeDef *phost)
 {
   __IO USBH_StatusTypeDef status = USBH_FAIL;
   uint8_t idx = 0U;
