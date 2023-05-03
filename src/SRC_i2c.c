@@ -260,6 +260,8 @@ static void I2C1_Init(I2C_HandleTypeDef *i2c_handler)
   */
 static void I2C1_Error(I2C_HandleTypeDef *i2c_handler, uint8_t Addr)
 {
+  (void)Addr;
+
   /* De-initialize the I2C communication bus */
   HAL_I2C_DeInit(i2c_handler);
 
@@ -386,7 +388,7 @@ int SRC_I2C_Configure(void)
 #ifdef WITH_I2C_TEST
 	uint8_t regVal;
 #endif
-	int i;
+	size_t i;
 	uint8_t *bPtr;
 
 	//configure the SRC chip

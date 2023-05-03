@@ -31,6 +31,7 @@ void SRC_RX_HalfTransfer_CallBack(struct __DMA_HandleTypeDef * hdma);
   */
 static void SAI_SRC_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
 {
+  (void)Params;
   static DMA_HandleTypeDef hdma_sai_src_rx;
   GPIO_InitTypeDef  gpio_init_structure;
 
@@ -237,6 +238,7 @@ void SRC_Rx_Start(void)
   */
 void SRC_RX_TransferComplete_CallBack(struct __DMA_HandleTypeDef * hdma)
 {
+	(void)hdma;
 }
 
 /**
@@ -246,4 +248,5 @@ void SRC_RX_TransferComplete_CallBack(struct __DMA_HandleTypeDef * hdma)
   */
 void SRC_RX_HalfTransfer_CallBack(struct __DMA_HandleTypeDef * hdma)
 {
+	(void)hdma;
 }

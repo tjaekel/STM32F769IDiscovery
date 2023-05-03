@@ -26,7 +26,7 @@
  *  
  *----------------------------------------------------------------------------
  *
- * Portions Copyright © 2016 STMicroelectronics International N.V. All rights reserved.
+ * Portions Copyright ï¿½ 2016 STMicroelectronics International N.V. All rights reserved.
  * Portions Copyright (c) 2013 ARM LIMITED
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
@@ -345,7 +345,10 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
                       (type == osTimerPeriodic) ? pdTRUE : pdFALSE,
                       (void *) argument,
                       (TaskFunction_t)timer_def->ptimer);
-#else 
+#else
+    (void)timer_def;
+	(void)argument;
+	(void)type;
 	return NULL;
 #endif
 }
@@ -385,6 +388,8 @@ osStatus osTimerStart (osTimerId timer_id, uint32_t millisec)
   }
 
 #else 
+  (void)millisec;
+  (void)timer_id;
   result = osErrorOS;
 #endif
   return result;
@@ -413,7 +418,8 @@ osStatus osTimerStop (osTimerId timer_id)
       result = osErrorOS;
     }
   }
-#else 
+#else
+  (void)timer_id;
   result = osErrorOS;
 #endif 
   return result;
@@ -440,7 +446,8 @@ osStatus result = osOK;
     }
   } 
     
-#else 
+#else
+  (void)timer_id;
   result = osErrorOS;
 #endif 
  
@@ -553,6 +560,7 @@ osEvent osSignalWait (int32_t signals, uint32_t millisec)
 */
 osMutexId osMutexCreate (const osMutexDef_t *mutex_def)
 {
+	(void)mutex_def;
 #if ( configUSE_MUTEXES == 1)
   return xSemaphoreCreateMutex(); 
 #else

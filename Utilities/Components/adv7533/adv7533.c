@@ -262,6 +262,9 @@ void ADV7533_PatternDisable(void)
   */
 uint32_t adv7533_AudioInit(uint16_t DeviceAddr, uint16_t OutputDevice, uint8_t Volume,uint32_t AudioFreq)
 {
+  (void)OutputDevice;
+  (void)Volume;
+
   uint32_t val = 4096;
   uint8_t  tmp = 0;
 
@@ -361,6 +364,8 @@ uint32_t adv7533_Resume(uint16_t DeviceAddr)
   */
 uint32_t adv7533_Play(uint16_t DeviceAddr ,uint16_t* pBuffer  ,uint16_t Size)
 {
+  (void)pBuffer;
+  (void)Size;
   return(adv7533_SetMute(DeviceAddr,AUDIO_MUTE_OFF));
 }
             
@@ -371,6 +376,7 @@ uint32_t adv7533_Play(uint16_t DeviceAddr ,uint16_t* pBuffer  ,uint16_t Size)
   */
 uint32_t adv7533_Stop(uint16_t DeviceAddr,uint32_t cmd)
 { 
+  (void)cmd;
   return(adv7533_SetMute(DeviceAddr,AUDIO_MUTE_ON));
 }               
             
@@ -409,6 +415,8 @@ uint32_t adv7533_SetMute(uint16_t DeviceAddr, uint32_t Cmd)
   */
 uint32_t adv7533_SetOutputMode(uint16_t DeviceAddr, uint8_t Output)
 {
+  (void)DeviceAddr;
+  (void)Output;
   return 0;
 }    
             
@@ -420,7 +428,9 @@ uint32_t adv7533_SetOutputMode(uint16_t DeviceAddr, uint8_t Output)
   */           
 uint32_t adv7533_SetVolume(uint16_t DeviceAddr, uint8_t Volume)
 {
- return 0;
+  (void)DeviceAddr;
+  (void)Volume;
+  return 0;
 }
             
 /**
@@ -430,6 +440,7 @@ uint32_t adv7533_SetVolume(uint16_t DeviceAddr, uint8_t Volume)
   */
 uint32_t adv7533_Reset(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   return 0;
 }
 

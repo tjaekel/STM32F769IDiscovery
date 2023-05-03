@@ -569,7 +569,7 @@ void FFT_Display_BarGraph(int ch)
 		{
 			//now we iterate with decimation
 			uint8_t nextInd;
-			int i;
+			size_t i;
 			float maxFftVal;
 
 			i = 0;

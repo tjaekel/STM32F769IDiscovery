@@ -6,15 +6,16 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
-  */
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F7xx_HAL_PWR_EX_H
@@ -144,7 +145,7 @@
 
 /** @brief Clear the Under-Drive Ready flag.
   */
-#define __HAL_PWR_CLEAR_ODRUDR_FLAG() (PWR->CSR1 |= (PWR_FLAG_UDRDY | PWR_CSR1_EIWUP))
+#define __HAL_PWR_CLEAR_ODRUDR_FLAG() (PWR->CSR1 |= PWR_FLAG_UDRDY)
 
 /** @brief  Check Wake Up flag is set or not.
   * @param  __WUFLAG__ specifies the Wake Up flag to check.
@@ -258,3 +259,4 @@ HAL_StatusTypeDef HAL_PWREx_EnterUnderDriveSTOPMode(uint32_t Regulator, uint8_t 
 
 #endif /* __STM32F7xx_HAL_PWR_EX_H */
 
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

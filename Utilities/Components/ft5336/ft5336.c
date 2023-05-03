@@ -144,6 +144,7 @@ static uint32_t ft5336_TS_Configure(uint16_t DeviceAddr);
   */
 void ft5336_Init(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Wait at least 200ms after power up before accessing registers
    * Trsi timing (Time of starting to report point after resetting) from FT5336GQQ datasheet */
   TS_IO_Delay(200);
@@ -160,6 +161,7 @@ void ft5336_Init(uint16_t DeviceAddr)
   */
 void ft5336_Reset(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Do nothing */
   /* No software reset sequence available in FT5336 IC */
 }
@@ -172,6 +174,7 @@ void ft5336_Reset(uint16_t DeviceAddr)
   */
 uint16_t ft5336_ReadID(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   volatile uint8_t ucReadId = 0;
   uint8_t nbReadAttempts = 0;
   uint8_t bFoundDevice = 0; /* Device not found by default */
@@ -406,6 +409,7 @@ void ft5336_TS_DisableIT(uint16_t DeviceAddr)
   */
 uint8_t ft5336_TS_ITStatus(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Always return 0 as feature not applicable to FT5336 */
   return 0;
 }
@@ -419,6 +423,7 @@ uint8_t ft5336_TS_ITStatus(uint16_t DeviceAddr)
   */
 void ft5336_TS_ClearIT(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Nothing to be done here for FT5336 */
 }
 
@@ -594,6 +599,7 @@ static void ft5336_I2C_InitializeIfRequired(void)
   */
 static uint32_t ft5336_TS_Configure(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   uint32_t status = FT5336_STATUS_OK;
 
   /* Nothing special to be done for FT5336 */

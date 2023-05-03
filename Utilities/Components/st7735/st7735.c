@@ -95,6 +95,7 @@ LCD_DrvTypeDef   st7735_drv =
   st7735_GetLcdPixelWidth,
   st7735_GetLcdPixelHeight,
   st7735_DrawBitmap,
+  0
 };
 
 static uint16_t ArrayRGB[320] = {0};

@@ -113,6 +113,7 @@ TS_DrvTypeDef ts3510_ts_drv =
   */
 void ts3510_Init(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Initialize IO BUS layer */
   IOE_Init(); 
   
@@ -125,7 +126,7 @@ void ts3510_Init(uint16_t DeviceAddr)
   */
 void ts3510_Reset(uint16_t DeviceAddr)
 {
-
+	(void)DeviceAddr;
 }
 
 /**
@@ -135,6 +136,7 @@ void ts3510_Reset(uint16_t DeviceAddr)
   */
 uint16_t ts3510_ReadID(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   return 0;
 }
 
@@ -145,6 +147,7 @@ uint16_t ts3510_ReadID(uint16_t DeviceAddr)
   */
 void ts3510_TS_Start(uint16_t DeviceAddr)
 {
+	(void)DeviceAddr;
 }
 
 /**
@@ -205,7 +208,8 @@ void ts3510_TS_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
   * @retval None
   */
 void ts3510_TS_EnableIT(uint16_t DeviceAddr)
-{  
+{
+	(void)DeviceAddr;
 }
 
 /**
@@ -215,6 +219,7 @@ void ts3510_TS_EnableIT(uint16_t DeviceAddr)
   */
 void ts3510_TS_DisableIT(uint16_t DeviceAddr)
 {
+	(void)DeviceAddr;
 }
 
 /**
@@ -224,6 +229,7 @@ void ts3510_TS_DisableIT(uint16_t DeviceAddr)
   */
 uint8_t ts3510_TS_ITStatus(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   return 0;
 }
 
@@ -234,6 +240,7 @@ uint8_t ts3510_TS_ITStatus(uint16_t DeviceAddr)
   */
 void ts3510_TS_ClearIT(uint16_t DeviceAddr)
 {
+	(void)DeviceAddr;
 }
 
 /**

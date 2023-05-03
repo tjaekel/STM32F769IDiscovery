@@ -123,9 +123,11 @@ void BASS_BOOST_filter(void)
 	extern int XXTouch;
 
 	if ( ! XXTouch)
-	for (i = 0; i < (bufSize / (2 + 2)); i++)
 	{
-		BassBoost_SingleSample(outBuf, outBuf + 1);
-		outBuf += 2;
+		for (i = 0; i < (bufSize / (2 + 2)); i++)
+		{
+			BassBoost_SingleSample(outBuf, outBuf + 1);
+			outBuf += 2;
+		}
 	}
 }

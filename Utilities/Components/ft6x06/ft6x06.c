@@ -160,6 +160,7 @@ void ft6x06_Init(uint16_t DeviceAddr)
   */
 void ft6x06_Reset(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Do nothing */
   /* No software reset sequence available in FT6206 IC */
 }
@@ -313,6 +314,7 @@ void ft6x06_TS_DisableIT(uint16_t DeviceAddr)
   */
 uint8_t ft6x06_TS_ITStatus(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Always return 0 as feature not applicable to FT6206 */
   return 0;
 }
@@ -326,6 +328,7 @@ uint8_t ft6x06_TS_ITStatus(uint16_t DeviceAddr)
   */
 void ft6x06_TS_ClearIT(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Nothing to be done here for FT6206 */
 }
 
@@ -464,6 +467,7 @@ static uint32_t ft6x06_TS_Calibration(uint16_t DeviceAddr)
   */
 static uint32_t ft6x06_TS_Configure(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   uint32_t status = FT6206_STATUS_OK;
 
   /* Nothing special to be done for FT6206 */

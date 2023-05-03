@@ -1458,7 +1458,6 @@ void gen_numname (
 	WCHAR wc;
 	DWORD sr;
 
-
 	mem_cpy(dst, src, 11);
 
 	if (seq > 5) {	/* On many collisions, generate a hash number instead of sequential number */
@@ -1479,7 +1478,11 @@ void gen_numname (
 	do {
 		c = (seq % 16) + '0';
 		if (c > '9') c += 7;
-		ns[i--] = c;
+		ns[i] = c;
+		if (i)
+			i--;
+		else
+			break;
 		seq /= 16;
 	} while (seq);
 	ns[i] = '~';

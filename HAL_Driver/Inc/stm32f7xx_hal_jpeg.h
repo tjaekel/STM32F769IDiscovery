@@ -6,12 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -23,11 +24,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#if defined (JPEG)
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal_def.h"
-
-#if defined (JPEG)
 
 /** @addtogroup STM32F7xx_HAL_Driver
   * @{
@@ -398,7 +397,7 @@ typedef  void (*pJPEG_DataReadyCallbackTypeDef)(JPEG_HandleTypeDef *hjpeg, uint8
   *         @arg JPEG_IT_EOC   : End of Conversion Interrupt
   *         @arg JPEG_IT_HPD   : Header Parsing Done Interrupt
   *
-  * @retval No return
+  * @retval No retrun
   */
 #define __HAL_JPEG_ENABLE_IT(__HANDLE__,__INTERRUPT__)  ((__HANDLE__)->Instance->CR |= (__INTERRUPT__) )
 
@@ -416,7 +415,7 @@ typedef  void (*pJPEG_DataReadyCallbackTypeDef)(JPEG_HandleTypeDef *hjpeg, uint8
   *
   * @note    To disable an IT we must use MODIFY_REG macro to avoid writing "1" to the FIFO flush bits
   *          located in the same IT enable register (CR register).
-  * @retval  No return
+  * @retval  No retrun
   */
 #define __HAL_JPEG_DISABLE_IT(__HANDLE__,__INTERRUPT__) MODIFY_REG((__HANDLE__)->Instance->CR, (__INTERRUPT__), 0UL)
 
@@ -644,10 +643,10 @@ uint32_t               HAL_JPEG_GetError(JPEG_HandleTypeDef *hjpeg);
   */
 
 #endif /* JPEG */
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* STM32F7xx_HAL_JPEG_H */
 
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

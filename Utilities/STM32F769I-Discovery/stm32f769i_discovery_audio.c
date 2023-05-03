@@ -588,6 +588,8 @@ void BSP_AUDIO_OUT_DeInit(void)
   */
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
+  (void)hsai;
+
   /* Manage the remaining file size and new address offset: This function 
      should be coded by user (its prototype is already declared in stm32f769i_discovery_audio.h) */
   BSP_AUDIO_OUT_TransferComplete_CallBack();
@@ -600,6 +602,8 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
   */
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
+  (void)hsai;
+
   /* Manage the remaining file size and new address offset: This function 
      should be coded by user (its prototype is already declared in stm32f769i_discovery_audio.h) */
   BSP_AUDIO_OUT_HalfTransfer_CallBack();
@@ -654,6 +658,8 @@ __weak void BSP_AUDIO_OUT_Error_CallBack(void)
   */
 __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
 { 
+  (void)Params;
+
   static DMA_HandleTypeDef hdma_sai_tx;
   GPIO_InitTypeDef  gpio_init_structure;  
   
@@ -720,6 +726,8 @@ __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
   */
 static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
 {
+  (void)Params;
+
   static DMA_HandleTypeDef hdma_sai_rx;
   GPIO_InitTypeDef  gpio_init_structure;  
 
@@ -793,6 +801,8 @@ static void SAI_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params)
   */
 static void SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
 {
+  (void)Params;
+
   GPIO_InitTypeDef  gpio_init_structure;
   
   /* SAI DMA IRQ Channel deactivation */
@@ -826,6 +836,8 @@ static void SAI_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
   */
 __weak void BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
 {
+    (void)Params;
+
     GPIO_InitTypeDef  gpio_init_structure;
 
     /* SAI DMA IRQ Channel deactivation */
@@ -865,6 +877,9 @@ __weak void BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
   */
 __weak void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFreq, void *Params)
 { 
+  (void)hsai;
+  (void)Params;
+
   RCC_PeriphCLKInitTypeDef rcc_ex_clk_init_struct;
 
   HAL_RCCEx_GetPeriphCLKConfig(&rcc_ex_clk_init_struct);
@@ -1144,6 +1159,8 @@ uint8_t BSP_AUDIO_IN_Init(uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr)
   */
 uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr)
 { 
+  (void)BitRes;
+
   uint8_t ret = AUDIO_ERROR;
   AudioIn_Device = InputDevice;
   
@@ -1445,7 +1462,7 @@ void BSP_AUDIO_IN_DeInit(void)
   */
 void HAL_DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter)
 {
-  uint32_t index = 0;
+  long int index = 0;
   
   if(hdfsdm_filter == &hAudioInTopLeftFilter)
   {
@@ -1521,7 +1538,7 @@ void HAL_DFSDM_FilterRegConvCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filt
   */
 void HAL_DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_filter)
 {
-  uint32_t index = 0;
+  long int index = 0;
   
   if(hdfsdm_filter == &hAudioInTopLeftFilter)
   {
@@ -1597,6 +1614,8 @@ void HAL_DFSDM_FilterRegConvHalfCpltCallback(DFSDM_Filter_HandleTypeDef *hdfsdm_
   */
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
+  (void)hsai;
+
   /* Manage the remaining file size and new address offset: This function 
      should be coded by user (its prototype is already declared in stm32769i_discovery_audio.h) */
   BSP_AUDIO_IN_HalfTransfer_CallBack();
@@ -1609,6 +1628,8 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
   */
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 {
+  (void)hsai;
+
   /* Call the record update function to get the next buffer to fill and its size (size is ignored) */
   BSP_AUDIO_IN_TransferComplete_CallBack();
 }
@@ -1694,6 +1715,9 @@ __weak void BSP_AUDIO_IN_MspDeInit(void)
   */
 __weak void BSP_AUDIO_IN_ClockConfig(DFSDM_Filter_HandleTypeDef *hdfsdm_filter, uint32_t AudioFreq, void *Params)
 { 
+  (void)hdfsdm_filter;
+  (void)Params;
+
   RCC_PeriphCLKInitTypeDef rcc_ex_clk_init_struct;
 
   HAL_RCCEx_GetPeriphCLKConfig(&rcc_ex_clk_init_struct);

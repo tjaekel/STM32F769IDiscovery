@@ -108,6 +108,11 @@ int recCnt = 0;
 
 void UDanteUDP_Receive(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
+	(void)addr;
+	(void)arg;
+	(void)pcb;
+	(void)port;
+
 	unsigned char *pAudio;
 
 	unsigned char *paBuf;
@@ -199,6 +204,7 @@ void main_UDanteUDP(void)
   */
 void StartHTTPDThread(void const * argument)
 {
+  (void)argument;
 #if 0
   /* Initialize LCD and LEDs */
   BSP_Config();

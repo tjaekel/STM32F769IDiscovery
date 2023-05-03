@@ -65,8 +65,14 @@ static void print_cpuLoad(void)
 	//ATT: send all the time one single, complete string: our UART_Tx cannot handle
 	//send requests if previous is still running!
 	//Two UART_Tx will kill the ongoing transmission!
-	sprintf(text, "%3.1f\n\r", (float)((100.0 * (float)time_diff) / (float)time_total));
-	strcat(text, "> ");			//prompt - avoid to kill UART_Tx!
+
+	//floating point sprintf not supported!
+	////sprintf(text, "%3.1f\n\r", (float)((100.0 * (float)time_diff) / (float)time_total));
+	if (time_total)
+		l = (int)((100 * time_diff) / time_total);
+	else
+		l = 0;
+	sprintf(text, "%3d\r\n> ", l);		//with prompt - avoid to kill UART_Tx!
 	l = strlen(text);
 	UART_Tx((const uint8_t *)text, l);
 }
@@ -107,6 +113,7 @@ void UART_cmd_init(void)
   */
 int UART_cmd(uint8_t *uartBuf, int len)
 {
+	(void)len;
 	char cmd = '\0';
 	int p1, p2, p3, p4, p5;
 

@@ -20,7 +20,7 @@ const int16_t SineWave1KHz[AUDIO_IN_PACKET /2] = {
 void TONEGEN_CpySine(void)
 {
 	//copy the sine wave into output play buffer
-	int i = 0;
+	size_t i = 0;
 
 	while (i < sizeof(BufferCtl.buff))
 	{

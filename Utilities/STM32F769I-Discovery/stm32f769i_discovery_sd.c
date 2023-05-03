@@ -359,6 +359,9 @@ uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr)
   */
 __weak void BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params)
 {
+  (void)hsd;
+  (void)Params;
+
   static DMA_HandleTypeDef dma_rx_handle;
   static DMA_HandleTypeDef dma_tx_handle;
   GPIO_InitTypeDef gpio_init_structure;
@@ -464,6 +467,9 @@ __weak void BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params)
   */
 __weak void BSP_SD_Detect_MspInit(SD_HandleTypeDef *hsd, void *Params)
 {
+  (void)hsd;
+  (void)Params;
+
   GPIO_InitTypeDef  gpio_init_structure;
 
   SD_DETECT_GPIO_CLK_ENABLE();
@@ -483,6 +489,9 @@ __weak void BSP_SD_Detect_MspInit(SD_HandleTypeDef *hsd, void *Params)
   */
 __weak void BSP_SD_MspDeInit(SD_HandleTypeDef *hsd, void *Params)
 {
+	(void)hsd;
+	(void)Params;
+
     static DMA_HandleTypeDef dma_rx_handle;
     static DMA_HandleTypeDef dma_tx_handle;
 
@@ -542,6 +551,7 @@ void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo)
   */
 void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
 {
+  (void)hsd;
   BSP_SD_AbortCallback();
 }
 
@@ -552,6 +562,7 @@ void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
   */
 void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
 {
+  (void)hsd;
   BSP_SD_WriteCpltCallback();
 }
 
@@ -562,6 +573,7 @@ void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
   */
 void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
 {
+  (void)hsd;
   BSP_SD_ReadCpltCallback();
 }
 

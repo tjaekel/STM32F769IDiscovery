@@ -249,7 +249,7 @@ int UART_getString(uint8_t *buf, int len)
 				UART_Tx((uint8_t *)"\010 \010", 3);
 			}
 			else
-				;
+				{;}
 
 			return 0;
 		}

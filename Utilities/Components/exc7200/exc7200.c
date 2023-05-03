@@ -115,6 +115,7 @@ uint8_t aBufferTS[10];
   */
 void exc7200_Init(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   /* Initialize IO BUS layer */
   IOE_Init(); 
   
@@ -127,7 +128,7 @@ void exc7200_Init(uint16_t DeviceAddr)
   */
 void exc7200_Reset(uint16_t DeviceAddr)
 {
-
+  (void)DeviceAddr;
 }
 
 /**
@@ -137,6 +138,7 @@ void exc7200_Reset(uint16_t DeviceAddr)
   */
 uint16_t exc7200_ReadID(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   return 0;
 }
 
@@ -147,6 +149,7 @@ uint16_t exc7200_ReadID(uint16_t DeviceAddr)
   */
 void exc7200_TS_Start(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
 }
 
 /**
@@ -191,7 +194,8 @@ void exc7200_TS_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y)
   * @retval None
   */
 void exc7200_TS_EnableIT(uint16_t DeviceAddr)
-{  
+{
+	(void)DeviceAddr;
 }
 
 /**
@@ -201,6 +205,7 @@ void exc7200_TS_EnableIT(uint16_t DeviceAddr)
   */
 void exc7200_TS_DisableIT(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
 }
 
 /**
@@ -210,6 +215,7 @@ void exc7200_TS_DisableIT(uint16_t DeviceAddr)
   */
 uint8_t exc7200_TS_ITStatus(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
   return 0;
 }
 
@@ -220,6 +226,7 @@ uint8_t exc7200_TS_ITStatus(uint16_t DeviceAddr)
   */
 void exc7200_TS_ClearIT(uint16_t DeviceAddr)
 {
+  (void)DeviceAddr;
 }
 
 /**

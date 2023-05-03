@@ -6,12 +6,14 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file in
-  * the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
   ******************************************************************************
   */
 
@@ -500,10 +502,10 @@ typedef struct
   * @{
   */
 /**
-  * @brief  Calculate the FLASH Boot Base Address (BOOT_ADD0 or BOOT_ADD1)
+  * @brief  Calculate the FLASH Boot Base Adress (BOOT_ADD0 or BOOT_ADD1)
   * @note   Returned value BOOT_ADDx[15:0] corresponds to boot address [29:14].
   * @param  __ADDRESS__ FLASH Boot Address (in the range 0x0000 0000 to 0x2004 FFFF with a granularity of 16KB)
-  * @retval The FLASH Boot Base Address
+  * @retval The FLASH Boot Base Adress
   */
 #define __HAL_FLASH_CALC_BOOT_BASE_ADR(__ADDRESS__) ((__ADDRESS__) >> 14)
  /**
@@ -695,3 +697,4 @@ void FLASH_Erase_Sector(uint32_t Sector, uint8_t VoltageRange);
 
 #endif /* __STM32F7xx_HAL_FLASH_EX_H */
 
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

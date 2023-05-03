@@ -537,6 +537,8 @@ static HAL_StatusTypeDef I2Cx_IsDeviceReady(I2C_HandleTypeDef *i2c_handler, uint
   */
 static void I2Cx_Error(I2C_HandleTypeDef *i2c_handler, uint8_t Addr)
 {
+  (void)Addr;
+
   /* De-initialize the I2C communication bus */
   HAL_I2C_DeInit(i2c_handler);
   

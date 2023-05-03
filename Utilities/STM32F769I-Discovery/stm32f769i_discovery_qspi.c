@@ -530,6 +530,8 @@ uint8_t BSP_QSPI_EnableMemoryMappedMode(void)
   */
 __weak void BSP_QSPI_MspInit(QSPI_HandleTypeDef *hqspi, void *Params)
 {
+  (void)hqspi;
+  (void)Params;
   GPIO_InitTypeDef gpio_init_structure;
 
   /*##-1- Enable peripherals and GPIO Clocks #################################*/
@@ -591,6 +593,9 @@ __weak void BSP_QSPI_MspInit(QSPI_HandleTypeDef *hqspi, void *Params)
   */
 __weak void BSP_QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi, void *Params)
 {
+  (void)hqspi;
+  (void)Params;
+
   /*##-1- Disable the NVIC for QSPI ###########################################*/
   HAL_NVIC_DisableIRQ(QUADSPI_IRQn);
 

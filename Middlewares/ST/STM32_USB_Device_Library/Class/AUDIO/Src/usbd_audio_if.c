@@ -62,8 +62,12 @@ USBD_AUDIO_ItfTypeDef USBD_AUDIO_fops = {
   * @param  options: Reserved for future use 
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
-static int8_t Audio_Init(uint32_t  AudioFreq, uint32_t Volume, uint32_t options)
+static int8_t Audio_Init(uint32_t AudioFreq, uint32_t Volume, uint32_t options)
 {
+  (void)AudioFreq;
+  (void)Volume;
+  (void)options;
+
 #if 0
   BSP_AUDIO_OUT_Init(OUTPUT_DEVICE_AUTO, Volume, AudioFreq);
   
@@ -81,6 +85,7 @@ static int8_t Audio_Init(uint32_t  AudioFreq, uint32_t Volume, uint32_t options)
   */
 static int8_t Audio_DeInit(uint32_t options)
 {
+  (void)options;
 #if 0
   BSP_AUDIO_OUT_Stop(CODEC_PDWN_SW);
 #endif
@@ -96,6 +101,8 @@ static int8_t Audio_DeInit(uint32_t options)
   */
 static int8_t Audio_PlaybackCmd(uint8_t *pbuf, uint32_t size, uint8_t cmd)
 {
+  (void)pbuf;
+  (void)size;
   switch(cmd)
   {
   case AUDIO_CMD_START:
@@ -142,6 +149,7 @@ static int8_t Audio_MuteCtl(uint8_t cmd)
   */
 static int8_t Audio_PeriodicTC(uint8_t cmd)
 {
+  (void)cmd;
   return 0;
 }
 

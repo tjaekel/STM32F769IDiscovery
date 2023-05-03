@@ -33,31 +33,23 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-/*_estack = 0x20080000;        end of RAM */
+_estack = 0x20080000;    /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size  = 0x2000;      	/* required amount of heap  */
-_Min_Stack_Size = 0x2000; 		/* required amount of stack - for MSP, RTOS kernel
+_Min_Heap_Size  = 0x0000;      	/* required amount of heap - malloc not used! */
+_Min_Stack_Size = 0x4000; 		/* required amount of stack - for MSP, RTOS kernel
 								   make sure RTOS is interrupt-able by regular ISR's - also nested !! */
 
 /* Specify the memory areas */
 MEMORY
 {
-ITCMRAM (rx)	 : ORIGIN = 0x00000000, LENGTH = 16K
+ITCM (rx)		 : ORIGIN = 0x00000000, LENGTH = 16K
 FLASH (rx)       : ORIGIN = 0x08000000, LENGTH = 2048K
 
-/* DTCM (rw)		 : ORIGIN = 0x20000000, LENGTH = 0x20000
-
-////DTCM (rw)		 : ORIGIN = 0x20000000, LENGTH = 0x1C260
-////Memory_B1(xrw)   : ORIGIN = 0x2001C260, LENGTH = 0x100
-////Memory_B2(xrw)   : ORIGIN = 0x2001C360, LENGTH = 0x100
-////Memory_B3(xrw)   : ORIGIN = 0x2001C460, LENGTH = 0x1DD0
-////Memory_B4(xrw)   : ORIGIN = 0x2001E230, LENGTH = 0x1DD0
-*/
 Memory_B1(xrw)   : ORIGIN = 0x20000000, LENGTH = 0xA0
 Memory_B2(xrw)   : ORIGIN = 0x200000A0, LENGTH = 0xA0
 Memory_B3(xrw)   : ORIGIN = 0x20000140, LENGTH = 0x1dc4 
 Memory_B4(xrw)   : ORIGIN = 0x20001F04, LENGTH = 0x1dc4
-DTCMRAM (rw)     : ORIGIN = 0x20003CC8, LENGTH = 0x1C338
+DTCM (rw)		 : ORIGIN = 0x20003CC8, LENGTH = 0x1C338
 
 RAM (xrw)        : ORIGIN = 0x20020000, LENGTH = 0x60000
 }
@@ -112,7 +104,6 @@ SECTIONS
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
   } >FLASH
-  
   .init_array :
   {
     PROVIDE_HIDDEN (__init_array_start = .);
@@ -120,7 +111,6 @@ SECTIONS
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
   } >FLASH
-  
   .fini_array :
   {
     PROVIDE_HIDDEN (__fini_array_start = .);
@@ -131,6 +121,7 @@ SECTIONS
 
   /* used by the startup to initialize data */
   _sidata = LOADADDR(.data);
+
   /* Initialized data sections goes into RAM, load LMA copy after code */
   .data : 
   {
@@ -157,7 +148,7 @@ SECTIONS
     . = ALIGN(4);
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
-  } >RAM AT> FLASH
+  } >RAM
 
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack :
@@ -167,25 +158,23 @@ SECTIONS
     PROVIDE ( _end = . );
     . = . + _Min_Heap_Size;
     . = . + _Min_Stack_Size;
-    _estack = .;
     . = ALIGN(8);
-  } >RAM AT> FLASH
+  } >RAM
 
   /* have 128K DTCM as separate section - ATT: it will not be initialized !! */
-  _sidtcm = LOADADDR(DTCM);
   DTCM : 
   {
     . = ALIGN(4);
     *(DTCM)
     *(DTCM*)
-  } >DTCMRAM AT> FLASH
+  } >DTCM AT> FLASH
   
   /* make the 4K retention SRAM available */
   
   /* use the 16K TCM RAM for fast code execution */
   /* used by the startup to initialize data */
-  _siitcm = LOADADDR(ITCM);
-  ITCM (NOLOAD) : 
+  _siitcm = LOADADDR(ITCM_RAM);
+  ITCM_RAM (NOLOAD) : 
   {
     . = ALIGN(4);
     _sitcm = .;        		/* create a global symbol at data start */
@@ -194,7 +183,7 @@ SECTIONS
 
     . = ALIGN(4);
     _eitcm = .;        		/* define a global symbol at data end */
-  } >ITCMRAM AT> FLASH
+  } >ITCM AT> FLASH
 
   /* Remove information from the standard libraries */
   /DISCARD/ :

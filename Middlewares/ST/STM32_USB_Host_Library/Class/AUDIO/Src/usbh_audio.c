@@ -1781,6 +1781,9 @@ USBH_StatusTypeDef USBH_AUDIO_InputStream (USBH_HandleTypeDef *phost)
 #else
 	//48KHz, 16bit, stereo = 192 bytes - the format we can handle in all the other code!
 	USBH_MIC_BufferCopy(audioInBuffer, 192, isoRxLen);
+
+	//XXXX: release the audio out clock...
+
 #endif
 	xStatus = 1;
 	}
@@ -2361,7 +2364,7 @@ static USBH_StatusTypeDef AUDIO_SetVolume (USBH_HandleTypeDef *phost, uint8_t fe
   */
 __weak void USBH_AUDIO_FrequencySet(USBH_HandleTypeDef *phost)
 {
-
+  (void)phost;
 }
 
 /**
@@ -2371,7 +2374,7 @@ __weak void USBH_AUDIO_FrequencySet(USBH_HandleTypeDef *phost)
   */
 __weak void  USBH_AUDIO_BufferEmptyCallback(USBH_HandleTypeDef *phost)
 {
-
+  (void)phost;
 }
 /**
 * @}

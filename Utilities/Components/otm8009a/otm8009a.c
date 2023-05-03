@@ -178,6 +178,8 @@ const uint8_t ShortRegData51[] = {0xC6, 0x06};
   */
 __weak void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t *pParams)
 {
+	(void)NbrParams;
+	(void)pParams;
   /* NOTE : This function Should not be modified, when it is needed,
             the DSI_IO_WriteCmd could be implemented in the user file
    */

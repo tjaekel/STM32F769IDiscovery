@@ -301,6 +301,7 @@ static USBD_MSC_BOT_HandleTypeDef usbd_MSC_Handle;
 uint8_t  USBD_MSC_Init (USBD_HandleTypeDef *pdev, 
                             uint8_t cfgidx)
 {
+  (void)cfgidx;
   int16_t ret = 0;
    
   if(pdev->dev_speed == USBD_SPEED_HIGH  ) 
@@ -358,6 +359,7 @@ uint8_t  USBD_MSC_Init (USBD_HandleTypeDef *pdev,
 uint8_t  USBD_MSC_DeInit (USBD_HandleTypeDef *pdev, 
                               uint8_t cfgidx)
 {
+  (void)cfgidx;
   /* Close MSC EPs */
   USBD_LL_CloseEP(pdev,
                   MSC_EPOUT_ADDR);

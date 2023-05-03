@@ -97,6 +97,8 @@ void MX_USB_HOST_Init(void)
  */
 static void USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
 {
+  (void)phost;
+
   /* USER CODE BEGIN CALL_BACK_1 */
   switch(id)
   {

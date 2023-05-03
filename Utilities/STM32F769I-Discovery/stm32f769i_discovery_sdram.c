@@ -372,7 +372,10 @@ uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
   * @retval None
   */
 __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
-{  
+{
+  (void)hsdram;
+  (void)Params;
+
   static DMA_HandleTypeDef dma_handle;
   GPIO_InitTypeDef gpio_init_structure;
   
@@ -471,6 +474,9 @@ __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
   */
 __weak void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
 {  
+	(void)hsdram;
+	(void)Params;
+
     static DMA_HandleTypeDef dma_handle;
   
     /* Disable NVIC configuration for DMA interrupt */

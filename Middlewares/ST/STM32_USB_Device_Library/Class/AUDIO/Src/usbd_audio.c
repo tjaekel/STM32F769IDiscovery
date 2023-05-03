@@ -505,6 +505,7 @@ static uint8_t  USBD_AUDIO_Init (USBD_HandleTypeDef *pdev,
                                  uint8_t cfgidx)
 {
   USBD_AUDIO_HandleTypeDef   *haudio;
+  (void)cfgidx;
   
   /* Open EP OUT */
   USBD_LL_OpenEP(pdev,
@@ -561,7 +562,8 @@ static uint8_t  USBD_AUDIO_Init (USBD_HandleTypeDef *pdev,
 static uint8_t  USBD_AUDIO_DeInit (USBD_HandleTypeDef *pdev, 
                                    uint8_t cfgidx)
 {
-  
+  (void)cfgidx;
+
   /* Close EP OUT */
   USBD_LL_CloseEP(pdev, AUDIO_OUT_EP);
 
@@ -689,8 +691,8 @@ static uint8_t USBInBuf[2*AUDIO_TOTAL_BUF_SIZE] __attribute__((section("DTCM")))
 #endif
 #endif
 
-static int USBInIdxRd = 0;
-static int USBInIdxWr = 0;
+static long unsigned int USBInIdxRd = 0;
+static long unsigned int USBInIdxWr = 0;
 
 /**
   * @brief  USBD_AUDIO_DataIn
@@ -702,6 +704,7 @@ static int USBInIdxWr = 0;
 static uint8_t  USBD_AUDIO_DataIn (USBD_HandleTypeDef *pdev, 
                               	   uint8_t epnum)
 {
+  (void)epnum;
   USBD_StatusTypeDef stat;
 
   //USBD_LL_FlushEP(pdev, AUDIO_IN_EP);
@@ -786,6 +789,8 @@ static uint8_t  USBD_AUDIO_EP0_TxReady (USBD_HandleTypeDef *pdev)
   */
 static uint8_t  USBD_AUDIO_SOF (USBD_HandleTypeDef *pdev)
 {
+  (void)pdev;
+
   return USBD_OK;
 }
 
@@ -816,11 +821,11 @@ void  USBD_AUDIO_Sync (USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset)
   
   if(haudio->rd_ptr > haudio->wr_ptr)
   {
-    if((haudio->rd_ptr - haudio->wr_ptr) < AUDIO_OUT_PACKET)
+    if((long unsigned int)(haudio->rd_ptr - haudio->wr_ptr) < AUDIO_OUT_PACKET)
     {
       shift = -4;
     }
-    else if((haudio->rd_ptr - haudio->wr_ptr) > (AUDIO_TOTAL_BUF_SIZE - AUDIO_OUT_PACKET))
+    else if((long unsigned int)(haudio->rd_ptr - haudio->wr_ptr) > (AUDIO_TOTAL_BUF_SIZE - AUDIO_OUT_PACKET))
     {
       shift = 4;
     }    
@@ -828,11 +833,11 @@ void  USBD_AUDIO_Sync (USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset)
   }
   else
   {
-    if((haudio->wr_ptr - haudio->rd_ptr) < AUDIO_OUT_PACKET)
+    if((long unsigned int)(haudio->wr_ptr - haudio->rd_ptr) < AUDIO_OUT_PACKET)
     {
       shift = 4;
     }
-    else if((haudio->wr_ptr - haudio->rd_ptr) > (AUDIO_TOTAL_BUF_SIZE - AUDIO_OUT_PACKET))
+    else if((long unsigned int)(haudio->wr_ptr - haudio->rd_ptr) > (AUDIO_TOTAL_BUF_SIZE - AUDIO_OUT_PACKET))
     {
       shift = -4;
     }  
@@ -856,6 +861,9 @@ void  USBD_AUDIO_Sync (USBD_HandleTypeDef *pdev, AUDIO_OffsetTypeDef offset)
   */
 static uint8_t  USBD_AUDIO_IsoINIncomplete (USBD_HandleTypeDef *pdev, uint8_t epnum)
 {
+  (void)epnum;
+  (void)pdev;
+
   return USBD_OK;
 }
 /**
@@ -867,6 +875,9 @@ static uint8_t  USBD_AUDIO_IsoINIncomplete (USBD_HandleTypeDef *pdev, uint8_t ep
   */
 static uint8_t  USBD_AUDIO_IsoOutIncomplete (USBD_HandleTypeDef *pdev, uint8_t epnum)
 {
+  (void)epnum;
+  (void)pdev;
+
   return USBD_OK;
 }
 

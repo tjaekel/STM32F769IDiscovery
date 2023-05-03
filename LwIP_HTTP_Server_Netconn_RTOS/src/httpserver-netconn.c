@@ -246,6 +246,7 @@ void http_server_serve(struct netconn *conn)
   */
 static void http_server_netconn_thread(void *arg)
 { 
+  (void)arg;
   struct netconn *conn, *newconn;
   err_t err, accept_err;
 

@@ -100,6 +100,7 @@ USBD_StorageTypeDef USBD_DISK_fops = {
   */
 int8_t STORAGE_Init(uint8_t lun)
 {
+  (void)lun;
   BSP_SD_Init();
   return 0;
 }
@@ -113,6 +114,7 @@ int8_t STORAGE_Init(uint8_t lun)
   */
 int8_t STORAGE_GetCapacity(uint8_t lun, uint32_t *block_num, uint16_t *block_size)
 {
+  (void)lun;
   HAL_SD_CardInfoTypeDef info;
   int8_t ret = -1;
 
@@ -134,6 +136,7 @@ int8_t STORAGE_GetCapacity(uint8_t lun, uint32_t *block_num, uint16_t *block_siz
   */
 int8_t STORAGE_IsReady(uint8_t lun)
 {
+  (void)lun;
   static int8_t prev_status = 0;
   int8_t ret = -1;
 
@@ -164,6 +167,7 @@ int8_t STORAGE_IsReady(uint8_t lun)
   */
 int8_t STORAGE_IsWriteProtected(uint8_t lun)
 {
+  (void)lun;
   return 0;
 }
 
@@ -176,6 +180,7 @@ int8_t STORAGE_IsWriteProtected(uint8_t lun)
   */
 int8_t STORAGE_Read(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
+  (void)lun;
   int8_t ret = -1;
 
   if(BSP_SD_IsDetected() != SD_NOT_PRESENT)
@@ -195,6 +200,7 @@ int8_t STORAGE_Read(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_l
   */
 int8_t STORAGE_Write(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
+  (void)lun;
   int8_t ret = -1;
 
   if(BSP_SD_IsDetected() != SD_NOT_PRESENT)

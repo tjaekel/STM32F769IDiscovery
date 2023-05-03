@@ -221,7 +221,7 @@ static int oIdx = 0;
 void AUDIO_PLAYER_QueueBuf(uint8_t *buf, int len)
 {
 	//just to make sure:
-	if ((oIdx + len) <= sizeof(BufferCtl.buff))
+	if ((size_t)(oIdx + len) <= sizeof(BufferCtl.buff))
 	{
 		fast_memcpy(&BufferCtl.buff[oIdx], buf, len);
 		oIdx += len;
@@ -237,14 +237,14 @@ void AUDIO_PLAYER_QueueBuf(uint8_t *buf, int len)
 	{
 		//tricky: how to restart audio out so that it is in sync?
 		//this seems to work the best way, but not always, we need a new reset and restart
-		if (oIdx >= (sizeof(BufferCtl.buff) / 2 + 192))
+		if ((size_t)oIdx >= (sizeof(BufferCtl.buff) / 2 + 192))
 		{
 			AUDIO_PLAYER_Restart();
 			initDone = 1;
 		}
 	}
 
-	if (oIdx >= sizeof(BufferCtl.buff))
+	if ((size_t)oIdx >= sizeof(BufferCtl.buff))
 		oIdx = 0;
 
 	AUDIO_PLAYER_IncHeartbeat();

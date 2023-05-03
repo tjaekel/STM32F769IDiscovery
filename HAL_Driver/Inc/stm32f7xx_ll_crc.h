@@ -6,12 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -235,7 +236,7 @@ __STATIC_INLINE void LL_CRC_SetOutputDataReverseMode(CRC_TypeDef *CRCx, uint32_t
 }
 
 /**
-  * @brief  Return type of reversal of the bit order of the Output data
+  * @brief  Configure the reversal of the bit order of the Output data
   * @rmtoll CR           REV_OUT       LL_CRC_GetOutputDataReverseMode
   * @param  CRCx CRC Instance
   * @retval Returned value can be one of the following values:
@@ -459,3 +460,5 @@ ErrorStatus LL_CRC_DeInit(CRC_TypeDef *CRCx);
 #endif
 
 #endif /* STM32F7xx_LL_CRC_H */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

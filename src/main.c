@@ -31,6 +31,9 @@ const char VERSION_STR[7] = "V1.1.0";
 
 extern uint8_t IP_ADDR[4];
 
+volatile uint32_t time_begin, time_start, time_end, time_diff, time_total;
+TIM_HandleTypeDef hTim2;
+
 /** @addtogroup STM32F7xx_HAL_Examples
   * @{
   */
@@ -274,6 +277,7 @@ int main_audio(void)
   */
 static void Audio_Thread(void const * argument)
 {
+  (void)argument;
   int ifSelection, outSelection;
   int sampleFreq = 48000;				//will be changed by config
   int SDGUIState = 0;
@@ -495,6 +499,13 @@ static void Audio_Thread(void const * argument)
     			//ATT: works only with SD-Card !!!
     			BASS_BOOST_filter();
     	}
+
+#ifdef TRY_USBH_MIC
+    	if (ifSelection == INIF_USB)
+    	{
+    		/* USBH MIC Audio */
+    	}
+#endif
 
     	if (ifSelection == INIF_UDANTE)
     	{
@@ -1180,6 +1191,7 @@ void ProcessConfig(void)
 #ifdef UART_THREAD
 static void UARTCmd_Thread(void const * argument)
 {
+	(void)argument;
 	//initialize USART1, for VCP on USB-Debug-Port, for UART Shell commands
 	//UART_cmd_init();
 
@@ -1251,6 +1263,7 @@ void Display_FFTPage(void)
   */
 void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
 {
+  (void)hdsi;
   if(pend_buffer >= 0)
   { 
     /* Disable DSI Wrapper */

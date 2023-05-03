@@ -37,7 +37,7 @@ extern SAI_HandleTypeDef    haudio_in_src_sai;
 #endif
 extern UART_HandleTypeDef huart1;
 
-int extern gUSBInterface;
+extern int gUSBInterface;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
