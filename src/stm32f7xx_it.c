@@ -178,7 +178,7 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
+void __attribute__((section("ITCM_RAM"))) SysTick_Handler(void)
 {
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
@@ -211,7 +211,7 @@ void DSI_IRQHandler(void)
 #ifdef USE_USB_FS
 void OTG_FS_IRQHandler(void)
 #else
-void OTG_HS_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) OTG_HS_IRQHandler(void)
 #endif
 {
   if (gUSBInterface == 2)
@@ -229,7 +229,7 @@ void OTG_HS_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void BSP_SDMMC_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) BSP_SDMMC_IRQHandler(void)
 {
   HAL_SD_IRQHandler(&uSdHandle);
 }
@@ -266,7 +266,7 @@ void BSP_SDMMC_DMA_Rx_IRQHandler(void)
   * @param None
   * @retval None
   */
-void AUDIO_OUT_SAIx_DMAx_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) AUDIO_OUT_SAIx_DMAx_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(haudio_out_sai.hdmatx);
 }
@@ -312,7 +312,7 @@ void SPDIF_RX_IRQHandler(void)
 /**
 * @brief This function handles DMA1 stream1 global interrupt.
 */
-void DMA1_Stream1_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) DMA1_Stream1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
 
@@ -329,7 +329,7 @@ void DMA1_Stream1_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA2_Stream2_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) DMA2_Stream2_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(spdiftxhsai.hdmatx);
 }
@@ -350,7 +350,7 @@ void AUDIO_IN_SAI_SRC_DMAx_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void DMA2_Stream4_IRQHandler(void)
+void __attribute__((section("ITCM_RAM"))) DMA2_Stream4_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(haudio_in_sai.hdmarx);
 }

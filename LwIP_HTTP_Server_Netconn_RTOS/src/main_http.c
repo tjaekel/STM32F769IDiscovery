@@ -16,7 +16,7 @@
 #include "cmsis_os.h"
 #include "ethernetif.h"
 #include "app_ethernet.h"
-#include "lcd_log.h"
+//#include "lcd_log.h"
 #include "httpserver-netconn.h"
 
 #include "udp.h"

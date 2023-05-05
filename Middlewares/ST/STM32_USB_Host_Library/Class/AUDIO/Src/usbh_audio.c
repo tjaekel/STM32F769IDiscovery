@@ -685,7 +685,7 @@ static USBH_StatusTypeDef USBH_AUDIO_HandleCSRequest(USBH_HandleTypeDef *phost)
   * @param  phost: Host handle
   * @retval USBH Status
   */
-static USBH_StatusTypeDef USBH_AUDIO_Process (USBH_HandleTypeDef *phost)
+static USBH_StatusTypeDef __attribute__((section("ITCM_RAM"))) USBH_AUDIO_Process (USBH_HandleTypeDef *phost)
 {
   USBH_StatusTypeDef status = USBH_BUSY;
   AUDIO_HandleTypeDef *AUDIO_Handle =  (AUDIO_HandleTypeDef *)  phost->pActiveClass->pData;
@@ -1664,7 +1664,7 @@ static void __attribute__((section("ITCM"))) USBH_MIC_BufferCopy(uint8_t *micBuf
   * @param  phost: Host handle
   * @retval USBH Status
   */
-USBH_StatusTypeDef USBH_AUDIO_InputStream (USBH_HandleTypeDef *phost)
+USBH_StatusTypeDef __attribute__((section("ITCM_RAM"))) USBH_AUDIO_InputStream (USBH_HandleTypeDef *phost)
 {
 	(void)phost;
 	USBH_StatusTypeDef status = USBH_OK;
@@ -1796,7 +1796,7 @@ USBH_StatusTypeDef USBH_AUDIO_InputStream (USBH_HandleTypeDef *phost)
   * @param  phost: Host handle
   * @retval USBH Status
   */
-static USBH_StatusTypeDef USBH_AUDIO_Control (USBH_HandleTypeDef *phost)
+static USBH_StatusTypeDef __attribute__((section("ITCM_RAM"))) USBH_AUDIO_Control (USBH_HandleTypeDef *phost)
 {
   USBH_StatusTypeDef status = USBH_BUSY ;
   AUDIO_HandleTypeDef *AUDIO_Handle =  (AUDIO_HandleTypeDef*) phost->pActiveClass->pData;
@@ -1871,7 +1871,7 @@ static USBH_StatusTypeDef USBH_AUDIO_Control (USBH_HandleTypeDef *phost)
   * @param  phost: Host handle
   * @retval USBH Status
   */
-static USBH_StatusTypeDef USBH_AUDIO_OutputStream (USBH_HandleTypeDef *phost)
+static USBH_StatusTypeDef __attribute__((section("ITCM_RAM"))) USBH_AUDIO_OutputStream (USBH_HandleTypeDef *phost)
 {
   USBH_StatusTypeDef status = USBH_BUSY ;
   AUDIO_HandleTypeDef *AUDIO_Handle =  (AUDIO_HandleTypeDef*) phost->pActiveClass->pData;

@@ -923,7 +923,7 @@ void  USBH_LL_SetTimer  (USBH_HandleTypeDef *phost, uint32_t time)
   * @param  phost: Host Handle
   * @retval None
   */
-void  USBH_LL_IncTimer  (USBH_HandleTypeDef *phost)
+inline void USBH_LL_IncTimer  (USBH_HandleTypeDef *phost)
 {
   phost->Timer++;
   USBH_HandleSof(phost);
@@ -935,7 +935,7 @@ void  USBH_LL_IncTimer  (USBH_HandleTypeDef *phost)
   * @param  phost: Host Handle
   * @retval None
   */
-static void  USBH_HandleSof  (USBH_HandleTypeDef *phost)
+inline static void  USBH_HandleSof  (USBH_HandleTypeDef *phost)
 {
   if((phost->gState == HOST_CLASS)&&(phost->pActiveClass != NULL))
   {

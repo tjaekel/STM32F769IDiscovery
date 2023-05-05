@@ -95,7 +95,7 @@ void MX_USB_HOST_Init(void)
 /*
  * user callback definition
  */
-static void USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
+static void __attribute__((section("ITCM_RAM"))) USBH_UserProcess  (USBH_HandleTypeDef *phost, uint8_t id)
 {
   (void)phost;
 

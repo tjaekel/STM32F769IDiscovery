@@ -472,7 +472,7 @@ uint8_t BSP_AUDIO_OUT_Stop(uint32_t Option)
   *         Mute and 100 for Max volume level).
   * @retval AUDIO_OK if correct communication, else wrong communication
   */
-uint8_t BSP_AUDIO_OUT_SetVolume(uint8_t Volume)
+uint8_t __attribute__((section("ITCM_RAM"))) BSP_AUDIO_OUT_SetVolume(uint8_t Volume)
 {
   /* Call the codec volume control function with converted volume value */
   if(audio_drv->SetVolume(AUDIO_I2C_ADDRESS, Volume) != 0)

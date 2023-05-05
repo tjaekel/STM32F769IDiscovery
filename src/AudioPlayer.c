@@ -27,7 +27,7 @@ int gCurVolume = AUDIO_DEFAULT_VOLUME;					//the start volume
 
 /* Private functions ---------------------------------------------------------*/
 
-int AUDIO_PLAYER_GetClock(void)
+int __attribute__((section("ITCM_RAM"))) AUDIO_PLAYER_GetClock(void)
 {
 	//we will block here for max. 200 msec if we do not have an audio clock, so the GUI remains a bit responsive
 	if (xSemaphoreTake(xSemaphoreAudio, 200) == pdTRUE)
@@ -42,7 +42,7 @@ int AUDIO_PLAYER_GetClock(void)
 	}
 }
 
-void AUDIO_PLAYER_ReleaseClock(int trig)
+void __attribute__((section("ITCM_RAM"))) AUDIO_PLAYER_ReleaseClock(int trig)
 {
 	static BaseType_t xHigherPriorityTaskWoken;
 
@@ -54,7 +54,7 @@ void AUDIO_PLAYER_ReleaseClock(int trig)
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
-int AUDIO_PLAYER_GetState(void)
+inline int AUDIO_PLAYER_GetState(void)
 {
 	if (BufferCtl.state == BUFFER_OFFSET_HALF)
 		return 0;
@@ -62,13 +62,13 @@ int AUDIO_PLAYER_GetState(void)
 		return 1;
 }
 
-int AUDIO_PLAYER_GetBuffer(uint8_t **out_BufAddr)
+inline int AUDIO_PLAYER_GetBuffer(uint8_t **out_BufAddr)
 {
 	*out_BufAddr = BufferCtl.buff;
 	return sizeof(BufferCtl.buff);
 }
 
-int __attribute__((section("ITCM"))) AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_BufAddr)
+int __attribute__((section("ITCM_RAM"))) AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_BufAddr)
 {
 	if (BufferCtl.state == BUFFER_OFFSET_HALF)
 	{
@@ -78,12 +78,12 @@ int __attribute__((section("ITCM"))) AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_
 	else
 	{
 		//second half buffer was played - return the second, active buffer - BUFFER_OFFSET_FULL
-		////*out_BufAddr = BufferCtl.buff + (sizeof(BufferCtl.buff) / 2);
-		*out_BufAddr = &BufferCtl.buff[AUDIO_TOTAL_BUF_SIZE];
+		*out_BufAddr = BufferCtl.buff + (sizeof(BufferCtl.buff) / 2);
+		////*out_BufAddr = &BufferCtl.buff[AUDIO_TOTAL_BUF_SIZE];
 	}
 
-	////return (sizeof(BufferCtl.buff) / 2);		//in bytes, half size of Double Buffer
-	return AUDIO_TOTAL_BUF_SIZE;
+	return (sizeof(BufferCtl.buff) / 2);		//in bytes, half size of Double Buffer
+	////return AUDIO_TOTAL_BUF_SIZE;
 }
 
 /**
@@ -143,7 +143,7 @@ void AUDIO_PLAYER_Restart(void)
   * @param  None
   * @retval Audio error
   */
-AUDIO_ErrorTypeDef AUDIO_PLAYER_Process(void)
+inline AUDIO_ErrorTypeDef AUDIO_PLAYER_Process(void)
 {
   return AUDIO_ERROR_NONE;
 }
@@ -164,7 +164,7 @@ AUDIO_ErrorTypeDef AUDIO_PLAYER_Stop(void)
   * @param  None
   * @retval None
   */
-void BSP_AUDIO_OUT_TransferComplete_CallBack(void)
+void __attribute__((section("ITCM_RAM"))) BSP_AUDIO_OUT_TransferComplete_CallBack(void)
 {
     BufferCtl.state = BUFFER_OFFSET_FULL;
     AUDIO_PLAYER_ReleaseClock(2);
@@ -175,7 +175,7 @@ void BSP_AUDIO_OUT_TransferComplete_CallBack(void)
   * @param  None
   * @retval None
   */
-void BSP_AUDIO_OUT_HalfTransfer_CallBack(void)
+void __attribute__((section("ITCM_RAM"))) BSP_AUDIO_OUT_HalfTransfer_CallBack(void)
 {
     BufferCtl.state = BUFFER_OFFSET_HALF;
     AUDIO_PLAYER_ReleaseClock(1);
@@ -186,7 +186,7 @@ void BSP_AUDIO_OUT_HalfTransfer_CallBack(void)
   * @param  buf - pointer to the USB input samples
   * @retval None
   */
-void AUDIO_PLAYER_CpyBuf(uint8_t *buf)
+void __attribute__((section("ITCM_RAM"))) AUDIO_PLAYER_CpyBuf(uint8_t *buf)
 {
 	if (BufferCtl.state == BUFFER_OFFSET_FULL)
 	{
@@ -204,7 +204,7 @@ void AUDIO_PLAYER_CpyBuf(uint8_t *buf)
   * @brief  Clear SAI output buffer, used when we do not have valid audio
   * @retval None
   */
-void AUDIO_PLAYER_ClrBuf(void)
+inline void AUDIO_PLAYER_ClrBuf(void)
 {
 	memset(&BufferCtl.buff[0], 0, sizeof(BufferCtl.buff));
 }
@@ -218,7 +218,7 @@ static int oIdx = 0;
   * @param  len - the length of the Audio Samples, in bytes
   * @retval None
   */
-void AUDIO_PLAYER_QueueBuf(uint8_t *buf, int len)
+void __attribute__((section("ITCM_RAM"))) AUDIO_PLAYER_QueueBuf(uint8_t *buf, int len)
 {
 	//just to make sure:
 	if ((size_t)(oIdx + len) <= sizeof(BufferCtl.buff))
@@ -266,7 +266,7 @@ void AUDIO_PLAYER_UDANTERestart(void)
   * @param  None
   * @retval ulong - the audio reception counter
   */
-unsigned long AUDIO_PLAYER_GetHeartbeat(void)
+inline unsigned long AUDIO_PLAYER_GetHeartbeat(void)
 {
 	unsigned long x;
 	x = sAudioHeartbeat;
@@ -287,12 +287,12 @@ unsigned long AUDIO_PLAYER_GetHeartbeat(void)
   * @param  None
   * @retval None
   */
-void AUDIO_PLAYER_IncHeartbeat(void)
+inline void AUDIO_PLAYER_IncHeartbeat(void)
 {
 	sAudioHeartbeat++;
 }
 
-void AUDIO_Volume(int upDown)
+void __attribute__((section("ITCM_RAM"))) AUDIO_Volume(int upDown)
 {
 	/* 1 : increase volume, in steps of 10
 	 * 0 : decrease volume, in steps of 10

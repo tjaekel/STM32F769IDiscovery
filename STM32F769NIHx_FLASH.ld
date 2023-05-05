@@ -36,7 +36,7 @@ ENTRY(Reset_Handler)
 _estack = 0x20080000;    /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size  = 0x0000;      	/* required amount of heap - malloc not used! */
-_Min_Stack_Size = 0x4000; 		/* required amount of stack - for MSP, RTOS kernel
+_Min_Stack_Size = 0x1000; 		/* required amount of stack - for MSP, RTOS kernel
 								   make sure RTOS is interrupt-able by regular ISR's - also nested !! */
 
 /* Specify the memory areas */
@@ -174,7 +174,7 @@ SECTIONS
   /* use the 16K TCM RAM for fast code execution */
   /* used by the startup to initialize data */
   _siitcm = LOADADDR(ITCM_RAM);
-  ITCM_RAM (NOLOAD) : 
+  ITCM_RAM : 
   {
     . = ALIGN(4);
     _sitcm = .;        		/* create a global symbol at data start */

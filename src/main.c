@@ -275,7 +275,7 @@ int main_audio(void)
   * @param  argument - not used
   * @retval None
   */
-static void Audio_Thread(void const * argument)
+static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argument)
 {
   (void)argument;
   int ifSelection, outSelection;
@@ -485,7 +485,7 @@ static void Audio_Thread(void const * argument)
 #ifndef DIGI_FP
 #ifdef STM_SPDIF_OUT
     	//SPDIF Tx on STM to output
-    	taskYIELD();	/* give higher thread a chance */
+    	//taskYIELD();	/* give higher thread a chance */
     	SPDIF_TX_OutBuf();
 #endif
 #endif
@@ -522,7 +522,7 @@ static void Audio_Thread(void const * argument)
     						UDANTE_UDPPort);
 
     				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    				taskYIELD();	/* give higher thread a chance */
+    				//taskYIELD();	/* give higher thread a chance */
     				BSP_LCD_DisplayStringAt(370, 100, (uint8_t *)iptxt, LEFT_MODE);
     			}
     		}
@@ -535,7 +535,7 @@ static void Audio_Thread(void const * argument)
 				sprintf((char*)iptxt, "HTTP: %d.%d.%d.%d", IP_ADDR[0], IP_ADDR[1], IP_ADDR[2], IP_ADDR[3]);
 
 				BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-				taskYIELD();	/* give higher thread a chance */
+				//taskYIELD();	/* give higher thread a chance */
 				BSP_LCD_DisplayStringAt(370, 100, (uint8_t *)iptxt, LEFT_MODE);
     		}
     	}
@@ -555,7 +555,7 @@ static void Audio_Thread(void const * argument)
     			button = SDPlay_FileSelection(0);				//blocking - return if play selected
     			if (button == SD_B_PLAY)
     			{
-    				taskYIELD();	/* give higher thread a chance */
+    				//taskYIELD();	/* give higher thread a chance */
     				Display_FFTPage();
     				AUDIO_PLAYER_Start();
     				SDGUIState = 0;
@@ -573,7 +573,7 @@ static void Audio_Thread(void const * argument)
     			{
     				SDGUIState = 1;
     				/* clear display and show GUI page - display all again, but non-blocking*/
-    				taskYIELD();	/* give higher thread a chance */
+    				//taskYIELD();	/* give higher thread a chance */
     				SDPlay_FileSelection(1);				//non-blocking
     			}
     		}
@@ -585,7 +585,7 @@ static void Audio_Thread(void const * argument)
     			{
     				//a new or the same file to play
     				SDGUIState = 0;
-    				taskYIELD();	/* give higher thread a chance */
+    				//taskYIELD();	/* give higher thread a chance */
         			Display_FFTPage();
         			AUDIO_PLAYER_Start();
         			touchDelay = TOUCH_DELAY;
@@ -594,7 +594,7 @@ static void Audio_Thread(void const * argument)
     			{
     				//closed without to change anything
     				SDGUIState = 0;
-    				taskYIELD();	/* give higher thread a chance */
+    				//taskYIELD();	/* give higher thread a chance */
     				Display_FFTPage();
     				touchDelay = TOUCH_DELAY;
     			}
@@ -641,14 +641,19 @@ static void Audio_Thread(void const * argument)
     			taskYIELD();	/* give higher thread a chance */
     		}
 
+#ifdef LCD_FFT
     		FFT_Filter(0);
     		taskYIELD();	/* give higher thread a chance */
     		FFT_DisplayGraph(0);
     		taskYIELD();	/* give higher thread a chance */
+#if 0
+    		//with both channels to display
     		FFT_Filter(1);
-    		taskYIELD();	/* give higher thread a chance */
+    		//taskYIELD();	/* give higher thread a chance */
     		FFT_DisplayGraph(1);
-    		taskYIELD();	/* give higher thread a chance */
+    		//taskYIELD();	/* give higher thread a chance */
+#endif
+#endif
     	}
 
     	if (SDGUIState == 0)
@@ -660,7 +665,10 @@ static void Audio_Thread(void const * argument)
     	    float load;
     	    char text[15];
 
-    	    load = (float)((100.0 * (float)time_diff) / (float)time_total);
+    	    if (time_total)
+    	    	load = (float)((100.0 * (float)time_diff) / (float)time_total);
+    	    else
+    	    	load = 100.0;
     	    if (sMaxLoad < load)
     	    	sMaxLoad = load;
     	    sMaxLoadInt = (int)(sMaxLoad * 10.0);
@@ -679,11 +687,13 @@ static void Audio_Thread(void const * argument)
     		if (sMaxLoad > 0.05f)
     			sMaxLoad -= 0.05f;
 
+#if 0
     		//display sample rate
     		sprintf(text, "%5d", SysInterfaces.sampleFreq);
     		BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-    		taskYIELD();	/* give higher thread a chance */
+    		//taskYIELD();	/* give higher thread a chance */
     		BSP_LCD_DisplayStringAt(726, FFT_Y_BORDER_TOP + 170, (uint8_t *)text, LEFT_MODE);
+#endif
 
     		/*Refresh the LCD display*/
     		HAL_DSI_Refresh(&hdsi_discovery);
@@ -1559,9 +1569,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 420;					//try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
+  RCC_OscInitStruct.PLL.PLLN = 435;					//420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 9;					//9 for 216MHz, 8 for 200 MHz with PLLN 400;
+  RCC_OscInitStruct.PLL.PLLQ = 8;					//9: for 216MHz, 8 for 200 MHz with PLLN 400;
   RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
   
   ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
@@ -1596,7 +1606,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;  
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2; 
   
-  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5); //FLASH_LATENCY
+  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4); //FLASH_LATENCY
   if(ret != HAL_OK)
   {
 	  while(1) { ; }

@@ -257,7 +257,7 @@ uint8_t BSP_TS_ITConfig(void)
   * @param  TS_State: Pointer to touch screen current state structure
   * @retval TS_OK if all initializations are OK. Other value if error.
   */
-uint8_t BSP_TS_GetState(TS_StateTypeDef *TS_State)
+uint8_t __attribute__((section("ITCM_RAM"))) BSP_TS_GetState(TS_StateTypeDef *TS_State)
 {
   static uint32_t _x[TS_MAX_NB_TOUCH] = {0, 0};
   static uint32_t _y[TS_MAX_NB_TOUCH] = {0, 0};

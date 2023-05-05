@@ -489,7 +489,7 @@ HAL_StatusTypeDef HAL_HCD_HC_SubmitRequest(HCD_HandleTypeDef *hhcd,
   * @param  hhcd HCD handle
   * @retval None
   */
-void HAL_HCD_IRQHandler(HCD_HandleTypeDef *hhcd)
+void __attribute__((section("ITCM_RAM"))) HAL_HCD_IRQHandler(HCD_HandleTypeDef *hhcd)
 {
   USB_OTG_GlobalTypeDef *USBx = hhcd->Instance;
   uint32_t USBx_BASE = (uint32_t)USBx;

@@ -1469,7 +1469,7 @@ HAL_StatusTypeDef HAL_DSI_Stop(DSI_HandleTypeDef *hdsi)
   *               the configuration information for the DSI.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_DSI_Refresh(DSI_HandleTypeDef *hdsi)
+inline HAL_StatusTypeDef HAL_DSI_Refresh(DSI_HandleTypeDef *hdsi)
 {
   /* Process locked */
   __HAL_LOCK(hdsi);

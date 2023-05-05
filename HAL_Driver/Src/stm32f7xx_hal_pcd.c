@@ -942,7 +942,7 @@ uint32_t EP1PktLen;
   * @param  hpcd PCD handle
   * @retval HAL status
   */
-void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
+void __attribute__((section("ITCM_RAM"))) HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
 {
   USB_OTG_GlobalTypeDef *USBx = hpcd->Instance;
   uint32_t USBx_BASE = (uint32_t)USBx;

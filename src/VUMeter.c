@@ -20,7 +20,7 @@ static int16_t last_input[NUM_CHANNELS];
   * @param  None
   * @retval None
   */
-void VUMETER_Analyse(void)
+void __attribute__((section("ITCM_RAM"))) VUMETER_Analyse(void)
 {
 	int16_t *sampleBuf, sample;
 	int bufLen;
@@ -61,7 +61,7 @@ void VUMETER_Analyse(void)
   * @param  channel - which channel to analyze
   * @retval None
   */
-void VUMETER_Input(int channel)
+inline void VUMETER_Input(int channel)
 {
 	if (l_params.vuInput[channel] > last_input[channel])  		// update if higher input level
 		last_input[channel] = l_params.vuInput[channel];
@@ -69,7 +69,7 @@ void VUMETER_Input(int channel)
 		l_params.vuPeak[channel] = l_params.vuInput[channel];
 }
 
-static void VUMETER_Move(int channel)
+static void __attribute__((section("ITCM_RAM"))) VUMETER_Move(int channel)
 {
 	uint32_t curTick = HAL_GetTick();
 	uint32_t curTickDelta;
@@ -101,7 +101,7 @@ static void VUMETER_Move(int channel)
   * @param  channel - 0 or 1 for left or right
   * @retval None
   */
-void VUMETER_Display(int channel)
+void __attribute__((section("ITCM_RAM"))) VUMETER_Display(int channel)
 {
 	// Scale to make it fit to number of segments
 	uint8_t Level = (l_params.vuInput[channel] / (MAX_VALUE / SEGMENTS));
@@ -158,7 +158,7 @@ void VUMETER_Display(int channel)
 	VUMETER_Move(channel);
 }
 
-void VUMETER_Volume(int channel, int level)
+void __attribute__((section("ITCM_RAM"))) VUMETER_Volume(int channel, int level)
 {
 	// Scale to make it fit to number of segments
 	uint8_t Level = level / (100 / SEGMENTS);
@@ -205,7 +205,7 @@ void VUMETER_Volume(int channel, int level)
 	}
 }
 
-void VUMETER_ProcessVolume(int x)
+void __attribute__((section("ITCM_RAM"))) VUMETER_ProcessVolume(int x)
 {
 	int vol;
 

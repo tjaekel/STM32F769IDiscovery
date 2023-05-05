@@ -48,7 +48,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "lwip/opt.h"
 #include "main.h"
-#include "lcd_log.h"
+//#include "lcd_log.h"
 #include "lwip/dhcp.h"
 #include "app_ethernet.h"
 #include "ethernetif.h"

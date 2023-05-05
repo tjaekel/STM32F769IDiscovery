@@ -1429,7 +1429,7 @@ HAL_StatusTypeDef HAL_SD_Erase(SD_HandleTypeDef *hsd, uint32_t BlockStartAdd, ui
   * @param  hsd Pointer to SD handle
   * @retval None
   */
-void HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
+void __attribute__((section("ITCM_RAM"))) HAL_SD_IRQHandler(SD_HandleTypeDef *hsd)
 {
   uint32_t errorstate = HAL_SD_ERROR_NONE;
   

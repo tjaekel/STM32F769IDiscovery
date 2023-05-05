@@ -298,7 +298,7 @@ int32_t FFT_Init(void)
 	return 0;
 }
 
-int32_t FFT_Ready(float32_t **result, int *numResults)
+int32_t __attribute__((section("ITCM_RAM"))) FFT_Ready(float32_t **result, int *numResults)
 {
 	if (fftResultReady)
 	{
@@ -317,7 +317,7 @@ int32_t FFT_Ready(float32_t **result, int *numResults)
   * @param  inOutPtr: the pointer to the (32bit) sample
   * @retval None
   */
-static void DC_BlockerSample(int32_t *inOutPtr, int ch)
+static void __attribute__((section("ITCM_RAM"))) DC_BlockerSample(int32_t *inOutPtr, int ch)
 {
 //define float -> uint32_t conversion with rounding handling,
 //make sure not to use LIB function round which is different
@@ -338,7 +338,7 @@ static void DC_BlockerSample(int32_t *inOutPtr, int ch)
 	*inOutPtr = ROUND(res);
 }
 
-int32_t FFT_Filter(int ch)
+int32_t __attribute__((section("ITCM_RAM"))) FFT_Filter(int ch)
 {
   int i, j;
   q31_t *inBuf = sFFTBuf;
@@ -438,7 +438,7 @@ int32_t FFT_Filter(int ch)
   * @param  None
   * @retval None
   */
-void FFT_DisplayGraph(int ch)
+void __attribute__((section("ITCM_RAM"))) FFT_DisplayGraph(int ch)
 {
 	switch (barType)
 	{
@@ -474,7 +474,8 @@ static void FFT_DisplayMagnitude(int ch, float32_t FFTmaxValue, float32_t FFTmin
 			dB = sFFTmaxValue / (float32_t)(256.0f);
 			dB = log(dB) * 10;
 			dBInt = (int)(dB * 100.0);
-			sprintf(s, "%4d.%2ddB", dBInt / 100, dBInt % 100);
+			//sprintf(s, "%4d.%2ddB", dBInt / 100, abs(dBInt % 100));
+			sprintf(s, "%4ddB", dBInt / 100);
 			if (ch)
 				BSP_LCD_DisplayStringAt(FFT_X_DISP, FFT_Y_BORDER_TOP + 50, (uint8_t *)s, LEFT_MODE);
 			else
@@ -487,7 +488,8 @@ static void FFT_DisplayMagnitude(int ch, float32_t FFTmaxValue, float32_t FFTmin
 			dB = sFFTmaxValue / sFFTminValue;
 			dB = log(dB) * 10;
 			dBInt = (int)(dB * 100.0);
-			sprintf(s, "%4d.%2ddB", dBInt / 100, dBInt % 100);
+			//sprintf(s, "%4d.%2ddB", dBInt / 100, abs(dBInt % 100));
+			sprintf(s, "%4ddB", dBInt / 100);
 			if (ch)
 				BSP_LCD_DisplayStringAt(FFT_X_DISP, FFT_Y_BORDER_TOP + 90, (uint8_t *)s, LEFT_MODE);
 			else
@@ -506,7 +508,7 @@ const uint8_t lookupInd[] = {25, 27, 30, 34, 39, 45, 52, 60, 69, 79, 90, 102, 11
   * @param  ch - the channel 0 or 1
   * @retval None
   */
-void FFT_Display_BarGraph(int ch)
+void __attribute__((section("ITCM_RAM"))) FFT_Display_BarGraph(int ch)
 {
 	float32_t *fft= fftResult;
 	int valInd, x;
@@ -635,7 +637,7 @@ void FFT_Display_BarGraph(int ch)
   * @param  ch - the channel 0 or 1
   * @retval None
   */
-void FFT_Display_Points(int ch)
+void __attribute__((section("ITCM_RAM"))) FFT_Display_Points(int ch)
 {
 	float32_t *fft= fftResult;
 	int valInd, x;
@@ -726,7 +728,7 @@ void FFT_Display_Points(int ch)
   * @param  ch - the channel 0 or 1
   * @retval None
   */
-void FFT_Display_Lines(int ch)
+void __attribute__((section("ITCM_RAM"))) FFT_Display_Lines(int ch)
 {
 	float32_t *fft = fftResult;
 	int valInd, x;

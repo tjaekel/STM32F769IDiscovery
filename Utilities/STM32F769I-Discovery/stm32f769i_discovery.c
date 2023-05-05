@@ -451,7 +451,7 @@ static void I2Cx_Init(I2C_HandleTypeDef *i2c_handler)
       /* External, camera and Arduino connector  I2C configuration */
       i2c_handler->Instance = DISCOVERY_EXT_I2Cx;
     }
-    i2c_handler->Init.Timing           = DISCOVERY_I2Cx_TIMING;
+    i2c_handler->Init.Timing           = DISCOVERY_I2Cx_TIMING;			//I2C speed
     i2c_handler->Init.OwnAddress1      = 0;
     i2c_handler->Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     i2c_handler->Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;

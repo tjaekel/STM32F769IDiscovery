@@ -1244,7 +1244,7 @@ osStatus osMailFree (osMailQId queue_id, void *mail)
 * @param  none.
 * @retval none.
 */
-void osSystickHandler(void)
+void __attribute__((section("ITCM_RAM"))) osSystickHandler(void)
 {
 
 #if (INCLUDE_xTaskGetSchedulerState  == 1 )

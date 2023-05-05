@@ -880,7 +880,7 @@ void BSP_LCD_ResetColorKeying(uint32_t LayerIndex)
   * @brief  Sets the LCD text color.
   * @param  Color: Text color code ARGB(8-8-8-8)
   */
-void BSP_LCD_SetTextColor(uint32_t Color)
+inline void BSP_LCD_SetTextColor(uint32_t Color)
 {
   DrawProp[ActiveLayer].TextColor = Color;
 }
@@ -889,7 +889,7 @@ void BSP_LCD_SetTextColor(uint32_t Color)
   * @brief  Gets the LCD text color.
   * @retval Used text color.
   */
-uint32_t BSP_LCD_GetTextColor(void)
+inline uint32_t BSP_LCD_GetTextColor(void)
 {
   return DrawProp[ActiveLayer].TextColor;
 }
@@ -898,7 +898,7 @@ uint32_t BSP_LCD_GetTextColor(void)
   * @brief  Sets the LCD background color.
   * @param  Color: Layer background color code ARGB(8-8-8-8)
   */
-void BSP_LCD_SetBackColor(uint32_t Color)
+inline void BSP_LCD_SetBackColor(uint32_t Color)
 {
   DrawProp[ActiveLayer].BackColor = Color;
 }
@@ -1016,7 +1016,7 @@ void BSP_LCD_DisplayChar(uint16_t Xpos, uint16_t Ypos, uint8_t Ascii)
   *            @arg  RIGHT_MODE
   *            @arg  LEFT_MODE
   */
-void BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Text_AlignModeTypdef Mode)
+void __attribute__((section("ITCM_RAM"))) BSP_LCD_DisplayStringAt(uint16_t Xpos, uint16_t Ypos, uint8_t *Text, Text_AlignModeTypdef Mode)
 {
   uint16_t refcolumn = 1, i = 0;
   uint32_t size = 0, xsize = 0;

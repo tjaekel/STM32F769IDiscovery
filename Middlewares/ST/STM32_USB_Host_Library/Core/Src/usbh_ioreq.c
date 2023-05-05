@@ -286,7 +286,7 @@ USBH_StatusTypeDef USBH_InterruptSendData(USBH_HandleTypeDef *phost,
   * @param  pipe_num: Pipe Number
   * @retval USBH Status.
   */
-USBH_StatusTypeDef USBH_IsocReceiveData(USBH_HandleTypeDef *phost,
+USBH_StatusTypeDef __attribute__((section("ITCM_RAM"))) USBH_IsocReceiveData(USBH_HandleTypeDef *phost,
                                 uint8_t *buff,
                                 uint32_t length,
                                 uint8_t pipe_num)

@@ -33,7 +33,7 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform.1291911004" isAbstract="false" osList="all" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.targetplatform"/>
 							<builder buildPath="${workspace_loc:/STM32F769IDiscovery}/Debug" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder.262587540" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.builder"/>
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.1246343867" name="MCU GCC Assembler" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler">
-								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.2131442119" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g3" valueType="enumerated"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.2131442119" name="Debug level" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel" useByScannerDiscovery="false" value="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.debuglevel.value.g0" valueType="enumerated"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths.1761141773" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/CMSIS/core&quot;"/>
@@ -62,26 +62,12 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/arch&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/noOS&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/OS&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire480272&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire640480&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/exc7200&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft5336&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft6x06&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mfxstm32l152&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mx25l512&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q128a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q512a&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/otm8009a&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ov9655&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/rk043fn48h&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/s5k5cag&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/st7735&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/stmpe811&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ts3510&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/wm8994&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Fonts&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Log&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/STM32F769I-Discovery&quot;"/>
 								</option>
@@ -119,26 +105,12 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/arch&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/noOS&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/OS&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire480272&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire640480&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/exc7200&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft5336&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft6x06&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mfxstm32l152&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mx25l512&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q128a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q512a&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/otm8009a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ov9655&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/rk043fn48h&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/s5k5cag&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/st7735&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/stmpe811&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ts3510&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/wm8994&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Fonts&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Log&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/STM32F769I-Discovery&quot;"/>
 								</option>
@@ -157,15 +129,15 @@
 									<listOptionValue builtIn="false" value="__VFP_FP"/>
 									<listOptionValue builtIn="false" value="FPU_USED=1"/>
 									<listOptionValue builtIn="false" value="NO_DIGI_FP"/>
-									<listOptionValue builtIn="false" value="STM_SPDIF_OUT"/>
+									<listOptionValue builtIn="false" value="NO_STM_SPDIF_OUT"/>
 									<listOptionValue builtIn="false" value="USE_SD_CARD"/>
 									<listOptionValue builtIn="false" value="NO_USE_DMA2D"/>
 									<listOptionValue builtIn="false" value="UART_THREAD"/>
 									<listOptionValue builtIn="false" value="TRY_USBH_MIC"/>
 									<listOptionValue builtIn="false" value="LCD_UPDATE"/>
-									<listOptionValue builtIn="false" value="MIC24BIT"/>
+									<listOptionValue builtIn="false" value="LCD_FFT"/>
 								</option>
-								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.extra.675393827" name="Enable extra warning flags (-Wextra)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.extra" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.extra.675393827" name="Enable extra warning flags (-Wextra)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.extra" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.all.1569614748" name="Enable all warnings about questionable constructions (-Wall)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.warnings.all" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.810469186" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -183,6 +155,7 @@
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.otherflags.766991566" name="Other flags" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.otherflags" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-u _print_float "/>
 								</option>
+								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.nodefaultlibs.1287112542" name="Do not use default libraries (-nodefaultlibs)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.nodefaultlibs" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input.385320787" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -252,7 +225,6 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.616477903" name="MCU Output Converter Motorola S-rec with symbols" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.objcopy.symbolsrec.686251257"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1368136409.Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc/usbd_msc_storage_template.h" name="usbd_msc_storage_template.h" rcbsApplicability="disable" resourcePath="Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc/usbd_msc_storage_template.h" toolsToInvoke=""/>
 					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1368136409.Middlewares/Third_Party/FatFs/src/drivers/usbh_diskio.h" name="usbh_diskio.h" rcbsApplicability="disable" resourcePath="Middlewares/Third_Party/FatFs/src/drivers/usbh_diskio.h" toolsToInvoke=""/>
 					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1368136409.Middlewares/Third_Party/FatFs/src/drivers/sdram_diskio.h" name="sdram_diskio.h" rcbsApplicability="disable" resourcePath="Middlewares/Third_Party/FatFs/src/drivers/sdram_diskio.h" toolsToInvoke=""/>
 					<fileInfo id="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.1368136409.Middlewares/Third_Party/FatFs/src/drivers/sram_diskio.h" name="sram_diskio.h" rcbsApplicability="disable" resourcePath="Middlewares/Third_Party/FatFs/src/drivers/sram_diskio.h" toolsToInvoke=""/>
@@ -261,7 +233,7 @@
 						<entry excluding="Src/stm32f7xx_hal_timebase_tim_template.c|Src/stm32f7xx_hal_timebase_rtc_wakeup_template.c|Src/stm32f7xx_hal_timebase_rtc_alarm_template.c|Src/stm32f7xx_hal_msp_template.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="HAL_Driver"/>
 						<entry excluding="src/fsdata.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LwIP_HTTP_Server_Netconn_RTOS"/>
 						<entry excluding="ST/STM32_USB_Host_Library/Core/Src/usbh_conf_template.c|ST/STM32_USB_Host_Library/Class/Template|ST/STM32_USB_Host_Library/Class/MTP|ST/STM32_USB_Host_Library/Class/MSC|ST/STM32_USB_Host_Library/Class/HID|ST/STM32_USB_Host_Library/Class/CDC|ST/STM32_USB_Device_Library/Class/MSC/Src/usbd_msc_storage_template.c|ST/STM32_USB_Device_Library/Class/MSC/Inc/usbd_msc_storage_template.h|Third_Party/FatFs/src/drivers/usbh_diskio.h|Third_Party/FatFs/src/drivers/sram_diskio.h|Third_Party/FatFs/src/drivers/usbh_diskio.c|Third_Party/FatFs/src/drivers/sram_diskio.c|Third_Party/FatFs/src/drivers/sdram_diskio.h|Third_Party/FatFs/src/drivers/sdram_diskio.c|Third_Party/LwIP/src/apps|Third_Party/LwIP/src/core/ipv6|Third_Party/LwIP/doc|Third_Party/LwIP/src/netif/ethernetif.c|Third_Party/FreeRTOS/License|ST/STM32_USB_Device_Library/Core/Src/usbd_conf_template.c|ST/STM32_USB_Device_Library/Class/HID|ST/STM32_USB_Device_Library/Class/Template|ST/STM32_USB_Device_Library/Class/DFU|ST/STM32_USB_Device_Library/Class/CustomHID|ST/STM32_USB_Device_Library/Class/CDC|ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio_if_template.c|ST/STemWin|ST/STemWin/Config/LCDConf_Lin_Template.c|ST/STemWin/Config/LCDConf_FlexColor_Template.c|ST/STemWin/Config/GUIDRV_Template.c|ST/STemWin/Simulation|Third_Party/LwIP/test|Third_Party/FreeRTOS/Source/portable/MemMang/heap_1.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_2.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_3.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_5.c|Third_Party/FatFs/src/option/ccsbcs.c|Third_Party/FatFs/src/option/cc950.c|Third_Party/FatFs/src/option/cc949.c|Third_Party/FatFs/src/option/cc936.c|Third_Party/FatFs/src/option/cc932.c|Third_Party/FatFs/doc/img/app4.c|Third_Party/FatFs/doc/img/app3.c|Third_Party/FatFs/doc/img/app2.c|Third_Party/FatFs/doc/img/app1.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares"/>
-						<entry excluding="Fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Utilities"/>
+						<entry excluding="Log|Components/n25q512a|Components/n25q128a|Components/ts3510|Components/stmpe811|Components/st7789h2|Components/st7735|Components/s5k5cag|Components/rk043fn48h|Components/ov9655|Components/mfxstm32l152|Components/ft5336|Components/exc7200|Components/ampire640480|Components/ampire480272|Fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Utilities"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="inc"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="startup"/>
@@ -387,26 +359,12 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/arch&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/noOS&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Middlewares/Third_Party/LwIP/system/OS&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire480272&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ampire640480&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/exc7200&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft5336&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ft6x06&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mfxstm32l152&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/mx25l512&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q128a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/n25q512a&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/otm8009a&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ov9655&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/rk043fn48h&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/s5k5cag&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/st7735&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/stmpe811&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/ts3510&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Components/wm8994&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Fonts&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/Log&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Utilities/STM32F769I-Discovery&quot;"/>
 								</option>
@@ -455,7 +413,7 @@
 						<entry excluding="Src/stm32f7xx_hal_timebase_tim_template.c|Src/stm32f7xx_hal_timebase_rtc_wakeup_template.c|Src/stm32f7xx_hal_timebase_rtc_alarm_template.c|Src/stm32f7xx_hal_msp_template.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="HAL_Driver"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LwIP_HTTP_Server_Netconn_RTOS"/>
 						<entry excluding="ST/STM32_USB_Host_Library/Core/Src/usbh_conf_template.c|ST/STM32_USB_Host_Library/Class/Template|ST/STM32_USB_Host_Library/Class/MTP|ST/STM32_USB_Host_Library/Class/MSC|ST/STM32_USB_Host_Library/Class/HID|ST/STM32_USB_Host_Library/Class/CDC|Third_Party|Third_Party/FreeRTOS|ST/STM32_USB_Device_Library|ST/STemWin|ST/STemWin/Config/LCDConf_Lin_Template.c|ST/STemWin/Config/LCDConf_FlexColor_Template.c|ST/STemWin/Config/GUIDRV_Template.c|ST/STemWin/Simulation|Third_Party/FatFs|Third_Party/LwIP|Third_Party/LwIP/test|Third_Party/FreeRTOS/Source/portable/MemMang/heap_1.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_2.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_3.c|Third_Party/FreeRTOS/Source/portable/MemMang/heap_5.c|Third_Party/FatFs/src/option/ccsbcs.c|Third_Party/FatFs/src/option/cc950.c|Third_Party/FatFs/src/option/cc949.c|Third_Party/FatFs/src/option/cc936.c|Third_Party/FatFs/src/option/cc932.c|Third_Party/FatFs/doc/img/app4.c|Third_Party/FatFs/doc/img/app3.c|Third_Party/FatFs/doc/img/app2.c|Third_Party/FatFs/doc/img/app1.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Middlewares"/>
-						<entry excluding="Fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Utilities"/>
+						<entry excluding="Log|Components/n25q512a|Components/n25q128a|Components/ts3510|Components/stmpe811|Components/st7789h2|Components/st7735|Components/s5k5cag|Components/rk043fn48h|Components/ov9655|Components/mfxstm32l152|Components/ft5336|Components/exc7200|Components/ampire640480|Components/ampire480272|Fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Utilities"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="inc"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="startup"/>

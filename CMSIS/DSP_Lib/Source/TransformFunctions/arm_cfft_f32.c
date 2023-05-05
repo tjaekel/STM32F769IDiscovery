@@ -571,7 +571,7 @@ void arm_cfft_radix8by4_f32( arm_cfft_instance_f32 * S, float32_t * p1)
 * @return none.  
 */
 
-void arm_cfft_f32( 
+void arm_cfft_f32(
     const arm_cfft_instance_f32 * S, 
     float32_t * p1,
     uint8_t ifftFlag,
