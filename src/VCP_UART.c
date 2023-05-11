@@ -173,13 +173,19 @@ void UART_Tx(const uint8_t *buf, int len)
 	//Make sure to finish a transmission before a new one is queued.
 	//Or: modify to have a real FiFo or to block (but do not block audio loop!).
 
+	HAL_StatusTypeDef state;
+
 	if (len > UART_TX_BUF_SIZE)
 		len = UART_TX_BUF_SIZE;
 
 	//we need a local DMA buffer, the original source buffer can become invalid during DMA
 	memcpy(uartTxBuf, buf, len);
-	huart1.gState = HAL_UART_STATE_READY;
-	HAL_UART_Transmit_IT(&huart1, uartTxBuf, len);
+
+	do {
+		state = HAL_UART_Transmit_IT(&huart1, uartTxBuf, len);
+		if (state == HAL_BUSY)
+			osDelay(1);
+	} while(state == HAL_BUSY);
 }
 
 /**
@@ -189,8 +195,8 @@ void UART_Tx(const uint8_t *buf, int len)
   */
 int UART_RxChar(void)
 {
-	static int startRx = 0;
-	int ch;
+	static volatile int startRx = 0;
+	volatile int ch;
 
 	if ( ! startRx)
 	{
@@ -228,7 +234,7 @@ int UART_getString(uint8_t *buf, int len)
 {
 	static int idx = 0;
 	static int ignoreNext = 0;
-	int ch;
+	volatile int ch;
 	int l;
 
 	if ((ch = UART_RxChar()) != -1)

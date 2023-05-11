@@ -64,5 +64,7 @@ unsigned long AUDIO_PLAYER_GetHeartbeat(void);
 void AUDIO_PLAYER_UDANTERestart(void);
 void AUDIO_Volume(int upDown);
 int AUDIO_PLAYER_GetActiveBuffer(uint8_t **out_BufAddr);
+int AUDIO_PLAYER_RunState(void);
+int AUDIO_GetVolume(void);
 
 #endif /* AUDIOPLAYER_H_ */

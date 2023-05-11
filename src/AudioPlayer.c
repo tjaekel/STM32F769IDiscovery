@@ -13,6 +13,8 @@
 
 extern SemaphoreHandle_t xSemaphoreAudio;
 
+static int audioPlayerState = 0;			//not running
+
 /* Private define ------------------------------------------------------------*/
 
 /* Private macro -------------------------------------------------------------*/
@@ -128,6 +130,7 @@ AUDIO_ErrorTypeDef AUDIO_PLAYER_Start(void)
 {
 	BSP_AUDIO_OUT_Play((uint16_t*)&BufferCtl.buff[0], AUDIO_OUT_BUFFER_SIZE);
 	BufferCtl.clockState = 0;
+	audioPlayerState = 1;						//playing
     return AUDIO_ERROR_NONE;
 }
 
@@ -136,6 +139,7 @@ void AUDIO_PLAYER_Restart(void)
 	BSP_AUDIO_OUT_Restart((uint16_t*)&BufferCtl.buff[0], AUDIO_OUT_BUFFER_SIZE);
 	BufferCtl.clockState = 0;
 	BufferCtl.state = 0;
+	audioPlayerState = 1;
 }
 
 /**
@@ -156,7 +160,13 @@ inline AUDIO_ErrorTypeDef AUDIO_PLAYER_Process(void)
 AUDIO_ErrorTypeDef AUDIO_PLAYER_Stop(void)
 {
   BSP_AUDIO_OUT_Stop(CODEC_PDWN_SW);
+  audioPlayerState = 0;
   return AUDIO_ERROR_NONE;
+}
+
+int AUDIO_PLAYER_RunState(void)
+{
+	return audioPlayerState;
 }
 
 /**
@@ -318,6 +328,11 @@ void __attribute__((section("ITCM_RAM"))) AUDIO_Volume(int upDown)
 
 	BSP_AUDIO_OUT_SetVolume(vol);
 	gCurVolume = vol;
+}
+
+int AUDIO_GetVolume(void)
+{
+	return gCurVolume;
 }
 
 /*******************************************************************************

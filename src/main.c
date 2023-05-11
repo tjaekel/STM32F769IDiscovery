@@ -27,7 +27,8 @@
 
 #include "config.h"
 
-const char VERSION_STR[7] = "V1.1.0";
+/* version info to display */
+const char VERSION_STR[7] = "V1.2.0";
 
 extern uint8_t IP_ADDR[4];
 
@@ -706,8 +707,9 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
 		TIM_MEASURE_END; 						//stop stop watch for audio processing
 		TIM_MEASURE_TOTAL;						//total time for audio sample loops
 
-		taskYIELD();
+		////taskYIELD();
     }
+    taskYIELD();
   }
 }
 /**
@@ -1569,9 +1571,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 435;					//420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
+  RCC_OscInitStruct.PLL.PLLN = 430;					//420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 8;					//9: for 216MHz, 8 for 200 MHz with PLLN 400;
+  RCC_OscInitStruct.PLL.PLLQ = 9;					//9: for 216MHz, 8 for 200 MHz with PLLN 400;
   RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
   
   ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
@@ -1606,7 +1608,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;  
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2; 
   
-  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4); //FLASH_LATENCY
+  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5); //FLASH_LATENCY
   if(ret != HAL_OK)
   {
 	  while(1) { ; }

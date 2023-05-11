@@ -29,6 +29,7 @@ static char text[50];
 
 static void print_prompt(void)
 {
+	osDelay(10);
 	UART_Tx((const uint8_t *)"> ", 2);
 }
 
@@ -79,14 +80,25 @@ static void print_cpuLoad(void)
 
 static void increase_volume(void)
 {
-	AUDIO_Volume(1);
+	if (AUDIO_PLAYER_RunState())
+		AUDIO_Volume(1);
 	print_prompt();
 }
 
 static void decrease_volume(void)
 {
-	AUDIO_Volume(0);
+	if (AUDIO_PLAYER_RunState())
+		AUDIO_Volume(0);
 	print_prompt();
+}
+
+static void show_volume(void)
+{
+	int vol = AUDIO_GetVolume();
+
+	sprintf(text, "%3d\r\n> ", vol);		//with prompt - avoid to kill UART_Tx!
+	vol = strlen(text);
+	UART_Tx((const uint8_t *)text, vol);
 }
 
 /**
@@ -131,6 +143,8 @@ int UART_cmd(uint8_t *uartBuf, int len)
 		case '+' : increase_volume();
 				   break;
 		case '-' : decrease_volume();
+				   break;
+		case 'v' : show_volume();
 				   break;
 		case '\n': 											//!< NL/CR : empty line
 		case '\r':

@@ -2102,9 +2102,9 @@ HAL_StatusTypeDef HAL_UART_AbortReceive_IT(UART_HandleTypeDef *huart)
   */
 void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
-  uint32_t isrflags   = READ_REG(huart->Instance->ISR);
-  uint32_t cr1its     = READ_REG(huart->Instance->CR1);
-  uint32_t cr3its     = READ_REG(huart->Instance->CR3);
+  __IO uint32_t isrflags   = READ_REG(huart->Instance->ISR);
+  __IO uint32_t cr1its     = READ_REG(huart->Instance->CR1);
+  __IO uint32_t cr3its     = READ_REG(huart->Instance->CR3);
 
   uint32_t errorflags;
   uint32_t errorcode;
@@ -3362,7 +3362,7 @@ static void UART_EndTransmit_IT(UART_HandleTypeDef *huart)
 static void UART_RxISR_8BIT(UART_HandleTypeDef *huart)
 {
   uint16_t uhMask = huart->Mask;
-  uint16_t  uhdata;
+  __IO uint16_t  uhdata;
 
   /* Check that a Rx process is ongoing */
   if (huart->RxState == HAL_UART_STATE_BUSY_RX)
@@ -3413,7 +3413,7 @@ static void UART_RxISR_16BIT(UART_HandleTypeDef *huart)
 {
   uint16_t *tmp;
   uint16_t uhMask = huart->Mask;
-  uint16_t  uhdata;
+  __IO uint16_t  uhdata;
 
   /* Check that a Rx process is ongoing */
   if (huart->RxState == HAL_UART_STATE_BUSY_RX)

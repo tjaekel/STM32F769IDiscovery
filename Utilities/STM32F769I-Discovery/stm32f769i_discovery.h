@@ -294,7 +294,7 @@ typedef enum
 /* Due to the big MOFSET capacity for adapting the camera level the rising time is very large (>1us) */
 /* 0x40912732 takes in account the big rising and aims a clock of 100khz */
 #ifndef DISCOVERY_I2Cx_TIMING  
-#define DISCOVERY_I2Cx_TIMING                      		((uint32_t)0x00901850)		//((uint32_t)0x40912732)
+#define DISCOVERY_I2Cx_TIMING                      		((uint32_t)0x20912732)	//((uint32_t)0x00901850)		//((uint32_t)0x40912732)
 #endif /* DISCOVERY_I2Cx_TIMING */
 
 /**
