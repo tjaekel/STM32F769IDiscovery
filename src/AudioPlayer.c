@@ -178,6 +178,7 @@ void __attribute__((section("ITCM_RAM"))) BSP_AUDIO_OUT_TransferComplete_CallBac
 {
     BufferCtl.state = BUFFER_OFFSET_FULL;
     AUDIO_PLAYER_ReleaseClock(2);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
 }
 
 /**
@@ -189,6 +190,7 @@ void __attribute__((section("ITCM_RAM"))) BSP_AUDIO_OUT_HalfTransfer_CallBack(vo
 {
     BufferCtl.state = BUFFER_OFFSET_HALF;
     AUDIO_PLAYER_ReleaseClock(1);
+    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_RESET);
 }
 
 /**

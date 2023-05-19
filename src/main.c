@@ -210,6 +210,9 @@ int main_audio(void)
   //initialize QSPI
   //BSP_QSPI_Init();
 
+  //for clock debug:
+  BSP_GPIO_Init();
+
   //Enable QSPI memory mapped mode
   BSP_QSPI_EnableMemoryMappedMode();
 
@@ -364,7 +367,7 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
 
       BSP_AUDIO_IN_InitEx(INPUT_DEVICE_INPUT_LINE_1, sampleFreq, DEFAULT_AUDIO_IN_BIT_RESOLUTION, DEFAULT_AUDIO_IN_CHANNEL_NBR);
       bufSize = AUDIO_PLAYER_GetBuffer(&buffer);
-      BSP_AUDIO_IN_Record((uint16_t*)buffer, bufSize /(sizeof(uint16_t)));
+      BSP_AUDIO_IN_Record((uint16_t*)buffer, bufSize / (sizeof(uint16_t)));
   }
 
   if (ifSelection == INIF_MIC)
@@ -1571,7 +1574,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 430;					//420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
+  RCC_OscInitStruct.PLL.PLLN = 435;					//430: seems to work, 420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 9;					//9: for 216MHz, 8 for 200 MHz with PLLN 400;
   RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
@@ -1592,10 +1595,15 @@ void SystemClock_Config(void)
   //if with 200 MHz HSE Clock - USB needs other clock setting for 48MHz on USB
   /* Select PLLSAI output as USB clock source */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_CLK48;
-  PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48SOURCE_PLLSAIP;
-  PeriphClkInitStruct.PLLSAI.PLLSAIN = 384;			//384 is nominal
-  PeriphClkInitStruct.PLLSAI.PLLSAIQ = 7;
+  PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48SOURCE_PLLSAIP;	//RCC_CLK48SOURCE_PLL;	//RCC_CLK48SOURCE_PLLSAIP;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 404;			//384 is nominal
+  PeriphClkInitStruct.PLLSAI.PLLSAIQ = 8;			//7;
   PeriphClkInitStruct.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV8;
+  /* we trim with debugging for most accurate timing: USB clock should be 48KHz, play clock also 48 KHz,
+   * we have trimmed play clock, but USB clock is independent and drifts!
+   * So, we might have periodically a wrong sample from USB MIC (both clocks are not locked, they are
+   * free running and independent)
+   */
   if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct)  != HAL_OK)
   {
 	  while(1) { ; }

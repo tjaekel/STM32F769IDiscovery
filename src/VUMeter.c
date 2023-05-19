@@ -116,19 +116,25 @@ void __attribute__((section("ITCM_RAM"))) VUMETER_Display(int channel)
 			if (i == (SEGMENTS - 3))
 			{
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);
+#if 0
 				BSP_LED_On(LED1);
 				BSP_LED_On(LED2);
+#endif
 			}
 			else
 			if (i == (SEGMENTS - 6))
 			{
 				BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
+#if 0
 				BSP_LED_On(LED2);
+#endif
 			}
 			else
 			{
+#if 0
 				BSP_LED_Off(LED1);
 				BSP_LED_Off(LED2);
+#endif
 				if ( ! (colSet & 1))
 				{
 					BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
@@ -172,19 +178,25 @@ void __attribute__((section("ITCM_RAM"))) VUMETER_Volume(int channel, int level)
 			if (i == (SEGMENTS - 3))
 			{
 				BSP_LCD_SetTextColor(LCD_COLOR_RED);
+#if 0
 				BSP_LED_On(LED1);
 				BSP_LED_On(LED2);
+#endif
 			}
 			else
 			if (i == (SEGMENTS - 6))
 			{
 				BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
+#if 0
 				BSP_LED_On(LED2);
+#endif
 			}
 			else
 			{
+#if 0
 				BSP_LED_Off(LED1);
 				BSP_LED_Off(LED2);
+#endif
 				if ( ! (colSet & 1))
 				{
 					BSP_LCD_SetTextColor(LCD_COLOR_GREEN);

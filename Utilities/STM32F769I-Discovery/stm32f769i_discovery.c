@@ -193,6 +193,23 @@ void BSP_LED_Init(Led_TypeDef Led)
 
 }
 
+void BSP_GPIO_Init(void)
+{
+	GPIO_InitTypeDef  gpio_init_structure;
+
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	/* Configure the GPIO_LED pin */
+	gpio_init_structure.Pin   = GPIO_PIN_2;
+	gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_PP;
+	gpio_init_structure.Pull  = GPIO_PULLUP;
+	gpio_init_structure.Speed = GPIO_SPEED_HIGH;
+
+	HAL_GPIO_Init(GPIOD, &gpio_init_structure);
+
+	gpio_init_structure.Pin   = GPIO_PIN_12;
+	HAL_GPIO_Init(GPIOC, &gpio_init_structure);
+}
 
 /**
   * @brief  DeInit LEDs.

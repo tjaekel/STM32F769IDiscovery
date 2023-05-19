@@ -357,7 +357,7 @@ uint8_t BSP_AUDIO_OUT_Init(uint16_t OutputDevice, uint8_t Volume, uint32_t Audio
 uint8_t BSP_AUDIO_OUT_Play(uint16_t* pBuffer, uint32_t Size)
 {
   /* Call the audio Codec Play function */
-  if(audio_drv->Play(AUDIO_I2C_ADDRESS, (uint16_t *)pBuffer, Size) != 0)
+  if(audio_drv->Play(AUDIO_I2C_ADDRESS, (uint16_t *)pBuffer, DMA_MAX(Size / AUDIODATA_SIZE) /*Size*/) != 0)
   {  
     return AUDIO_ERROR;
   }
@@ -908,8 +908,10 @@ __weak void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFre
     SAI_CLK_x = SAI_CLK(first level)/PLLSAIDIVQ = 49.142/1 = 49.142 Mhz */  
     rcc_ex_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
     rcc_ex_clk_init_struct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLLI2S;
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 344; 
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 7; 
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 394;	//384 355 344 336; - trim exactly for 48 KHz
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 8;		//8;
+    //378 + 8 results in: 48.07 KHz audio clock, but sine wave: 961Hz!
+    //394 + 8 results in: quite accurate 1 KHz sine out, but audio clock is 50.1 KHz!
     rcc_ex_clk_init_struct.PLLI2SDivQ = 1;      
     
     HAL_RCCEx_PeriphCLKConfig(&rcc_ex_clk_init_struct);
@@ -1188,8 +1190,8 @@ uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t B
     haudio_in_sai.Instance = AUDIO_IN_SAIx;
     if(HAL_SAI_GetState(&haudio_in_sai) == HAL_SAI_STATE_RESET)
     {    
-    BSP_AUDIO_OUT_MspInit(&haudio_in_sai, NULL);
-    BSP_AUDIO_IN_MspInit();
+    	BSP_AUDIO_OUT_MspInit(&haudio_in_sai, NULL);
+    	BSP_AUDIO_IN_MspInit();
     }
 
     SAIx_In_Init(AudioFreq);
@@ -1293,7 +1295,7 @@ uint8_t BSP_AUDIO_IN_Record(uint16_t* pbuf, uint32_t size)
   else
   {
     /* Start the process receive DMA */
-    if(HAL_OK !=HAL_SAI_Receive_DMA(&haudio_in_sai, (uint8_t*)pbuf, size))
+    if(HAL_OK != HAL_SAI_Receive_DMA(&haudio_in_sai, (uint8_t*)pbuf, size))
     {
       return AUDIO_ERROR;
     }
@@ -1746,7 +1748,7 @@ __weak void BSP_AUDIO_IN_ClockConfig(DFSDM_Filter_HandleTypeDef *hdfsdm_filter, 
     SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 49.142/1 = 49.142 Mhz */  
     rcc_ex_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_SAI2;
     rcc_ex_clk_init_struct.Sai2ClockSelection = RCC_SAI2CLKSOURCE_PLLI2S;
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 344; 
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 336;	//344;
     rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 7; 
     rcc_ex_clk_init_struct.PLLI2SDivQ = 1;   
     HAL_RCCEx_PeriphCLKConfig(&rcc_ex_clk_init_struct);

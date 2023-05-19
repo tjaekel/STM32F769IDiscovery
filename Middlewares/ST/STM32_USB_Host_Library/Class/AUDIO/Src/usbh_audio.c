@@ -187,7 +187,8 @@ USBH_ClassTypeDef  AUDIO_Class =
 static void USBH_MIC_BufferCopy(uint8_t *micBuffer, int frmLenBytes, int isoRxBytes);
 
 AUDIO_HandleTypeDef usbhAudioHandle;
-uint8_t audioInBuffer[48 * 2 * 3] __attribute__ ((aligned (4)));	//ATT: max. 2048 size possible to do in USB_ReadPacket()
+//it should match with the EP size!
+uint8_t audioInBuffer[/*48 * 2 * 3*/ 294] __attribute__ ((aligned (4)));	//ATT: max. 2048 size possible to do in USB_ReadPacket()
 /* we have 48 KHz, 2 channels and 24bit audio from MIC = 288bytes, it has to be aligned for 32bit, if DMA is used */
 unsigned int cnt;	//just to let flash an LED for reception, in 500ms intervall to toggle
 
@@ -1582,6 +1583,16 @@ static void __attribute__((section("ITCM"))) USBH_MIC_BufferCopy(uint8_t *micBuf
 	static int init = 0;
 	int i;
 
+	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_12);
+
+	//if (isoRxBytes > 288)
+	//	isoRxBytes = 288;
+
+#if DEBUG_RODE_MIC
+	if (isoRxBytes != 288)
+		BSP_LED_Toggle(LED1);
+#endif
+
 	if (init < 2)
 	{
 		/* wait 2x for buffer sync, then let's start with the USB, almost in sync
@@ -1599,33 +1610,9 @@ static void __attribute__((section("ITCM"))) USBH_MIC_BufferCopy(uint8_t *micBuf
 	}
 
 	/* check if the OUT buffer was changed - do it afterwards, option is to do it first on next call */
-	bytes = AUDIO_PLAYER_GetActiveBuffer(&bufPtr);
-	/*
-	 * check if buffer was changed in between on output
-	 * Remark: bytes should be always the same, the half of the double buffer
-	 */
-	if (prevBufPtr != bufPtr)
+	if ( ! offset)
 	{
-		/* cross-check if we are too slow - offset should be at the end */
-		if (offset < bytes)
-		{
-			/* we are too slow on MIC */
-			BSP_LED_Toggle(LED1);		//red LED, can be shared with BBERR indication!
-#if 0
-			/*
-			 * fill the remaining buffer with zero samples - we are too slow
-			 */
-			while (offset < bytes)
-			{
-				*(prevBufPtr + offset) = 0;	/* bufPtr is changed ! */
-				offset++;
-			}
-#endif
-		}
-
-		/* reset the buffer management - start over on new buffer */
-		offset = 0;
-		prevBufPtr = bufPtr;
+		bytes = AUDIO_PLAYER_GetActiveBuffer(&bufPtr);
 	}
 
 	if ( ! isoRxBytes)
@@ -1633,30 +1620,20 @@ static void __attribute__((section("ITCM"))) USBH_MIC_BufferCopy(uint8_t *micBuf
 		return;											//in case we have not received anything
 	}
 
-	for (i = 0; i < frmLenBytes; i += 2)				//bytes for 48KHz, 2 channels, 2 bytes (16bit)
+	for (i = 0; i < isoRxBytes; i += 3)
 	{
-		/* we assume little endian values from USB MIC and output is little endian */
-		if (isoRxBytes == 288)							//check if we have 48KHz * 2 * 3 (24bit) samples
-		{
-			/* if have to handle 24bit samples from MIC */
-			micBuffer++;								//skip the lower 8bit, convert 24bit to 16bit audio
-		}
-		*(bufPtr + offset + i + 0) = *micBuffer++;
-		*(bufPtr + offset + i + 1) = *micBuffer++;
+		micBuffer++;
+		*(bufPtr + offset + 0) = *micBuffer++;
+		*(bufPtr + offset + 1) = *micBuffer++;
 
-		/* check if we would overflow the current buffer, stop if so */
-		if ((offset + i) >= bytes)						//don't trigger on OK, exact full case!
-		{
-			/* we are too fast on USB MIC */
-			BSP_LED_Toggle(LED2);						//green LED
-			/*
-			 * Remark: the green LED toggles sometimes, approx. every 6 seconds! Are we too fast on MIC????
-			 */
+		offset += 2;
+
+		if (offset >= bytes)
 			break;
-		}
 	}
 
-	offset += i;
+	if (offset >= bytes)
+		offset = 0;
 }
 
 /**

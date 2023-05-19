@@ -321,6 +321,8 @@ void             BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mo
 void             BSP_PB_DeInit(Button_TypeDef Button);
 uint32_t         BSP_PB_GetState(Button_TypeDef Button);
 
+void			 BSP_GPIO_Init(void);
+
 /**
   * @}
   */
