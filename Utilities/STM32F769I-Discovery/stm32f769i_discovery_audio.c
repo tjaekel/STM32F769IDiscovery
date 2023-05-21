@@ -342,7 +342,13 @@ uint8_t BSP_AUDIO_OUT_Init(uint16_t OutputDevice, uint8_t Volume, uint32_t Audio
   if(ret == AUDIO_OK)
   {
     /* Initialize the codec internal registers */
-    audio_drv->Init(AUDIO_I2C_ADDRESS, OutputDevice, Volume, AudioFreq);
+	extern int gLineInPT;
+	if (gLineInPT) {
+		audio_drv->Init(AUDIO_I2C_ADDRESS, OUTPUT_DEVICE_HEADPHONE | INPUT_DEVICE_INPUT_LINE_1, Volume, AudioFreq);
+		gLineInPT = 2;
+	}
+	else
+		audio_drv->Init(AUDIO_I2C_ADDRESS, OutputDevice, Volume, AudioFreq);
   }
  
   return ret;
@@ -618,11 +624,11 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
 {
   if(hsai->Instance == AUDIO_OUT_SAIx)
   {
-  BSP_AUDIO_OUT_Error_CallBack();
+	  BSP_AUDIO_OUT_Error_CallBack();
   }
   else
   {
-    BSP_AUDIO_IN_Error_CallBack();
+	  BSP_AUDIO_IN_Error_CallBack();
   }
 }
 
@@ -962,8 +968,8 @@ static void SAIx_Out_Init(uint32_t AudioFreq)
   FS Definition: Start frame + Channel Side identification
   FS Polarity: FS active Low
   FS Offset: FS asserted one bit before the first bit of slot 0 */ 
-  haudio_out_sai.FrameInit.FrameLength = 128; 
-  haudio_out_sai.FrameInit.ActiveFrameLength = 64;
+  haudio_out_sai.FrameInit.FrameLength = 64;	//128;
+  haudio_out_sai.FrameInit.ActiveFrameLength = 32;	//64;
   haudio_out_sai.FrameInit.FSDefinition = SAI_FS_CHANNEL_IDENTIFICATION;
   haudio_out_sai.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
   haudio_out_sai.FrameInit.FSOffset = SAI_FS_BEFOREFIRSTBIT;
@@ -976,7 +982,7 @@ static void SAIx_Out_Init(uint32_t AudioFreq)
   haudio_out_sai.SlotInit.FirstBitOffset = 0;
   haudio_out_sai.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
   haudio_out_sai.SlotInit.SlotNumber = 4; 
-  haudio_out_sai.SlotInit.SlotActive = CODEC_AUDIOFRAME_SLOT_0123;
+  haudio_out_sai.SlotInit.SlotActive = CODEC_AUDIOFRAME_SLOT_02;
 
   HAL_SAI_Init(&haudio_out_sai);
   
@@ -1020,19 +1026,19 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   DataSize: 16 */
   haudio_out_sai.Init.MonoStereoMode = SAI_STEREOMODE;
   haudio_out_sai.Init.AudioFrequency = AudioFreq;
-  haudio_out_sai.Init.AudioMode      = SAI_MODEMASTER_RX;
-  haudio_out_sai.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
-  haudio_out_sai.Init.Protocol       = SAI_FREE_PROTOCOL;
-  haudio_out_sai.Init.DataSize       = SAI_DATASIZE_16;
-  haudio_out_sai.Init.FirstBit       = SAI_FIRSTBIT_MSB;
-  haudio_out_sai.Init.ClockStrobing  = SAI_CLOCKSTROBING_FALLINGEDGE;
-  haudio_out_sai.Init.Synchro        = SAI_ASYNCHRONOUS;
-  haudio_out_sai.Init.OutputDrive    = SAI_OUTPUTDRIVE_ENABLE;
-  haudio_out_sai.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_1QF;
+  haudio_out_sai.Init.AudioMode = SAI_MODEMASTER_TX;
+  haudio_out_sai.Init.NoDivider = SAI_MASTERDIVIDER_ENABLED;
+  haudio_out_sai.Init.Protocol = SAI_FREE_PROTOCOL;
+  haudio_out_sai.Init.DataSize = SAI_DATASIZE_16;
+  haudio_out_sai.Init.FirstBit = SAI_FIRSTBIT_MSB;
+  haudio_out_sai.Init.ClockStrobing = SAI_CLOCKSTROBING_FALLINGEDGE;
+  haudio_out_sai.Init.Synchro = SAI_ASYNCHRONOUS;
+  haudio_out_sai.Init.OutputDrive = SAI_OUTPUTDRIVE_ENABLED;
+  haudio_out_sai.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_1QF;
   haudio_out_sai.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
   haudio_out_sai.Init.CompandingMode = SAI_NOCOMPANDING;
   haudio_out_sai.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
-  haudio_out_sai.Init.Mckdiv         = 0;  
+  haudio_out_sai.Init.Mckdiv         = 0;
 
   /* Configure SAI_Block_x Frame
   Frame Length: 64
@@ -1040,21 +1046,21 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   FS Definition: Start frame + Channel Side identification
   FS Polarity: FS active Low
   FS Offset: FS asserted one bit before the first bit of slot 0 */
-  haudio_out_sai.FrameInit.FrameLength       = 64;
+  haudio_out_sai.FrameInit.FrameLength = 64;
   haudio_out_sai.FrameInit.ActiveFrameLength = 32;
-  haudio_out_sai.FrameInit.FSDefinition      = SAI_FS_CHANNEL_IDENTIFICATION;
-  haudio_out_sai.FrameInit.FSPolarity        = SAI_FS_ACTIVE_LOW;
-  haudio_out_sai.FrameInit.FSOffset          = SAI_FS_BEFOREFIRSTBIT;
+  haudio_out_sai.FrameInit.FSDefinition = SAI_FS_CHANNEL_IDENTIFICATION;
+  haudio_out_sai.FrameInit.FSPolarity = SAI_FS_ACTIVE_LOW;
+  haudio_out_sai.FrameInit.FSOffset = SAI_FS_BEFOREFIRSTBIT;
 
   /* Configure SAI Block_x Slot
   Slot First Bit Offset: 0
   Slot Size  : 16
   Slot Number: 4
-  Slot Active: All slot actives */
+  Slot Active */
   haudio_out_sai.SlotInit.FirstBitOffset = 0;
-  haudio_out_sai.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
-  haudio_out_sai.SlotInit.SlotNumber     = 4;
-  haudio_out_sai.SlotInit.SlotActive     = CODEC_AUDIOFRAME_SLOT_02;
+  haudio_out_sai.SlotInit.SlotSize = SAI_SLOTSIZE_DATASIZE;
+  haudio_out_sai.SlotInit.SlotNumber = 4;
+  haudio_out_sai.SlotInit.SlotActive = CODEC_AUDIOFRAME_SLOT_02;
 
   HAL_SAI_Init(&haudio_out_sai);
 
@@ -1100,7 +1106,7 @@ static void SAIx_In_Init(uint32_t AudioFreq)
   Slot First Bit Offset: 0
   Slot Size  : 16
   Slot Number: 4
-  Slot Active: All slot active */
+  Slot Active: */
   haudio_in_sai.SlotInit.FirstBitOffset = 0;
   haudio_in_sai.SlotInit.SlotSize       = SAI_SLOTSIZE_DATASIZE;
   haudio_in_sai.SlotInit.SlotNumber     = 4;
@@ -1161,6 +1167,7 @@ uint8_t BSP_AUDIO_IN_Init(uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr)
   */
 uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t BitRes, uint32_t ChnlNbr)
 { 
+  extern int gLineInPT;
   (void)BitRes;
 
   uint8_t ret = AUDIO_ERROR;
@@ -1199,7 +1206,8 @@ uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t B
     if((wm8994_drv.ReadID(AUDIO_I2C_ADDRESS)) == WM8994_ID)
     {
       /* Reset the Codec Registers */
-      wm8994_drv.Reset(AUDIO_I2C_ADDRESS);
+      if (gLineInPT != 2)
+    	  wm8994_drv.Reset(AUDIO_I2C_ADDRESS);
       /* Initialize the audio driver structure */
       audio_drv = &wm8994_drv;
       ret = AUDIO_OK;
@@ -1212,7 +1220,11 @@ uint8_t BSP_AUDIO_IN_InitEx(uint16_t InputDevice, uint32_t AudioFreq, uint32_t B
     if(ret == AUDIO_OK)
     {
       /* Initialize the codec internal registers */
-      audio_drv->Init(AUDIO_I2C_ADDRESS, InputDevice, 100, AudioFreq);
+      if (gLineInPT != 2)
+    	  audio_drv->Init(AUDIO_I2C_ADDRESS, InputDevice, 100, AudioFreq);
+      else {
+    	  ;
+      }
     }    
   }
   
@@ -1676,14 +1688,14 @@ __weak void BSP_AUDIO_IN_MspInit(void)
 { 
   if (AudioIn_Device == INPUT_DEVICE_DIGITAL_MIC)
   {  
-  /* MSP channels initialization */
-  DFSDMx_ChannelMspInit();  
-  /* MSP filters initialization */
-  DFSDMx_FilterMspInit();
+	  /* MSP channels initialization */
+	  DFSDMx_ChannelMspInit();
+	  /* MSP filters initialization */
+	  DFSDMx_FilterMspInit();
   }
   else
   {
-   SAI_AUDIO_IN_MspInit(&haudio_in_sai, NULL); 
+	  SAI_AUDIO_IN_MspInit(&haudio_in_sai, NULL);
   }
 }
 
@@ -1748,9 +1760,9 @@ __weak void BSP_AUDIO_IN_ClockConfig(DFSDM_Filter_HandleTypeDef *hdfsdm_filter, 
     SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 49.142/1 = 49.142 Mhz */  
     rcc_ex_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_SAI2;
     rcc_ex_clk_init_struct.Sai2ClockSelection = RCC_SAI2CLKSOURCE_PLLI2S;
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 336;	//344;
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 344;	//336;	//344 for 1 KHz correct sine wave
     rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 7; 
-    rcc_ex_clk_init_struct.PLLI2SDivQ = 1;   
+    rcc_ex_clk_init_struct.PLLI2SDivQ = 1;
     HAL_RCCEx_PeriphCLKConfig(&rcc_ex_clk_init_struct);
   }
   
@@ -1790,7 +1802,7 @@ static uint8_t DFSDMx_Init(uint32_t AudioFreq)
   hAudioInTopLeftChannel.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
   hAudioInTopLeftChannel.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
   hAudioInTopLeftChannel.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hAudioInTopLeftChannel.Init.Awd.Oversampling         = 10;
+  hAudioInTopLeftChannel.Init.Awd.Oversampling         = 8;	//AAAA
   hAudioInTopLeftChannel.Init.Offset                   = 0;
   hAudioInTopLeftChannel.Init.RightBitShift            = DFSDM_RIGHT_BIT_SHIFT(AudioFreq);
   if(HAL_OK != HAL_DFSDM_ChannelInit(&hAudioInTopLeftChannel))
@@ -1812,7 +1824,7 @@ static uint8_t DFSDMx_Init(uint32_t AudioFreq)
   hAudioInTopRightChannel.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
   hAudioInTopRightChannel.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
   hAudioInTopRightChannel.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-  hAudioInTopRightChannel.Init.Awd.Oversampling         = 10;
+  hAudioInTopRightChannel.Init.Awd.Oversampling         = 8;
   hAudioInTopRightChannel.Init.Offset                   = 0;
   hAudioInTopRightChannel.Init.RightBitShift            = DFSDM_RIGHT_BIT_SHIFT(AudioFreq);
   if(HAL_OK != HAL_DFSDM_ChannelInit(&hAudioInTopRightChannel))
@@ -1836,7 +1848,7 @@ static uint8_t DFSDMx_Init(uint32_t AudioFreq)
     hAudioInButtomLeftChannel.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_RISING;
     hAudioInButtomLeftChannel.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hAudioInButtomLeftChannel.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hAudioInButtomLeftChannel.Init.Awd.Oversampling         = 10;
+    hAudioInButtomLeftChannel.Init.Awd.Oversampling         = 8;
     hAudioInButtomLeftChannel.Init.Offset                   = 0;
     hAudioInButtomLeftChannel.Init.RightBitShift            = DFSDM_RIGHT_BIT_SHIFT(AudioFreq);
     if(HAL_OK != HAL_DFSDM_ChannelInit(&hAudioInButtomLeftChannel))
@@ -1858,7 +1870,7 @@ static uint8_t DFSDMx_Init(uint32_t AudioFreq)
     hAudioInButtomRightChannel.Init.SerialInterface.Type     = DFSDM_CHANNEL_SPI_FALLING;
     hAudioInButtomRightChannel.Init.SerialInterface.SpiClock = DFSDM_CHANNEL_SPI_CLOCK_INTERNAL;
     hAudioInButtomRightChannel.Init.Awd.FilterOrder          = DFSDM_CHANNEL_FASTSINC_ORDER;
-    hAudioInButtomRightChannel.Init.Awd.Oversampling         = 10;
+    hAudioInButtomRightChannel.Init.Awd.Oversampling         = 8;
     hAudioInButtomRightChannel.Init.Offset                   = 0;
     hAudioInButtomRightChannel.Init.RightBitShift            = DFSDM_RIGHT_BIT_SHIFT(AudioFreq);
     if(HAL_OK != HAL_DFSDM_ChannelInit(&hAudioInButtomRightChannel))

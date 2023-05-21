@@ -266,7 +266,7 @@ void BSP_SDMMC_DMA_Rx_IRQHandler(void)
   * @param None
   * @retval None
   */
-void __attribute__((section("ITCM_RAM"))) AUDIO_OUT_SAIx_DMAx_IRQHandler(void)
+void /*__attribute__((section("ITCM_RAM")))*/ AUDIO_OUT_SAIx_DMAx_IRQHandler(void)
 {
   HAL_DMA_IRQHandler(haudio_out_sai.hdmatx);
 }

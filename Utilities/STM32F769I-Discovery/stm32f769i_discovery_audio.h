@@ -341,6 +341,8 @@ void BSP_AUDIO_IN_ClockConfig(DFSDM_Filter_HandleTypeDef *hdfsdm_filter, uint32_
 void BSP_AUDIO_IN_MspInit(void);
 void BSP_AUDIO_IN_MspDeInit(void);
 
+uint8_t BSP_AUDIO_IN_OUT_Init(uint32_t AudioFreq);
+
 /**
   * @}
   */ 

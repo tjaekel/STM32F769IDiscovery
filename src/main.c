@@ -131,14 +131,16 @@ int GNetworkMode = 0;				//0 = web browser, all other ETH audio, no browser
 
 static int processVolume = 0;
 
+int gLineInPT = 0;
+
 #ifdef UART_THREAD
 static void UARTCmd_Thread(void const * argument);
 SemaphoreHandle_t xSemaphoreUART;
 xTaskHandle CreatedTaskUART;
 #endif
 
-#define SCRATCH_BUFF_SIZE  (AUDIO_OUT_BUFFER_SIZE) 	/* (AUDIO_OUT_BUFFER_SIZE / sizeof(int16_t))	//XXXX seems to be the correct value! */
-int32_t Scratch [SCRATCH_BUFF_SIZE];				/* for two MIC channels, each a 16bit */
+#define SCRATCH_BUFF_SIZE (AUDIO_OUT_BUFFER_SIZE) 		/* (AUDIO_OUT_BUFFER_SIZE / sizeof(int16_t))	//XXXX seems to be the correct value! */
+int32_t Scratch [SCRATCH_BUFF_SIZE];					/* for two MIC channels, each a 16bit */
 
 int USBConfig = 0;
 
@@ -274,6 +276,10 @@ int main_audio(void)
   for( ;; );
 }
 
+#if 0
+uint8_t inBuffer[AUDIO_OUT_BUFFER_SIZE] __attribute__((aligned(4)));
+#endif
+
 /**
   * @brief  Audio thread for FreeRTOS OS
   * @param  argument - not used
@@ -295,6 +301,9 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
   SysInterfaces.ifSelection = ifSelection;
   SysInterfaces.outSelection = outSelection;
   SysInterfaces.sampleFreq = sampleFreq;
+
+  if (ifSelection == INIF_LINE)
+	  gLineInPT = 1;
 
   /*
    * make sure that web server task does not intercept the SD card procedures!
@@ -338,7 +347,7 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
 	  USB_Interface(1);
   }
 
-  /* clear buffer to make sure not to have gargabe */
+  /* clear buffer to make sure not to have garbage */
   AUDIO_PLAYER_ClrBuf();
 
   /* Init Audio interface - important to do in this order */
@@ -365,9 +374,17 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
 	  int bufSize;
 	  uint8_t *buffer;
 
-      BSP_AUDIO_IN_InitEx(INPUT_DEVICE_INPUT_LINE_1, sampleFreq, DEFAULT_AUDIO_IN_BIT_RESOLUTION, DEFAULT_AUDIO_IN_CHANNEL_NBR);
+	  /* it does not work right:
+	   * there is nothing out, instead we get all the time the SAI Tx DMA Error, with FIFO_ERROR (FE) set,
+	   * but the VU Meter and FFT works
+	   */
+      BSP_AUDIO_IN_InitEx(INPUT_DEVICE_ANALOG_MIC, sampleFreq, DEFAULT_AUDIO_IN_BIT_RESOLUTION, DEFAULT_AUDIO_IN_CHANNEL_NBR);
       bufSize = AUDIO_PLAYER_GetBuffer(&buffer);
+#if 1
       BSP_AUDIO_IN_Record((uint16_t*)buffer, bufSize / (sizeof(uint16_t)));
+#else
+      BSP_AUDIO_IN_Record((uint16_t*)inBuffer, bufSize / (sizeof(uint16_t)));
+#endif
   }
 
   if (ifSelection == INIF_MIC)
@@ -451,7 +468,7 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
 	  SDPlay_FileSelection(0);
   }
 
-  if (ifSelection == INIF_GEN)
+  if (ifSelection == INIF_GEN)		//debug: enable for LineIn test of output player
   {
 	  TONEGEN_CpySine();
   }
@@ -482,6 +499,16 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
     if (AUDIO_PLAYER_GetClock())
     {
     	TIM_MEASURE_START; 	// start stop watch
+
+#if 0
+    	//debug - if we have Out when LineIn is selected - yes
+    	TONEGEN_CpySine();
+#endif
+
+#if 0
+    	if (ifSelection == INIF_LINE)
+    		memcpy(BufferCtl.buff, inBuffer, sizeof(inBuffer));
+#endif
 
     	//check if we have audio in received - if not - clear the buffers
     	AUDIO_PLAYER_GetHeartbeat();
@@ -1576,8 +1603,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 25;
   RCC_OscInitStruct.PLL.PLLN = 435;					//430: seems to work, 420: try 412: 400 for 200 MHz - needed if DDR RAM!, 432 for 216 MHz
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 9;					//9: for 216MHz, 8 for 200 MHz with PLLN 400;
-  RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
+  RCC_OscInitStruct.PLL.PLLQ = 4;	//9;			//9: for 216MHz, 8 for 200 MHz with PLLN 400;
+  //RCC_OscInitStruct.PLL.PLLR = 7;					//should be default 2?
   
   ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
   if(ret != HAL_OK)

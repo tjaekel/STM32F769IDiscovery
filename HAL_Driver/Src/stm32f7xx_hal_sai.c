@@ -2433,12 +2433,22 @@ static void SAI_DMARxHalfCplt(DMA_HandleTypeDef *hdma)
   */
 static void SAI_DMAError(DMA_HandleTypeDef *hdma)
 {
+  int err = 0;
   SAI_HandleTypeDef* hsai = ( SAI_HandleTypeDef* )((DMA_HandleTypeDef* )hdma)->Parent;
 
   /* Set SAI error code */
   hsai->ErrorCode |= HAL_SAI_ERROR_DMA;
 
-  if((hsai->hdmatx->ErrorCode == HAL_DMA_ERROR_TE) || (hsai->hdmarx->ErrorCode == HAL_DMA_ERROR_TE))
+  //YYYY
+  if (hsai->hdmatx)
+	  if ((hsai->hdmatx->ErrorCode == HAL_DMA_ERROR_TE) /*|| (hsai->hdmatx->ErrorCode == HAL_DMA_ERROR_FE)*/)
+			  err = 1;
+
+  if (hsai->hdmarx)
+  	  if ((hsai->hdmarx->ErrorCode == HAL_DMA_ERROR_TE) /*|| (hsai->hdmarx->ErrorCode == HAL_DMA_ERROR_FE)*/)
+  			  err = 1;
+  //if((hsai->hdmatx->ErrorCode == HAL_DMA_ERROR_TE) || (hsai->hdmarx->ErrorCode == HAL_DMA_ERROR_TE))
+  if (err)
   {
     /* Disable the SAI DMA request */
     hsai->Instance->CR1 &= ~SAI_xCR1_DMAEN;
