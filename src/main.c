@@ -302,6 +302,12 @@ static void __attribute__((section("ITCM_RAM"))) Audio_Thread(void const * argum
   SysInterfaces.outSelection = outSelection;
   SysInterfaces.sampleFreq = sampleFreq;
 
+#if 1
+  //bug: MIC runs just with 44.1 KHz
+  if (ifSelection == INIF_MIC)
+	  sampleFreq = 44100;
+#endif
+
   if (ifSelection == INIF_LINE)
 	  gLineInPT = 1;
 

@@ -899,7 +899,7 @@ __weak void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFre
     SAI_CLK_x = SAI_CLK(first level)/PLLSAIDIVQ = 214.5/19 = 11.289 Mhz */ 
     rcc_ex_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_SAI1;
     rcc_ex_clk_init_struct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLLI2S;
-    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 429;
+    rcc_ex_clk_init_struct.PLLI2S.PLLI2SN = 468;			//BBBB - trim for 1 KHz generator
     rcc_ex_clk_init_struct.PLLI2S.PLLI2SQ = 2;
     rcc_ex_clk_init_struct.PLLI2SDivQ = 19;
     
